@@ -66,6 +66,7 @@ class ISETTA_API Color {
    * @param a alpha
    */
   Color(float r, float g, float b, float a) : r{r}, g{g}, b{b}, a{a} {}
+  Color(float r, float g, float b) : r{r}, g{g}, b{b}, a{1.f} {}
   /**
    * @brief Construct a new Color object
    *

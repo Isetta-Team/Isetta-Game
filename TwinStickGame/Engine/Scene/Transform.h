@@ -7,7 +7,7 @@
 #include "Core/Math/Matrix4.h"
 #include "Core/Math/Quaternion.h"
 #include "Core/Math/Vector3.h"
-#include "Horde3D.h"
+#include "Horde3D/Horde3D.h"
 
 namespace Isetta {
 class ISETTA_API_DECLARE Transform {

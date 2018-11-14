@@ -3,8 +3,9 @@
  */
 #pragma once
 
-#include <GLFW/glfw3.h>
-#include <Horde3D.h>
+#include "GLFW/glfw3.h"
+#include "Horde3D/Horde3D.h"
+
 #include <list>
 #include <string>
 #include "Core/Config/CVar.h"
