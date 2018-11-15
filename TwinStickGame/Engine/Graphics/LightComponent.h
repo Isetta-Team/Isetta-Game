@@ -2,44 +2,44 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
+#include <Horde3D.h>
 #include <string>
 #include "Core/Color.h"
-#include "Horde3D/Horde3D.h"
 #include "Scene/Component.h"
 
 namespace Isetta {
 BEGIN_COMPONENT(LightComponent, Component, true)
-public:
-enum class Property {
-  RADIUS,
-  FOV,
-  SHADOW_MAP_COUNT,
-  SHADOW_MAP_BIAS,
-  COLOR,
-  COLOR_MULTIPLIER
-};
+ public:
+  enum class Property {
+    RADIUS,
+    FOV,
+    SHADOW_MAP_COUNT,
+    SHADOW_MAP_BIAS,
+    COLOR,
+    COLOR_MULTIPLIER
+  };
 
-void OnEnable() override;
-void OnDisable() override;
-void OnDestroy() override;
+  void OnEnable() override;
+  void OnDisable() override;
+  void OnDestroy() override;
 
-LightComponent(std::string_view resourceName, std::string_view lightName);
+  LightComponent(std::string_view resourceName, std::string_view lightName);
 
-template <Property Attr, typename T>
-void SetProperty(T value);
+  template <Property Attr, typename T>
+  void SetProperty(T value);
 
-template <Property Attr, typename T>
-T GetProperty() const;
+  template <Property Attr, typename T>
+  T GetProperty() const;
 
-private:
-static H3DRes LoadResourceFromFile(std::string_view resourceName);
+ private:
+  static H3DRes LoadResourceFromFile(std::string_view resourceName);
 
-static class RenderModule* renderModule;
-friend class RenderModule;
-void UpdateH3DTransform() const;
-std::string_view name;
-H3DNode renderNode{0};
-H3DRes renderResource{0};
+  static class RenderModule* renderModule;
+  friend class RenderModule;
+  void UpdateH3DTransform() const;
+  std::string_view name;
+  H3DNode renderNode{0};
+  H3DRes renderResource{0};
 END_COMPONENT(LightComponent, Component)
 
 template <LightComponent::Property Attr, typename T>

@@ -66,7 +66,7 @@ inline void PriorityQueue<T, compare>::Heapify(int i) {
   int l = Left(i);
   int r = Right(i);
   int min = i;
-  if (l < elements.Size() && compare<T>()(elements[l], elements[r])) min = l;
+  if (l < elements.Size() && compare<T>()(elements[l], elements[min])) min = l;
   if (r < elements.Size() && compare<T>()(elements[r], elements[min])) min = r;
   if (min != i) {
     T tmp = elements[i];

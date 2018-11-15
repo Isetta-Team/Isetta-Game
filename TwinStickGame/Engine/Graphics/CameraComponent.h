@@ -26,6 +26,7 @@ explicit CameraComponent(std::string cameraName);
 
 void OnEnable() override;
 void OnDisable() override;
+void OnDestroy() override;
 
 template <Property Attr, typename T>
 void SetProperty(T value);

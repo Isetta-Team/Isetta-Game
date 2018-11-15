@@ -3,17 +3,22 @@
  */
 #pragma once
 #include "Core/Math/Vector3.h"
+#include "Graphics/Texture.h"
 #include "Scene/Component.h"
 
 using namespace Isetta;
 
 BEGIN_COMPONENT(MainMenu, Isetta::Component, true)
 private:
-float readyLerpT = 0.0f;
-float readyLerpSpeed = 2.f;
+float btnLerp = 0.0f;
+float btnSpeed = 2.f;
 
-bool multiplayer = false;
-char ipAddress[16] = "xxx.xxx.xxx.xxx";
+std::bitset<2> multiplayer = 0;
+char ipAddress[16];
+int playerCnt = 0;
 
+Texture backgroundTexture;
+
+void Start() override;
 void GuiUpdate() override;
 END_COMPONENT(MainMenu, Isetta::Component)

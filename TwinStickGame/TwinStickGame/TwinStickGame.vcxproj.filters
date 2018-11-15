@@ -19,6 +19,12 @@
     <Filter Include="Levels">
       <UniqueIdentifier>{6fe44d10-3884-4078-84a4-f5f2d25ccf4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{51557332-55be-45fa-aa56-7e91efadd1bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay">
+      <UniqueIdentifier>{7de5e1c8-4a25-47f9-956b-4db2edcda3eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -36,6 +42,18 @@
     <ClCompile Include="Levels\SinglePlayerLevel.cpp">
       <Filter>Levels</Filter>
     </ClCompile>
+    <ClCompile Include="Player\PlayerController.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlayerHealth.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\Damageable.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\Score.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -52,6 +70,18 @@
     </ClInclude>
     <ClInclude Include="Levels\SinglePlayerLevel.h">
       <Filter>Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerController.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerHealth.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\Damageable.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\Score.h">
+      <Filter>Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

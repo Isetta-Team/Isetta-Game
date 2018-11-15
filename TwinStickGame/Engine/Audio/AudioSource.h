@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-#include "FMOD/fmod.hpp"
+#include "FMOD/inc/fmod.hpp"
 #include "Scene/Component.h"
 
 namespace Isetta {
