@@ -63,10 +63,12 @@ class CollisionsModule {
   void StartUp();
   void Update(float deltaTime);
   void ShutDown();
+  Array<Collider*> GetPossibleColliders(Collider* collider) const;
 
   friend class EngineLoop;
   friend class Collider;
   friend class Collisions;
+  friend class CollisionSolverModule;
 
   // Utilities
   bool GetIgnoreLayerCollision(int layer1, int layer2) const;
@@ -82,7 +84,7 @@ class CollisionsModule {
   static Math::Vector3 ClosestPtPointSegment(const Math::Vector3 &point,
                                              const Math::Vector3 &p0,
                                              const Math::Vector3 &p1,
-                                             float *const t);
+                                             float *);
   // static float ClosestPtRaySegment(const Ray &, const Math::Vector3 &,
   //                                 const Math::Vector3 &, float *const,
   //                                 float *const, Math::Vector3 *const,

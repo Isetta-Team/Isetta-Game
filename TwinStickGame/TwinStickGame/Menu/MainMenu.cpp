@@ -5,21 +5,28 @@
 
 // ENGINE
 #include "Application.h"
+#include "Audio/AudioClip.h"
+#include "Audio/AudioSource.h"
 #include "Core/Color.h"
 #include "Core/Time/Time.h"
+#include "Graphics/Font.h"
 #include "Graphics/GUI.h"
 #include "Graphics/RectTransform.h"
+#include "Scene/Entity.h"
 #include "Scene/LevelManager.h"
 #include "Util.h"
 #include "imgui/imgui.h"
 
 // GAME
 #include "ColorScheme.h"
+#include "Gameplay/Score.h"
 
 using namespace Isetta;
 
 void MainMenu::Start() {
   backgroundTexture = Texture{"images\\Neon-background.png"};
+  buttonAudio = entity->GetComponent<AudioSource>();
+  buttonAudio->SetVolume(0.25f);
 }
 
 void MainMenu::GuiUpdate() {
@@ -58,26 +65,45 @@ void MainMenu::GuiUpdate() {
     }
   };
 
-  GUI::PushFont("Neon", 50.f);
+  Font::PushFont("Neon", 50.f);
   if (multiplayer.count() == 0) {
-    if (GUI::Button(rect, "SINGLE PLAYER", btnStyle))
+    if (GUI::Button(rect, "SINGLE PLAYER", btnStyle)) {
+      buttonAudio->Play();
       LevelManager::Instance().LoadLevel("SinglePlayerLevel");
+    }
+
     rect.rect.y += height + padding;
-    multiplayer.set(0, GUI::Button(rect, "MULTIPLAYER", btnStyle));
+    if (GUI::Button(rect, "MULTIPLAYER", btnStyle)) {
+      buttonAudio->Play();
+      multiplayer.set(0, true);
+    }
+
     rect.rect.y += height + padding;
-    if (GUI::Button(rect, "EXIT", btnStyle)) Application::Exit();
+    if (GUI::Button(rect, "EXIT", btnStyle)) {
+      buttonAudio->Play();
+      Application::Exit();
+    }
   } else {
     if (!multiplayer.test(1)) {
-      if (GUI::Button(rect, "HOST", btnStyle)) multiplayer.flip();
+      if (GUI::Button(rect, "HOST", btnStyle)) {
+        buttonAudio->Play();
+        multiplayer.flip();
+      }
+
       rect.rect.y += height + padding;
-      if (GUI::Button(rect, "CONNECT", btnStyle)) multiplayer.set(1, 1);
+      if (GUI::Button(rect, "CONNECT", btnStyle)) {
+        buttonAudio->Play();
+        multiplayer.set(1, true);
+      }
     } else if (!multiplayer.test(0)) {
-      GUI::Button(rect, "READY", btnStyle);
+      if (GUI::Button(rect, "READY", btnStyle)) buttonAudio->Play();
+
       rect.rect.y += height + padding;
-      GUI::Child(rect, "host_optiosn", [&]() {
+      GUI::Child(rect, "host_options", [&]() {
         RectTransform rect{{0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
         GUI::Text(rect,
                   "PLAYERS: ", GUI::TextStyle{Color::white, 50.f, "Neon"});
+
         rect.anchor = GUI::Pivot::Right;
         rect.pivot = GUI::Pivot::Right;
         const char* players = Util::StrFormat("%d/4", playerCnt);
@@ -89,19 +115,21 @@ void MainMenu::GuiUpdate() {
                      GUI::InputTextFlags::CallbackCharFilter |
                          GUI::InputTextFlags::AlwaysInsertMode,
                      FilterIP::Filter);
+
       RectTransform rectCpy{rect};
       btnLerp += btnSpeed * Time::GetDeltaTime();
       btnLerp = Math::Util::Min(btnLerp, 1);
       rectCpy.rect.y =
           rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerp);
-      GUI::Button(rectCpy, "READY", btnStyle);
+      if (GUI::Button(rectCpy, "READY", btnStyle)) buttonAudio->Play();
     }
     rect.rect.y += height + padding;
-    if (GUI::Button(rect, "Cancel", btnStyle)) {
+    if (GUI::Button(rect, "CANCEL", btnStyle)) {
+      buttonAudio->Play();
       multiplayer.set(0, multiplayer[1]);
-      multiplayer.set(1, 0);
+      multiplayer.set(1, false);
       btnLerp = 0;
     }
   }
-  GUI::PopFont();
+  Font::PopFont();
 }

@@ -8,6 +8,10 @@
 
 using namespace Isetta;
 
+namespace Isetta {
+class AudioSource;
+}
+
 BEGIN_COMPONENT(MainMenu, Isetta::Component, true)
 private:
 float btnLerp = 0.0f;
@@ -18,6 +22,7 @@ char ipAddress[16];
 int playerCnt = 0;
 
 Texture backgroundTexture;
+AudioSource* buttonAudio;
 
 void Start() override;
 void GuiUpdate() override;

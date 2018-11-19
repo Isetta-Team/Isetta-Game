@@ -4,9 +4,10 @@
 #include "MenuLevel.h"
 
 // ENGINE
-#include "Core/Config/Config.h"
+#include "Audio/AudioListener.h"
+#include "Audio/AudioSource.h"
 #include "Graphics/CameraComponent.h"
-#include "Graphics/GUI.h"
+#include "Graphics/Font.h"
 #include "Scene/Entity.h"
 
 // GAME
@@ -16,23 +17,26 @@
 using namespace Isetta;
 using CameraProperty = CameraComponent::Property;
 
-void MenuLevel::LoadLevel() {
-  GUI::AddFontFromFile("Resources\\fonts\\NeonAbsoluteSans.ttf", 16.f, "Neon");
-  GUI::AddFontFromFile("Resources\\fonts\\NeonAbsoluteSans.ttf", 50.f, "Neon");
-  GUI::AddFontFromFile("Resources\\fonts\\NeonAbsoluteSans.ttf", 100.f, "Neon");
+void MenuLevel::OnLevelLoad() {
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 16.f, "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 50.f, "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 100.f, "Neon");
 
   Entity* cameraEntity{AddEntity("Camera")};
   CameraComponent* camComp =
       cameraEntity->AddComponent<CameraComponent, true>("Camera");
   cameraEntity->SetTransform(Math::Vector3{0, 5, 10}, Math::Vector3{-15, 0, 0},
                              Math::Vector3::one);
-  camComp->SetProperty<CameraProperty::FOV>(
-      CONFIG_VAL(renderConfig.fieldOfView));
-  camComp->SetProperty<CameraProperty::NEAR_PLANE>(
-      CONFIG_VAL(renderConfig.nearClippingPlane));
-  camComp->SetProperty<CameraProperty::FAR_PLANE>(70);
+  cameraEntity->AddComponent<AudioListener>();
 
   Entity* mainMenu{AddEntity("MainMenu")};
   mainMenu->AddComponent<MainMenu>();
   mainMenu->AddComponent<MainMenuDraw>();
+  mainMenu->AddComponent<AudioSource>(0b000, "audio/button.wav");
+
+  Entity* manager{AddEntity("Manager")};
+  auto bgm = manager->AddComponent<AudioSource>(
+      0b010, "audio/bgm/Signal-in-the-Noise.mp3");
+  bgm->SetVolume(0.1f);
+  bgm->Play();
 }

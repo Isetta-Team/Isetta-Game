@@ -5,5 +5,5 @@
 #include "Scene/IsettaLevel.h"
 
 CREATE_LEVEL(SinglePlayerLevel)
-void LoadLevel() override;
+void OnLevelLoad() override;
 CREATE_LEVEL_END

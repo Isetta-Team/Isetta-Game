@@ -22,15 +22,15 @@ explicit BoxCollider(const Math::Vector3& size = Math::Vector3::one)
 BoxCollider(const Math::Vector3& center,
             const Math::Vector3& size = Math::Vector3::one)
     : Collider{center}, size{size} {}
-BoxCollider(bool isStatic, bool isTrigger, const Math::Vector3& center,
+BoxCollider(bool trigger, const Math::Vector3& center,
             const Math::Vector3& size = Math::Vector3::one)
-    : Collider{isStatic, isTrigger, center}, size{size} {}
+    : Collider{trigger, center}, size{size} {}
 
-bool Raycast(const Ray& ray, RaycastHit* const hitInfo,
+bool Raycast(const class Ray& ray, RaycastHit* const hitInfo,
              float maxDistance = 0) final;
 
 inline Math::Vector3 GetWorldSize() const {
-  return Math::Vector3::Scale(size, GetTransform()->GetWorldScale());
+  return Math::Vector3::Scale(size, transform->GetWorldScale());
 }
 inline Math::Vector3 GetWorldExtents() const { return 0.5f * GetWorldSize(); }
 

@@ -6,7 +6,7 @@
 // ENGINE
 #include "Core/Config/Config.h"
 #include "Graphics/CameraComponent.h"
-#include "Graphics/GUI.h"
+#include "Graphics/Font.h"
 #include "Scene/Entity.h"
 
 // GAME
@@ -17,21 +17,15 @@
 using namespace Isetta;
 using CameraProperty = CameraComponent::Property;
 
-void SinglePlayerLevel::LoadLevel() {
+void SinglePlayerLevel::OnLevelLoad() {
   // TODO: remove
-  GUI::AddFontFromFile("Resources\\fonts\\NeonAbsoluteSans.ttf", 50.f, "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 50.f, "Neon");
 
   Entity* cameraEntity{AddEntity("Camera")};
   CameraComponent* camComp =
       cameraEntity->AddComponent<CameraComponent, true>("Camera");
   cameraEntity->SetTransform(Math::Vector3{0, 5, 10}, Math::Vector3{-15, 0, 0},
                              Math::Vector3::one);
-  camComp->SetProperty<CameraProperty::FOV>(
-      CONFIG_VAL(renderConfig.fieldOfView));
-  camComp->SetProperty<CameraProperty::NEAR_PLANE>(
-      CONFIG_VAL(renderConfig.nearClippingPlane));
-  camComp->SetProperty<CameraProperty::FAR_PLANE>(
-      CONFIG_VAL(renderConfig.farClippingPlane));
 
   Entity* score{AddEntity("Score")};
   score->AddComponent<Score>();
