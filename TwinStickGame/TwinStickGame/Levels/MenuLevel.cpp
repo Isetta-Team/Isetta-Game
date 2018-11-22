@@ -13,30 +13,29 @@
 // GAME
 #include "Menu/MainMenu.h"
 #include "Menu/MainMenuDraw.h"
+#include <Audio/AudioClip.h>
 
 using namespace Isetta;
-using CameraProperty = CameraComponent::Property;
 
 void MenuLevel::OnLevelLoad() {
   Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 16.f, "Neon");
   Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 50.f, "Neon");
   Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 100.f, "Neon");
 
-  Entity* cameraEntity{AddEntity("Camera")};
-  CameraComponent* camComp =
-      cameraEntity->AddComponent<CameraComponent, true>("Camera");
+  Entity* cameraEntity = Entity::CreateEntity("Camera");
+  cameraEntity->AddComponent<CameraComponent>();
   cameraEntity->SetTransform(Math::Vector3{0, 5, 10}, Math::Vector3{-15, 0, 0},
                              Math::Vector3::one);
   cameraEntity->AddComponent<AudioListener>();
 
-  Entity* mainMenu{AddEntity("MainMenu")};
+  Entity* mainMenu = Entity::CreateEntity("MainMenu");
   mainMenu->AddComponent<MainMenu>();
   mainMenu->AddComponent<MainMenuDraw>();
-  mainMenu->AddComponent<AudioSource>(0b000, "audio/button.wav");
+  mainMenu->AddComponent<AudioSource>(0b000, AudioClip::LoadClip("audio/button.wav"));
 
-  Entity* manager{AddEntity("Manager")};
+  Entity* manager = Entity::CreateEntity("Manager");
   auto bgm = manager->AddComponent<AudioSource>(
-      0b010, "audio/bgm/Signal-in-the-Noise.mp3");
-  bgm->SetVolume(0.1f);
-  bgm->Play();
+      0b010, AudioClip::LoadClip("audio/bgm/Signal-in-the-Noise.mp3"));
+  // bgm->SetVolume(0.1f);
+  // bgm->Play();
 }

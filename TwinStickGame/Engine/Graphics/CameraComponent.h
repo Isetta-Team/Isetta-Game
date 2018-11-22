@@ -2,10 +2,10 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-#include "Core/Config/CVar.h"
 #include "Core/Math/Matrix4.h"
 #include "Horde3D/Horde3D.h"
 #include "Scene/Component.h"
+#include "Core/Config/CVar.h"
 
 namespace Isetta {
 class Ray;
@@ -29,7 +29,7 @@ enum class Property {
   PROJECTION,
 };
 
-explicit CameraComponent(std::string cameraName);
+CameraComponent();
 
 void Start() override;
 void OnEnable() override;
@@ -74,7 +74,6 @@ float nearPlane{};
 float farPlane{};
 Math::Matrix4 projMat;
 
-std::string name;
 H3DNode renderNode;
 H3DRes renderResource;
 int resizeHandle;

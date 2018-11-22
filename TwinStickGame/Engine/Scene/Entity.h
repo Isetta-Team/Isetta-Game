@@ -18,6 +18,7 @@
 #include "Util.h"
 
 namespace Isetta {
+
 class ISETTA_API_DECLARE Entity {
  private:
   enum class EntityAttributes { IS_ACTIVE, NEED_DESTROY, IS_TRANSFORM_DIRTY };
@@ -27,7 +28,7 @@ class ISETTA_API_DECLARE Entity {
 
   std::vector<std::type_index> componentTypes;
   Array<class Component *> components;
-  Transform m_transform;
+  Transform internalTransform;
 
   void OnEnable();
   void GuiUpdate();
@@ -46,13 +47,17 @@ class ISETTA_API_DECLARE Entity {
   void SetAttribute(EntityAttributes attr, bool value);
   bool GetAttribute(EntityAttributes attr) const;
 
+  Entity(const std::string& name, bool entityStatic = false);
+  friend Level;
+  friend class MemoryManager;
+  friend class TemplatePoolAllocator<Entity>;
+
  public:
-  Entity(const std::string &name);
-  Entity(const std::string &name, const bool &entityStatic);
   ~Entity();
 
   Transform *transform{};
 
+  void SetName(std::string_view name) { entityName = name; }
   std::string GetName() const { return entityName; }
   GUID GetEntityId() const { return entityId; }
   std::string GetEntityIdString() const {
@@ -66,6 +71,8 @@ class ISETTA_API_DECLARE Entity {
 
     return std::string(output.data());
   }
+  static Entity* CreateEntity(std::string name, class Entity* parent = nullptr,
+                          bool entityStatic = false);
   static void Destroy(Entity *entity);
   static void DestroyHelper(Entity *entity);
   static void DestroyImmediately(Entity *entity);
@@ -124,8 +131,8 @@ T *Entity::AddComponent(Args &&... args) {
   } else {
     std::type_index typeIndex{typeid(T)};
     if (std::any_of(
-            std::execution::par, Component::excludeComponents().begin(),
-            Component::excludeComponents().end(),
+            std::execution::par, Component::uniqueComponents().begin(),
+            Component::uniqueComponents().end(),
             [typeIndex](std::type_index type) { return type == typeIndex; }) &&
         std::any_of(
             std::execution::par, componentTypes.begin(), componentTypes.end(),

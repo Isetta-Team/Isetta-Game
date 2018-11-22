@@ -21,16 +21,15 @@ void SinglePlayerLevel::OnLevelLoad() {
   // TODO: remove
   Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 50.f, "Neon");
 
-  Entity* cameraEntity{AddEntity("Camera")};
-  CameraComponent* camComp =
-      cameraEntity->AddComponent<CameraComponent, true>("Camera");
+  Entity* cameraEntity = Entity::CreateEntity("Camera");
+  cameraEntity->AddComponent<CameraComponent>();
   cameraEntity->SetTransform(Math::Vector3{0, 5, 10}, Math::Vector3{-15, 0, 0},
                              Math::Vector3::one);
 
-  Entity* score{AddEntity("Score")};
+  Entity* score = Entity::CreateEntity("Score");
   score->AddComponent<Score>();
 
-  Entity* player{AddEntity("Player")};
+  Entity* player = Entity::CreateEntity("Player");
   player->AddComponent<Damageable>(100);
   player->AddComponent<PlayerHealth>();
 }

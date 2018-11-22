@@ -7,6 +7,7 @@
 #include <stack>
 #include <string>
 #include "ISETTA_API.h"
+#include "Core/Memory/TemplatePoolAllocator.h"
 
 #define CREATE_LEVEL(NAME)                                                \
   class NAME : public Isetta::Level, public Isetta::LevelRegistry<NAME> { \
@@ -31,11 +32,16 @@ class ISETTA_API Level {
   void AddComponentToStart(class Component* component);
   void StartComponents();
 
+  class Entity* AddEntity(std::string name, class Entity* parent,
+                          bool entityStatic = false);
+
   void UnloadLevel();
   void Update();
   void GUIUpdate();
   void FixedUpdate();
   void LateUpdate();
+
+  TemplatePoolAllocator<Entity> pool;
 
   friend class Entity;
   friend class EngineLoop;
@@ -59,9 +65,5 @@ class ISETTA_API Level {
 
   virtual void OnLevelLoad() = 0;
   virtual void OnLevelUnload() {}
-
-  class Entity* AddEntity(std::string name, bool entityStatic = false);
-  class Entity* AddEntity(std::string name, class Entity* parent,
-                          bool entityStatic = false);
 };
 }  // namespace Isetta
