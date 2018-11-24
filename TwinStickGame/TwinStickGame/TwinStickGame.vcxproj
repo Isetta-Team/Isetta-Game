@@ -150,17 +150,22 @@
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Gameplay\Damageable.cpp" />
+    <ClCompile Include="Gameplay\Hitscan.cpp" />
     <ClCompile Include="Gameplay\Score.cpp" />
+    <ClCompile Include="Levels\HitscanTestLevel.cpp" />
     <ClCompile Include="Levels\MenuLevel.cpp" />
     <ClCompile Include="Levels\SinglePlayerLevel.cpp" />
     <ClCompile Include="Menu\MainMenu.cpp" />
     <ClCompile Include="Menu\MainMenuDraw.cpp" />
     <ClCompile Include="Player\PlayerController.cpp" />
     <ClCompile Include="Player\PlayerHealth.cpp" />
+    <ClCompile Include="Tools\HitscanTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gameplay\Damageable.h" />
+    <ClInclude Include="Gameplay\Hitscan.h" />
     <ClInclude Include="Gameplay\Score.h" />
+    <ClInclude Include="Levels\HitscanTestLevel.h" />
     <ClInclude Include="Levels\MenuLevel.h" />
     <ClInclude Include="Levels\SinglePlayerLevel.h" />
     <ClInclude Include="Menu\ColorScheme.h" />
@@ -168,6 +173,7 @@
     <ClInclude Include="Menu\MainMenuDraw.h" />
     <ClInclude Include="Player\PlayerController.h" />
     <ClInclude Include="Player\PlayerHealth.h" />
+    <ClInclude Include="Tools\HitscanTest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.cfg" />
