@@ -4,7 +4,6 @@
 #pragma once
 
 #include <list>
-#include <string>
 #include "Core/Config/CVar.h"
 #include "GLFW/glfw3.h"
 #include "Horde3D/Horde3D.h"
@@ -24,7 +23,8 @@ class ISETTA_API_DECLARE RenderModule {
                              "pipelines/forward.pipeline.xml"};
   };
 
-  static void LoadResourceFromDisk(H3DRes resource, std::string errorMessage);
+  static void LoadResourceFromDisk(H3DRes resource, bool isEnginePath,
+                                   const std::string_view errorMessage);
 
   /**
    * \brief The array of animation nodes
@@ -44,7 +44,6 @@ class ISETTA_API_DECLARE RenderModule {
   void ShutDown();
 
   int renderInterface;
-  static std::string resourcePath;
 
   void InitRenderConfig();
   void InitHordeConfig();

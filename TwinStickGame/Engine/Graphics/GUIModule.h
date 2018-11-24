@@ -3,9 +3,6 @@
  */
 #pragma once
 
-#ifndef __  // GLAD must be placed first
-#include <glad/glad.h>
-#endif
 #include <GLFW/glfw3.h>
 
 #include "Core/Color.h"
@@ -63,6 +60,7 @@ class GUIModule {
     CVar<Color> NavWindowingHighlight{"nav_windowing_highlight_style", Color{}};
     CVar<Color> NavWindowingDimBg{"nav_windowing_dim_bg_style", Color{}};
     CVar<Color> ModalWindowDimBg{"modal_window_dim_bg_style", Color{}};
+    CVar<float> EngineFontSize{"engine_font_size", 16.f};
   };
 
  private:

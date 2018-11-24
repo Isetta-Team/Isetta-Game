@@ -2,10 +2,10 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
+#include "Core/Config/CVar.h"
 #include "Core/Math/Matrix4.h"
 #include "Horde3D/Horde3D.h"
 #include "Scene/Component.h"
-#include "Core/Config/CVar.h"
 
 namespace Isetta {
 class Ray;
