@@ -4,7 +4,7 @@
 #pragma once
 #include "Core/Config/CVar.h"
 #include "Core/Math/Matrix4.h"
-#include "Horde3D/Horde3D.h"
+#include "Horde3D/Horde3D/Bindings/C++/Horde3D.h"
 #include "Scene/Component.h"
 
 namespace Isetta {
