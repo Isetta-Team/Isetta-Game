@@ -31,11 +31,11 @@ void MenuLevel::OnLevelLoad() {
   Entity* mainMenu = Entity::Instantiate("MainMenu");
   mainMenu->AddComponent<MainMenu>();
   mainMenu->AddComponent<MainMenuDraw>();
-  mainMenu->AddComponent<AudioSource>(0b000, AudioClip::LoadClip("audio/button.wav"));
+  mainMenu->AddComponent<AudioSource>(0b000, AudioClip::Load("audio/button.wav"));
 
   Entity* manager = Entity::Instantiate("Manager");
   auto bgm = manager->AddComponent<AudioSource>(
-      0b010, AudioClip::LoadClip("audio/bgm/Signal-in-the-Noise.mp3"));
+      0b010, AudioClip::Load("audio/bgm/Signal-in-the-Noise.mp3"));
   // bgm->SetVolume(0.1f);
   // bgm->Play();
 }

@@ -25,6 +25,9 @@
     <Filter Include="Gameplay">
       <UniqueIdentifier>{7de5e1c8-4a25-47f9-956b-4db2edcda3eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{cb056d9d-f7f5-43b2-9bf0-d1de8093887c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -54,6 +57,15 @@
     <ClCompile Include="Gameplay\Score.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\Hitscan.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\HitscanTest.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Levels\HitscanTestLevel.cpp">
+      <Filter>Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -82,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="Gameplay\Score.h">
       <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\Hitscan.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\HitscanTest.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Levels\HitscanTestLevel.h">
+      <Filter>Levels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
