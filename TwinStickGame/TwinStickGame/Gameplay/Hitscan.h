@@ -12,7 +12,8 @@ struct HitscanProps {
   float range = 10;
   float speed = 10;
   int damage = 2;
-  bool piercing = false;
+  bool piercing =
+      false;  // TODO(Caleb): Make piercing not register damage every frame
 };
 
 struct HitscanShot {
@@ -31,9 +32,8 @@ void Update() override;
 HitscanProps properties;
 std::list<HitscanProps> shotProps;
 std::unordered_map<HitscanProps*, int> propsReferenceCounts;
-bool propertiesHaveChanged = true;
+bool propertiesChanged = true;
 
-float cooldown = .1;
 float cooldownTimer = 0;
 std::list<HitscanShot> shots;
 
@@ -41,4 +41,16 @@ public:
 Hitscan() = default;
 Hitscan(float range, float rate, float speed, int damage);
 void Fire(Math::Vector3 origin, Math::Vector3 direction);
+
+float GetRange();
+void SetRange(float r);
+float GetSpeed();
+void SetSpeed(float s);
+int GetDamage();
+void SetDamage(int d);
+bool GetPiercing();
+void SetPiercing(bool p);
+
+float cooldown = .1;
+
 END_COMPONENT(Hitscan, Component)
