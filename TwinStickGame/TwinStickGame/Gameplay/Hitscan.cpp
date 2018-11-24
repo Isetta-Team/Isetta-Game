@@ -16,34 +16,42 @@ Hitscan::Hitscan(float range, float rate, float speed, int damage) {
 }
 
 void Hitscan::Update() {
+#ifdef _DEBUG
+  DebugDraw::Point(Math::Vector3::zero,
+      Color::blue, 8);
+#endif
   float deltaTime = Time::GetDeltaTime();
   cooldownTimer =
       Math::Util::Max(0, cooldownTimer - deltaTime);  // Gotta avoid underflow
 
   RaycastHit hit;
-  for (auto& shot : shots) {
-    if (Collisions::Raycast(shot.ray, &hit, shot.props->range) &&
-        hit.GetDistance() - shot.travel < shot.props->speed * deltaTime) {
-      shots.remove(shot);
+  auto it = shots.begin();
+  while (it != shots.end()) {
+#ifdef _DEBUG
+    DebugDraw::Line(it->ray.GetOrigin() + it->ray.GetDirection() * it->travel,
+                    it->ray.GetOrigin() + it->ray.GetDirection() *
+                                              (it->travel + it->props->speed * deltaTime),
+                    Color::red, 5);
+#endif
+    if (Collisions::Raycast(it->ray, &hit, it->props->range) &&
+        hit.GetDistance() - it->travel < it->props->speed * deltaTime) {
+      it = shots.erase(it);
 
       Damageable* damageable =
           hit.GetCollider()->entity->GetComponent<Damageable>();
       if (damageable) {
-        damageable->DealDamage(shot.props->damage);
+        damageable->DealDamage(it->props->damage);
       }
-    }
-
 #ifdef _DEBUG
-    DebugDraw::Line(
-        shot.ray.GetOrigin() + shot.ray.GetDirection() * shot.travel,
-        shot.ray.GetOrigin() +
-            shot.ray.GetDirection() * (shot.travel + shot.props->speed),
-        Color::red);
+      DebugDraw::Point(hit.GetPoint(), Color::white);
 #endif
-
-    shot.travel += shot.props->speed * deltaTime;
-    if (shot.travel > shot.props->range) {
-      shots.remove(shot);
+    } else {
+      it->travel += it->props->speed * deltaTime;
+      if (it->travel > it->props->range) {
+        it = shots.erase(it);
+      } else {
+        ++it;
+      }
     }
   }
 }
@@ -52,17 +60,17 @@ void Hitscan::Fire(Math::Vector3 origin, Math::Vector3 direction) {
   if (cooldownTimer <= 0) {
     // Generate the shot
     Ray ray(origin, direction);
-    HitscanShot shot = shots.emplace_back(ray);
+    HitscanShot& shot = shots.emplace_back(ray);
 
     // Connect the shot properties to the shot
-    HitscanProps* props;
     if (propertiesHaveChanged) {
-      props = &shotProps.emplace_back(properties);
-      propsReferenceCounts[props] = 0;
+      shot.props = &shotProps.emplace_back(properties);
+      propsReferenceCounts[shot.props] = 0;
+      propertiesHaveChanged = false;
     } else {
-      props = &shotProps.back();
+      shot.props = &shotProps.back();
     }
-    ++propsReferenceCounts[props];
+    ++propsReferenceCounts[shot.props];
 
     // Reset the cooldown
     cooldownTimer = cooldown;

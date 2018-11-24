@@ -12,6 +12,7 @@ void HitscanTest::Start() {
 void HitscanTest::Update() {
   if (Input::IsMouseButtonPressed(MouseButtonCode::MOUSE_LEFT)) {
     hitscan->Fire(Math::Vector3::zero,
-                  Math::Vector3(Input::GetMousePosition().x, 0, Input::GetMousePosition().y));
+                  Math::Vector3((Input::GetMousePosition().x - 960)/960, 0,
+                                (Input::GetMousePosition().y - 540)/540));
   }
 }
