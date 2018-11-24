@@ -46,18 +46,24 @@ void HitscanTest::Update() {
 }
 
 void HitscanTest::GuiUpdate() {
-  GUI::Window(RectTransform{Math::Rect{20, 10, 150, 120}}, "Hitscan", [&]() {
+  GUI::Window(RectTransform{Math::Rect{180, 10, 150, 200}}, "Hitscan", [&]() {
     GUI::TextStyle style{Color::white};
 
     GUI::Text(RectTransform{Math::Rect{5, 5, 50, 5}},
-              Util::StrFormat("Cooldown: %f", hitscan->cooldown), style);
+              Util::StrFormat("Number of Shots: %d", hitscan->GetNumFired()),
+              style);
     GUI::Text(RectTransform{Math::Rect{5, 25, 50, 5}},
-              Util::StrFormat("Range: %.3f", hitscan->GetRange()), style);
+              Util::StrFormat("Number of Props: %d", hitscan->GetNumProps()),
+              style);
     GUI::Text(RectTransform{Math::Rect{5, 45, 50, 5}},
-              Util::StrFormat("Speed: %.3f", hitscan->GetSpeed()), style);
+              Util::StrFormat("Cooldown: %f", hitscan->cooldown), style);
     GUI::Text(RectTransform{Math::Rect{5, 65, 50, 5}},
-              Util::StrFormat("Damage: %d", hitscan->GetDamage()), style);
+              Util::StrFormat("Range: %.3f", hitscan->GetRange()), style);
     GUI::Text(RectTransform{Math::Rect{5, 85, 50, 5}},
+              Util::StrFormat("Speed: %.3f", hitscan->GetSpeed()), style);
+    GUI::Text(RectTransform{Math::Rect{5, 105, 50, 5}},
+              Util::StrFormat("Damage: %d", hitscan->GetDamage()), style);
+    GUI::Text(RectTransform{Math::Rect{5, 125, 50, 5}},
               Util::StrFormat("Piercing: %d", hitscan->GetPiercing()), style);
   });
 }
