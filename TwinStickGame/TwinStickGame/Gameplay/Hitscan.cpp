@@ -17,8 +17,7 @@ Hitscan::Hitscan(float range, float rate, float speed, int damage) {
 
 void Hitscan::Update() {
 #ifdef _DEBUG
-  DebugDraw::Point(Math::Vector3::zero,
-      Color::blue, 8);
+  DebugDraw::Point(Math::Vector3::zero, Color::blue, 8);
 #endif
   float deltaTime = Time::GetDeltaTime();
   cooldownTimer =
@@ -28,14 +27,15 @@ void Hitscan::Update() {
   auto it = shots.begin();
   while (it != shots.end()) {
 #ifdef _DEBUG
-    DebugDraw::Line(it->ray.GetOrigin() + it->ray.GetDirection() * it->travel,
-                    it->ray.GetOrigin() + it->ray.GetDirection() *
-                                              (it->travel + it->props->speed * deltaTime),
-                    Color::red, 5);
+    DebugDraw::Line(
+        it->ray.GetOrigin() + it->ray.GetDirection() * it->travel,
+        it->ray.GetOrigin() + it->ray.GetDirection() *
+                                  (it->travel + it->props->speed * deltaTime),
+        Color::red, 5);
 #endif
     if (Collisions::Raycast(it->ray, &hit, it->props->range) &&
         hit.GetDistance() - it->travel < it->props->speed * deltaTime) {
-      it = shots.erase(it);
+      if (!it->props->piercing) it = shots.erase(it);
 
       Damageable* damageable =
           hit.GetCollider()->entity->GetComponent<Damageable>();
@@ -43,7 +43,7 @@ void Hitscan::Update() {
         damageable->DealDamage(it->props->damage);
       }
 #ifdef _DEBUG
-      DebugDraw::Point(hit.GetPoint(), Color::white);
+      DebugDraw::Point(hit.GetPoint(), Color::white, 5, .5);
 #endif
     } else {
       it->travel += it->props->speed * deltaTime;
@@ -63,10 +63,10 @@ void Hitscan::Fire(Math::Vector3 origin, Math::Vector3 direction) {
     HitscanShot& shot = shots.emplace_back(ray);
 
     // Connect the shot properties to the shot
-    if (propertiesHaveChanged) {
+    if (propertiesChanged) {
       shot.props = &shotProps.emplace_back(properties);
       propsReferenceCounts[shot.props] = 0;
-      propertiesHaveChanged = false;
+      propertiesChanged = false;
     } else {
       shot.props = &shotProps.back();
     }
@@ -75,6 +75,27 @@ void Hitscan::Fire(Math::Vector3 origin, Math::Vector3 direction) {
     // Reset the cooldown
     cooldownTimer = cooldown;
   }
+}
+
+float Hitscan::GetRange() { return properties.range; }
+void Hitscan::SetRange(float r) {
+  properties.range = r;
+  propertiesChanged = true;
+}
+float Hitscan::GetSpeed() { return properties.speed; }
+void Hitscan::SetSpeed(float s) {
+  properties.speed = s;
+  propertiesChanged = true;
+}
+int Hitscan::GetDamage() { return properties.damage; }
+void Hitscan::SetDamage(int d) {
+  properties.damage = d;
+  propertiesChanged = true;
+}
+bool Hitscan::GetPiercing() { return properties.piercing; }
+void Hitscan::SetPiercing(bool p) {
+  properties.piercing = p;
+  propertiesChanged = true;
 }
 
 HitscanShot::HitscanShot(Ray inRay) : ray{inRay} {}

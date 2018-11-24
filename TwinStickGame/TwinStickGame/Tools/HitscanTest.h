@@ -9,6 +9,7 @@ using namespace Isetta;
 BEGIN_COMPONENT(HitscanTest, Component, true)
 void Start() override;
 void Update() override;
+void GuiUpdate() override;
 
 private:
 class Hitscan* hitscan;
