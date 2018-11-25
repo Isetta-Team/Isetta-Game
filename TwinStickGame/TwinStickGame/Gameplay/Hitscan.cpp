@@ -38,6 +38,8 @@ void Hitscan::Update() {
       if (!it->props->piercing) {
         --it->props->refCount;
         it = shots.erase(it);
+      } else {
+        ++it;
       }
 
       Damageable* damageable =
