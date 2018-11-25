@@ -13,7 +13,7 @@
 #include "Scene/Primitive.h"
 
 #include "Gameplay/Hitscan.h"
-#include "Tools/HitscanTest.h"
+#include "Test/HitscanTest.h"
 
 void HitscanTestLevel::OnLevelLoad() {
   Entity* cameraEntity = Entity::Instantiate("Camera");

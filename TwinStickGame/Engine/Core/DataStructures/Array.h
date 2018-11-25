@@ -402,7 +402,7 @@ inline void Array<T>::Assign(std::initializer_list<T> list) {
   if (list.size() > capacity) ReservePow2(list.size());
   size = list.size();
   iterator itThis = begin();
-  for (auto it = list.begin(); it != list.end(); +++it, ++itThis) {
+  for (auto it = list.begin(); it != list.end(); ++it, ++itThis) {
     (*itThis).~T();
     *itThis = *it;
   }
@@ -441,7 +441,7 @@ inline typename Array<T>::iterator Array<T>::Insert(iterator position,
       *it = *itThis;
       (*itThis).~T();
     }
-    if (capacity > 0) MemoryManager::FreeOnFreeList(data);
+    if (capacity > 0) MemoryManager::DeleteArrOnFreeList(capacity, data);
     capacity = inCapacity;
     data = tmpData;
   } else {
@@ -473,7 +473,7 @@ inline typename Array<T>::iterator Array<T>::Insert(iterator position,
       *it = *itThis;
       (*itThis).~T();
     }
-    if (capacity > 0) MemoryManager::FreeOnFreeList(data);
+    if (capacity > 0) MemoryManager::DeleteArrOnFreeList(capacity, data);
     capacity = inCapacity;
     data = tmpData;
   } else {
@@ -505,7 +505,7 @@ inline typename Array<T>::iterator Array<T>::Insert(iterator position,
       *it = *itThis;
       (*itThis).~T();
     }
-    if (capacity > 0) MemoryManager::FreeOnFreeList(data);
+    if (capacity > 0) MemoryManager::DeleteArrOnFreeList(capacity, data);
     capacity = inCapacity;
     data = tmpData;
   } else {
@@ -538,7 +538,7 @@ inline typename Array<T>::iterator Array<T>::Insert(iterator position,
       *it = *itThis;
       (*itThis).~T();
     }
-    if (capacity > 0) MemoryManager::FreeOnFreeList(data);
+    if (capacity > 0) MemoryManager::DeleteArrOnFreeList(capacity, data);
     capacity = inCapacity;
     data = tmpData;
   } else {
@@ -606,7 +606,7 @@ inline typename Array<T>::iterator Array<T>::Emplace(iterator position,
       *it = *itThis;
       (*itThis).~T();
     }
-    if (capacity > 0) MemoryManager::FreeOnFreeList(data);
+    if (capacity > 0) MemoryManager::DeleteArrOnFreeList(capacity, data);
     capacity = inCapacity;
     data = tmpData;
   } else {
@@ -639,7 +639,7 @@ inline typename Array<T>::iterator Array<T>::Emplace(const_iterator position,
       *it = *itThis;
       (*itThis).~T();
     }
-    if (capacity > 0) MemoryManager::FreeOnFreeList(data);
+    if (capacity > 0) MemoryManager::DeleteArrOnFreeList(capacity, data);
     capacity = inCapacity;
     data = tmpData;
   } else {

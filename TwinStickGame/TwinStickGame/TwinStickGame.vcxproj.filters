@@ -60,11 +60,11 @@
     <ClCompile Include="Gameplay\Hitscan.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="Tools\HitscanTest.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
     <ClCompile Include="Levels\HitscanTestLevel.cpp">
       <Filter>Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\HitscanTest.cpp">
+      <Filter>Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,11 +98,11 @@
     <ClInclude Include="Gameplay\Hitscan.h">
       <Filter>Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Tools\HitscanTest.h">
-      <Filter>Test</Filter>
-    </ClInclude>
     <ClInclude Include="Levels\HitscanTestLevel.h">
       <Filter>Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\HitscanTest.h">
+      <Filter>Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

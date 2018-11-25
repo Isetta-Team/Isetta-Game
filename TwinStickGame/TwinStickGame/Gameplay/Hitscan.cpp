@@ -24,7 +24,7 @@ void Hitscan::Update() {
   auto it = shots.begin();
   while (it != shots.end()) {
     // Draw the ray
-#ifdef _DEBUG
+#ifdef _EDITOR
     DebugDraw::Line(
         it->ray.GetOrigin() + it->ray.GetDirection() * it->travel,
         it->ray.GetOrigin() + it->ray.GetDirection() *
@@ -47,7 +47,7 @@ void Hitscan::Update() {
       }
 
       // Draw the collision
-#ifdef _DEBUG
+#ifdef _EDITOR
       DebugDraw::Point(hit.GetPoint(), Color::white, 5, .5);
 #endif
     } else {  // Propogate the shot
