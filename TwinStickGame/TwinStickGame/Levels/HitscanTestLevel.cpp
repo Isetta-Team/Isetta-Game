@@ -4,6 +4,7 @@
 #include "HitscanTestLevel.h"
 #include "Core/IsettaCore.h"
 
+#include "Components/Editor/FrameReporter.h"
 #include "Components/GridComponent.h"
 
 #include "Collisions/BoxCollider.h"
@@ -12,7 +13,7 @@
 #include "Scene/Primitive.h"
 
 #include "Gameplay/Hitscan.h"
-#include "Tools/HitscanTest.h"
+#include "Test/HitscanTest.h"
 
 void HitscanTestLevel::OnLevelLoad() {
   Entity* cameraEntity = Entity::Instantiate("Camera");
@@ -26,6 +27,7 @@ void HitscanTestLevel::OnLevelLoad() {
 
   Entity* debug = Entity::Instantiate("Debug");
   debug->AddComponent<GridComponent>();
+  debug->AddComponent<FrameReporter>()->Open();
 
   Entity* colEnt = Entity::Instantiate("Collider 1");
   colEnt->SetTransform(Math::Vector3(2, 0, 2));
