@@ -6,6 +6,7 @@
 #include "Graphics/Texture.h"
 #include "Scene/Component.h"
 #include <stack>
+#include "Networking/NetworkDiscovery.h"
 
 using namespace Isetta;
 
@@ -17,7 +18,7 @@ BEGIN_COMPONENT(MainMenu, Isetta::Component, true)
 private:
 void Start() override;
 void GuiUpdate() override;
-float btnLerp = 0.0f;
+float btnLerpFactor = 0.0f;
 float btnSpeed = 2.f;
 
 char ipAddress[16]{};
@@ -29,5 +30,6 @@ AudioSource* buttonAudio{nullptr};
 enum class MenuState : U16 { MainMenu = 0, Multiplayer, Host, Client };
 MenuState menuState{MenuState::MainMenu};
 std::stack<Action<>> onCancel;
+NetworkDiscovery* networkDiscovery{nullptr};
 
 END_COMPONENT(MainMenu, Isetta::Component)

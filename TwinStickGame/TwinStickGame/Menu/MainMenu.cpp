@@ -28,6 +28,7 @@ void MainMenu::Start() {
   backgroundTexture = Texture{"images\\Neon-background.png"};
   buttonAudio = entity->GetComponent<AudioSource>();
   buttonAudio->SetVolume(0.25f);
+  networkDiscovery = entity->AddComponent<NetworkDiscovery>();
 }
 
 void MainMenu::GuiUpdate() {
@@ -92,8 +93,10 @@ void MainMenu::GuiUpdate() {
       if (GUI::Button(rect, "HOST", btnStyle)) {
         buttonAudio->Play();
         menuState = MenuState::Host;
+        networkDiscovery->StartBroadcasting("Join me!", 600, 1);
         onCancel.push([this]() {
           this->menuState = MenuState::Multiplayer;
+          this->networkDiscovery->StopBroadcasting();
         });
       }
 
@@ -101,9 +104,17 @@ void MainMenu::GuiUpdate() {
       if (GUI::Button(rect, "CONNECT", btnStyle)) {
         buttonAudio->Play();
         menuState = MenuState::Client;
+        static U64 handle;
+        handle = networkDiscovery->AddOnMessageReceivedListener([](const char* data, const char* ip) {
+          LOG_INFO(Debug::Channel::Networking, "[%s] said {%s}", ip, data);
+        });
+        networkDiscovery->StartListening();
+
         onCancel.push([=]() {
           this->menuState = MenuState::Multiplayer;
-        });
+          this->networkDiscovery->RemoveOnMessageReceivedListener(handle);
+          this->networkDiscovery->StopListening();
+        }); 
       }
 
     } else if (menuState == MenuState::Host) {
@@ -111,14 +122,14 @@ void MainMenu::GuiUpdate() {
 
       rect.rect.y += height + padding;
       GUI::Child(rect, "host_options", [&]() {
-        RectTransform rect{{0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
-        GUI::Text(rect,
+        RectTransform localRect{{0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
+        GUI::Text(localRect,
                   "PLAYERS: ", GUI::TextStyle{Color::white, Consts::MID_SIZE, "Neon"});
 
-        rect.anchor = GUI::Pivot::Right;
-        rect.pivot = GUI::Pivot::Right;
+        localRect.anchor = GUI::Pivot::Right;
+        localRect.pivot = GUI::Pivot::Right;
         const char* players = Util::StrFormat("%d/4", playerCnt);
-        GUI::Text(rect, players, GUI::TextStyle{Color::white, Consts::MID_SIZE, "Neon"});
+        GUI::Text(localRect, players, GUI::TextStyle{Color::white, Consts::MID_SIZE, "Neon"});
       });
     } else if (menuState == MenuState::Client) {
       rect.rect.y += height + padding;
@@ -128,10 +139,10 @@ void MainMenu::GuiUpdate() {
                      FilterIP::Filter);
 
       RectTransform rectCpy{rect};
-      btnLerp += btnSpeed * Time::GetDeltaTime();
-      btnLerp = Math::Util::Min(btnLerp, 1);
+      btnLerpFactor += btnSpeed * Time::GetDeltaTime();
+      btnLerpFactor = Math::Util::Min(btnLerpFactor, 1);
       rectCpy.rect.y =
-          rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerp);
+          rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerpFactor);
       if (GUI::Button(rectCpy, "READY", btnStyle)) buttonAudio->Play();
     }
 
@@ -142,7 +153,7 @@ void MainMenu::GuiUpdate() {
         onCancel.top()();
         onCancel.pop();
       }
-      btnLerp = 0;
+      btnLerpFactor = 0;
     }
   }
   Font::PopFont();
