@@ -33,10 +33,10 @@ void MainMenu::Start() {
   networkDiscovery = entity->AddComponent<NetworkDiscovery>();
 
   NetworkManager::Instance().AddClientConnectedListener(
-      [this](int clientIndex) { this->playerCnt++; });
+      [this](ClientInfo info) { this->playerCnt++; });
 
   NetworkManager::Instance().AddClientDisconnectedListener(
-      [this](int clientIndex) { this->playerCnt--; });
+      [this](ClientInfo info) { this->playerCnt--; });
 }
 
 void MainMenu::Update() {
