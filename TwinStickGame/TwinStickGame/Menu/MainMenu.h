@@ -17,9 +17,13 @@ private:
 float btnLerp = 0.0f;
 float btnSpeed = 2.f;
 
-std::bitset<2> multiplayer = 0;
 char ipAddress[16];
 int playerCnt = 0;
+enum class MenuState : U16 {
+  MainMenu = 0, Multiplayer, Host, Client
+};
+
+MenuState menuState {MenuState::MainMenu};
 
 Texture backgroundTexture;
 AudioSource* buttonAudio;

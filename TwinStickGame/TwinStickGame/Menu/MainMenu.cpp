@@ -66,7 +66,7 @@ void MainMenu::GuiUpdate() {
   };
 
   Font::PushFont("Neon", 50.f);
-  if (multiplayer.count() == 0) {
+  if (menuState == MenuState::MainMenu) {
     if (GUI::Button(rect, "SINGLE PLAYER", btnStyle)) {
       buttonAudio->Play();
       LevelManager::Instance().LoadLevel("SinglePlayerLevel");
@@ -75,7 +75,7 @@ void MainMenu::GuiUpdate() {
     rect.rect.y += height + padding;
     if (GUI::Button(rect, "MULTIPLAYER", btnStyle)) {
       buttonAudio->Play();
-      multiplayer.set(0, true);
+      menuState = MenuState::Multiplayer;
     }
 
     rect.rect.y += height + padding;
@@ -84,18 +84,18 @@ void MainMenu::GuiUpdate() {
       Application::Exit();
     }
   } else {
-    if (!multiplayer.test(1)) {
+    if (menuState == MenuState::Multiplayer) {
       if (GUI::Button(rect, "HOST", btnStyle)) {
         buttonAudio->Play();
-        multiplayer.flip();
+        menuState = MenuState::Host;
       }
 
       rect.rect.y += height + padding;
       if (GUI::Button(rect, "CONNECT", btnStyle)) {
         buttonAudio->Play();
-        multiplayer.set(1, true);
+        menuState = MenuState::Client;
       }
-    } else if (!multiplayer.test(0)) {
+    } else if (menuState == MenuState::Host) {
       if (GUI::Button(rect, "READY", btnStyle)) buttonAudio->Play();
 
       rect.rect.y += height + padding;
@@ -109,7 +109,7 @@ void MainMenu::GuiUpdate() {
         const char* players = Util::StrFormat("%d/4", playerCnt);
         GUI::Text(rect, players, GUI::TextStyle{Color::white, 50.f, "Neon"});
       });
-    } else if (multiplayer.test(1)) {
+    } else if (menuState == MenuState::Client) {
       rect.rect.y += height + padding;
       GUI::InputText(rect, "IP:", ipAddress, sizeof(ipAddress), ipStyle,
                      GUI::InputTextFlags::CallbackCharFilter |
@@ -126,8 +126,7 @@ void MainMenu::GuiUpdate() {
     rect.rect.y += height + padding;
     if (GUI::Button(rect, "CANCEL", btnStyle)) {
       buttonAudio->Play();
-      multiplayer.set(0, multiplayer[1]);
-      multiplayer.set(1, false);
+      menuState = MenuState::MainMenu;
       btnLerp = 0;
     }
   }

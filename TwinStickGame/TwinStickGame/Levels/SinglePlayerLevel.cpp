@@ -13,6 +13,7 @@
 #include "Gameplay/Damageable.h"
 #include "Gameplay/Score.h"
 #include "Player/PlayerHealth.h"
+#include <Input/Input.h>
 
 using namespace Isetta;
 using CameraProperty = CameraComponent::Property;
@@ -32,4 +33,8 @@ void SinglePlayerLevel::OnLevelLoad() {
   Entity* player = Entity::Instantiate("Player");
   player->AddComponent<Damageable>(100);
   player->AddComponent<PlayerHealth>();
+
+  Input::RegisterKeyPressCallback(KeyCode::ESCAPE, []() {
+    Application::Exit();
+  });
 }
