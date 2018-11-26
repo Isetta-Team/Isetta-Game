@@ -13,13 +13,15 @@
 #include "Gameplay/Damageable.h"
 #include "Gameplay/Score.h"
 #include "Player/PlayerHealth.h"
+#include <Input/Input.h>
+#include "Consts.h"
 
 using namespace Isetta;
 using CameraProperty = CameraComponent::Property;
 
 void SinglePlayerLevel::OnLevelLoad() {
   // TODO: remove
-  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 50.f, "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::MID_SIZE, "Neon");
 
   Entity* cameraEntity = Entity::Instantiate("Camera");
   cameraEntity->AddComponent<CameraComponent>();
@@ -32,4 +34,8 @@ void SinglePlayerLevel::OnLevelLoad() {
   Entity* player = Entity::Instantiate("Player");
   player->AddComponent<Damageable>(100);
   player->AddComponent<PlayerHealth>();
+
+  Input::RegisterKeyPressCallback(KeyCode::ESCAPE, []() {
+    Application::Exit();
+  });
 }

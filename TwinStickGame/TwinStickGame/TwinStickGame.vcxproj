@@ -131,7 +131,8 @@
       <AdditionalDependencies>$(SolutionDir)Engine\Build\$(Configuration)\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"</Command>
+      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"
+XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -192,7 +193,8 @@
       <AdditionalDependencies>$(SolutionDir)Engine\Build\$(Configuration)\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"</Command>
+      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"
+XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseEditor|x64'">
@@ -213,7 +215,8 @@
       <AdditionalDependencies>$(SolutionDir)Engine\Build\$(Configuration)\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"</Command>
+      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"
+XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -231,6 +234,7 @@
     <ClCompile Include="Test\HitscanTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Consts.h" />
     <ClInclude Include="Gameplay\Damageable.h" />
     <ClInclude Include="Gameplay\Hitscan.h" />
     <ClInclude Include="Gameplay\Score.h" />
