@@ -21,6 +21,7 @@
 // GAME
 #include "ColorScheme.h"
 #include "Consts.h"
+#include "Gameplay/GameManager.h"
 #include "Gameplay/Score.h"
 
 using namespace Isetta;
@@ -108,8 +109,9 @@ void MainMenu::GuiUpdate() {
       if (GUI::Button(rect, "HOST", btnStyle)) {
         buttonAudio->Play();
         menuState = MenuState::Host;
-        networkDiscovery->StartBroadcasting(SystemInfo::GetMachineName(), 600,
-                                            broadcastInterval);
+        networkDiscovery->StartBroadcasting(
+            GameManager::gameConfig.playerName.GetVal(), 600,
+            broadcastInterval);
 
         NetworkManager::Instance().StartHost(SystemInfo::GetIpAddressWithPrefix(
             CONFIG_VAL(networkConfig.ipPrefix)));
