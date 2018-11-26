@@ -74,11 +74,7 @@ void MainMenu::GuiUpdate() {
 
   const GUI::InputStyle ipStyle{sunsetLightAlpha, sunsetLightAlpha,
                                 sunsetLightAlpha, Color::white};
-  const GUI::TextStyle textStyle{
-      GUI::TextStyle{Color::white, Consts::MID_SIZE, "Neon"}};
-
-  const GUI::TextStyle smallTextStyle{
-      GUI::TextStyle{Color::white, Consts::SMALL_SIZE, "Neon"}};
+  const GUI::TextStyle textStyle{Color::white, Consts::MID_SIZE, "Neon"};
 
   struct FilterIP {
     static int Filter(InputTextCallbackData* data) {
@@ -93,15 +89,15 @@ void MainMenu::GuiUpdate() {
       buttonAudio->Play();
       LevelManager::Instance().LoadLevel("SinglePlayerLevel");
     }
-
     rect.rect.y += height + padding;
+
     if (GUI::Button(rect, "MULTIPLAYER", btnStyle)) {
       buttonAudio->Play();
       menuState = MenuState::Multiplayer;
       onCancel.push([this]() { this->menuState = MenuState::MainMenu; });
     }
-
     rect.rect.y += height + padding;
+
     if (GUI::Button(rect, "EXIT", btnStyle)) {
       buttonAudio->Play();
       Application::Exit();
@@ -169,14 +165,13 @@ void MainMenu::GuiUpdate() {
         name += "\'S GAME";
 
         GUI::Child(rect, "Host", [&]() {
-          RectTransform localRect{
-              {0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
+          RectTransform localRect{Math::Rect{0, 0, 300, 60}, GUI::Pivot::Left,
+                                  GUI::Pivot::Left};
+          GUI::Text(localRect, name, textStyle);
 
-          GUI::Text(localRect, name, smallTextStyle);
-
-          localRect.anchor = GUI::Pivot::Right;
-          localRect.pivot = GUI::Pivot::Right;
-          localRect.rect.width = 200;
+          localRect.anchor = GUI::Pivot::TopRight;
+          localRect.pivot = GUI::Pivot::TopRight;
+          localRect.rect.width = 130;
 
           if (GUI::Button(localRect, "JOIN!", btnStyle)) {
             buttonAudio->Play();

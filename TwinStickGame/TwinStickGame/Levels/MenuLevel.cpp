@@ -15,6 +15,7 @@
 #include "Menu/MainMenu.h"
 #include "Menu/MainMenuDraw.h"
 #include "Consts.h"
+#include "Gameplay/GameManager.h"
 
 using namespace Isetta;
 
@@ -35,9 +36,10 @@ void MenuLevel::OnLevelLoad() {
   mainMenu->AddComponent<AudioSource>(
       0b000, AudioClip::Load("audio/button.wav", "button-click"));
 
-  Entity* manager = Entity::Instantiate("Manager");
+  Entity* manager = Entity::Instantiate("Game Manager");
   auto bgm = manager->AddComponent<AudioSource>(
       0b010, AudioClip::Load("audio/bgm/Signal-in-the-Noise.mp3", "bgm"));
   bgm->SetVolume(0.4f);
   bgm->Play();
+  manager->AddComponent<GameManager>();
 }

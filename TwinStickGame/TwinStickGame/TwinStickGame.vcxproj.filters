@@ -66,6 +66,9 @@
     <ClCompile Include="Test\HitscanTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\GameManager.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Consts.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\GameManager.h">
+      <Filter>Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
