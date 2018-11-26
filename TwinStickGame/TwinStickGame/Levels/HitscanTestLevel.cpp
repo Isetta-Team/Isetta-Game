@@ -4,6 +4,7 @@
 #include "HitscanTestLevel.h"
 #include "Core/IsettaCore.h"
 
+#include "Components/Editor/EditorComponent.h"
 #include "Components/Editor/FrameReporter.h"
 #include "Components/GridComponent.h"
 
@@ -28,6 +29,7 @@ void HitscanTestLevel::OnLevelLoad() {
   Entity* debug = Entity::Instantiate("Debug");
   debug->AddComponent<GridComponent>();
   debug->AddComponent<FrameReporter>()->Open();
+  debug->AddComponent<EditorComponent>();
 
   Entity* colEnt = Entity::Instantiate("Collider 1");
   colEnt->SetTransform(Math::Vector3(2, 0, 2));

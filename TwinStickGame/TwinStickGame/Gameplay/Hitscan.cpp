@@ -7,6 +7,7 @@
 #include "Collisions/RaycastHit.h"
 #include "Core/IsettaCore.h"
 #include "Gameplay/Damageable.h"
+#include "brofiler/ProfilerCore/Brofiler.h"
 
 Hitscan::Hitscan(float range, float rate, float speed, int damage) {
   properties.range = range;
@@ -20,7 +21,7 @@ void Hitscan::Update() {
   cooldownTimer =
       Math::Util::Max(0, cooldownTimer - deltaTime);  // Gotta avoid underflow
 
-  RaycastHit hit;
+  Array<RaycastHit> hits;
   auto it = shots.begin();
   while (it != shots.end()) {
     // Draw the ray
@@ -33,34 +34,46 @@ void Hitscan::Update() {
 #endif
 
     // If the ray hits at the appropriate range, it's a hit
-    if (Collisions::Raycast(it->ray, &hit, it->props->range) &&
-        hit.GetDistance() - it->travel < it->props->speed * deltaTime) {
-      if (!it->props->piercing) {
-        --it->props->refCount;
-        it = shots.erase(it);
-      } else {
-        ++it;
+    float closestDist = INFINITY;
+    RaycastHit* closestHit = nullptr;
+    hits = Collisions::RaycastAll(
+        it->ray, it->travel + it->props->speed * deltaTime);
+    for (auto& hit : hits) {
+      if (hit.GetDistance() - it->travel >= 0 &&
+          hit.GetDistance() - it->travel < closestDist) {
+        closestDist = hit.GetDistance() - it->travel;
+        closestHit = &hit;
       }
+    }
 
+    if (closestHit) {
       Damageable* damageable =
-          hit.GetCollider()->entity->GetComponent<Damageable>();
+          closestHit->GetCollider()->entity->GetComponent<Damageable>();
       if (damageable) {
         damageable->DealDamage(it->props->damage);
       }
 
       // Draw the collision
 #ifdef _EDITOR
-      DebugDraw::Point(hit.GetPoint(), Color::white, 5, .5);
+      DebugDraw::Point(closestHit->GetPoint(), Color::white, 5, .5);
 #endif
-    } else {  // Propogate the shot
-      it->travel += it->props->speed * deltaTime;
-      if (it->travel > it->props->range) {
+
+      if (!it->props->piercing) {
         --it->props->refCount;
         it = shots.erase(it);
-      } else {
-        ++it;
+        continue;
       }
     }
+
+    it->travel += it->props->speed * deltaTime;
+    if (it->travel > it->props->range) {
+      --it->props->refCount;
+      it = shots.erase(it);
+    } else {
+      ++it;
+    }
+
+    hits.Clear();
   }
 
   // Clear out all of the unused properties objects
