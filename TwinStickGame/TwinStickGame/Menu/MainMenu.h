@@ -30,7 +30,7 @@ int playerCnt = 0;
 Texture backgroundTexture;
 AudioSource* buttonAudio{nullptr};
 
-enum class MenuState : U16 { MainMenu = 0, Multiplayer, Host, Client };
+enum class MenuState : U16 { MainMenu = 0, Multiplayer, Host, Client, InRoom};
 MenuState menuState{MenuState::MainMenu};
 std::stack<Action<>> onCancel;
 NetworkDiscovery* networkDiscovery{nullptr};

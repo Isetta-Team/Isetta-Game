@@ -71,10 +71,14 @@ void MainMenu::GuiUpdate() {
   const Color sunsetLightAlpha{ColorScheme::SUNSET_LIGHT.r,
                                ColorScheme::SUNSET_LIGHT.g,
                                ColorScheme::SUNSET_LIGHT.b, 0.25f};
+
   const GUI::InputStyle ipStyle{sunsetLightAlpha, sunsetLightAlpha,
                                 sunsetLightAlpha, Color::white};
   const GUI::TextStyle textStyle{
       GUI::TextStyle{Color::white, Consts::MID_SIZE, "Neon"}};
+
+  const GUI::TextStyle smallTextStyle{
+      GUI::TextStyle{Color::white, Consts::SMALL_SIZE, "Neon"}};
 
   struct FilterIP {
     static int Filter(InputTextCallbackData* data) {
@@ -168,14 +172,20 @@ void MainMenu::GuiUpdate() {
           RectTransform localRect{
               {0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
 
-          GUI::Text(localRect, name, textStyle);
+          GUI::Text(localRect, name, smallTextStyle);
 
           localRect.anchor = GUI::Pivot::Right;
           localRect.pivot = GUI::Pivot::Right;
           localRect.rect.width = 200;
 
           if (GUI::Button(localRect, "JOIN!", btnStyle)) {
+            buttonAudio->Play();
             NetworkManager::Instance().StartClient(ip);
+            menuState = MenuState::InRoom;
+            onCancel.push([this]() {
+              this->menuState = MenuState::Client;
+              NetworkManager::Instance().StopClient();
+            });
           }
         });
         rect.rect.y += height + padding;
@@ -193,6 +203,9 @@ void MainMenu::GuiUpdate() {
       //     rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerpFactor);
 
       // if (GUI::Button(rectCpy, "READY", btnStyle)) buttonAudio->Play();
+    } else if (menuState == MenuState::InRoom) {
+      GUI::Text(rect, "WAITING FOR START", textStyle);
+      rect.rect.y += height + padding;
     }
 
     rect.rect.y += height + padding;
