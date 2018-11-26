@@ -6,9 +6,10 @@
 #include <functional>
 #include "Core/Config/CVar.h"
 #include "Core/DataStructures/RingBuffer.h"
-#include "Networking/Messages.h"
 #include "Core/Time/Clock.h"
+#include "Networking/Messages.h"
 #include "yojimbo/yojimbo.h"
+#include "Core/DataStructures/Delegate.h"
 
 namespace Isetta {
 /**
@@ -23,6 +24,7 @@ class NetworkingModule {
    *
    */
   struct NetworkConfig {
+    CVarString ipPrefix{"ip_prefix", "128.2"};
     /// Default client IP address
     CVarString defaultClientIP{"default_client_ip", "0.0.0.0"};
     /// Default server IP address
@@ -53,6 +55,11 @@ class NetworkingModule {
 
  private:
   static CustomAdapter NetworkAdapter;
+
+  Delegate<> onConnectedToServer;
+  Delegate<> onDisconnectedFromServer;
+  Delegate<int> onClientConnected;
+  Delegate<int> onClientDisconnected;
 
   /// Keeps time for the client and server. Mainly used for timeouts.
   Clock clock;
@@ -85,8 +92,11 @@ class NetworkingModule {
   /// update.
   RingBuffer<yojimbo::Message*>* serverSendBufferArray;
 
-  // Constructors
+  // State monitoring
+  bool lastFrameClientRunning;
+  bool* lastFrameClientConnected;
 
+  // Constructors
   NetworkingModule() = default;
   ~NetworkingModule() = default;
 
@@ -118,7 +128,7 @@ class NetworkingModule {
    * @param message Pointer to a Message object that should have been created by
    * a MessageFactory.
    */
-  void AddClientToServerMessage(yojimbo::Message* message);
+  void AddClientToServerMessage(yojimbo::Message* message) const;
   /**
    * @brief Adds the given Message into the local Server's send queue to the
    * given client.
@@ -143,26 +153,26 @@ class NetworkingModule {
    * @brief Sends the local Client's queued messages.
    *
    */
-  void SendClientToServerMessages();
+  void SendClientToServerMessages() const;
   /**
    * @brief Sends the local Server's queued messages for the given client.
    *
    * @param clientIdx Index of the client who will receive the sent messages.
    */
-  void SendServerToClientMessages(int clientIdx);
+  void SendServerToClientMessages(int clientIdx) const;
   /**
    * @brief Receives the remote Client's messages as packets, constructs them
    * into Message objects, then handles them depending on their type and data.
    *
    * @param clientIdx Index of the client who sent the received messages.
    */
-  void ProcessClientToServerMessages(int clientIdx);
+  void ProcessClientToServerMessages(int clientIdx) const;
   /**
    * @brief Receives the remote Server's messages as packets, constructs them
    * into Message objects, then handles them depending on their type and data.
    *
    */
-  void ProcessServerToClientMessages();
+  void ProcessServerToClientMessages() const;
 
   /**
    * @brief Attempts to connect the local Client to a server at the given
@@ -182,7 +192,7 @@ class NetworkingModule {
    * exception if the Client is not already connected to a server.
    *
    */
-  void Disconnect();
+  void Disconnect() const;
 
   /**
    * @brief Initializes the local Server object with the given address and port.
@@ -198,8 +208,15 @@ class NetworkingModule {
    *
    */
   void CloseServer();
+  bool IsClient() const;
+  bool IsHost() const;
+  bool IsServer() const;
+  
+  bool IsClientRunning() const;
+  bool IsServerRunning() const;
+  bool IsClientConnected(int clientIndex) const;
 
-  // Other
+  void RegisterBuiltinCallbacks();
 
   friend class NetworkManager;
   friend class EngineLoop;
