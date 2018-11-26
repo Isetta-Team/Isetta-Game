@@ -13,6 +13,7 @@
 
 // GAME
 #include "Gameplay/Damageable.h"
+#include "Consts.h"
 
 using namespace Isetta;
 
@@ -30,7 +31,7 @@ void PlayerHealth::GuiUpdate() {
   const float scale = 3.f;
   RectTransform rect{{30, 45, 0, 0}};
   rect.pivot = GUI::Pivot::Left;
-  GUI::Text(rect, "Health:", GUI::TextStyle{50.f, "Neon"});
+  GUI::Text(rect, "Health:", GUI::TextStyle{Consts::MID_SIZE, "Neon"});
   rect.pivot = GUI::Pivot::Left;
   rect.rect.x += 150.f;
   rect.rect.width = scale * health->GetMaxHealth();

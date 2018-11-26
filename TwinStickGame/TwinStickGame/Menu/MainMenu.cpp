@@ -20,6 +20,7 @@
 // GAME
 #include "ColorScheme.h"
 #include "Gameplay/Score.h"
+#include "Consts.h"
 
 using namespace Isetta;
 
@@ -30,7 +31,6 @@ void MainMenu::Start() {
 }
 
 void MainMenu::GuiUpdate() {
-  ;
   GUI::Image(
       RectTransform{
           {0, -325, 2.f * static_cast<float>(backgroundTexture.GetWidth()),
@@ -41,7 +41,7 @@ void MainMenu::GuiUpdate() {
 
   RectTransform rect{{0, -100, 0, 0}, GUI::Pivot::Center, GUI::Pivot::Center};
   GUI::Text(rect, "GAME NAME",
-            GUI::TextStyle{ColorScheme::NEON_BLUE, 100.f, "Neon"});
+            GUI::TextStyle{ColorScheme::NEON_BLUE, Consts::TITLE_SIZE, "Neon"});
 
   const float width = 500.f, height = 75.f, padding = 25.f;
   rect.rect.y = 0.f;
@@ -65,7 +65,7 @@ void MainMenu::GuiUpdate() {
     }
   };
 
-  Font::PushFont("Neon", 50.f);
+  Font::PushFont("Neon", Consts::MID_SIZE);
   if (menuState == MenuState::MainMenu) {
     if (GUI::Button(rect, "SINGLE PLAYER", btnStyle)) {
       buttonAudio->Play();
@@ -76,6 +76,9 @@ void MainMenu::GuiUpdate() {
     if (GUI::Button(rect, "MULTIPLAYER", btnStyle)) {
       buttonAudio->Play();
       menuState = MenuState::Multiplayer;
+      onCancel.push([this]() {
+        this->menuState = MenuState::MainMenu;
+      });
     }
 
     rect.rect.y += height + padding;
@@ -83,18 +86,26 @@ void MainMenu::GuiUpdate() {
       buttonAudio->Play();
       Application::Exit();
     }
+
   } else {
     if (menuState == MenuState::Multiplayer) {
       if (GUI::Button(rect, "HOST", btnStyle)) {
         buttonAudio->Play();
         menuState = MenuState::Host;
+        onCancel.push([this]() {
+          this->menuState = MenuState::Multiplayer;
+        });
       }
 
       rect.rect.y += height + padding;
       if (GUI::Button(rect, "CONNECT", btnStyle)) {
         buttonAudio->Play();
         menuState = MenuState::Client;
+        onCancel.push([=]() {
+          this->menuState = MenuState::Multiplayer;
+        });
       }
+
     } else if (menuState == MenuState::Host) {
       if (GUI::Button(rect, "READY", btnStyle)) buttonAudio->Play();
 
@@ -102,12 +113,12 @@ void MainMenu::GuiUpdate() {
       GUI::Child(rect, "host_options", [&]() {
         RectTransform rect{{0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
         GUI::Text(rect,
-                  "PLAYERS: ", GUI::TextStyle{Color::white, 50.f, "Neon"});
+                  "PLAYERS: ", GUI::TextStyle{Color::white, Consts::MID_SIZE, "Neon"});
 
         rect.anchor = GUI::Pivot::Right;
         rect.pivot = GUI::Pivot::Right;
         const char* players = Util::StrFormat("%d/4", playerCnt);
-        GUI::Text(rect, players, GUI::TextStyle{Color::white, 50.f, "Neon"});
+        GUI::Text(rect, players, GUI::TextStyle{Color::white, Consts::MID_SIZE, "Neon"});
       });
     } else if (menuState == MenuState::Client) {
       rect.rect.y += height + padding;
@@ -123,10 +134,14 @@ void MainMenu::GuiUpdate() {
           rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerp);
       if (GUI::Button(rectCpy, "READY", btnStyle)) buttonAudio->Play();
     }
+
     rect.rect.y += height + padding;
     if (GUI::Button(rect, "CANCEL", btnStyle)) {
       buttonAudio->Play();
-      menuState = MenuState::MainMenu;
+      if (!onCancel.empty()) {
+        onCancel.top()();
+        onCancel.pop();
+      }
       btnLerp = 0;
     }
   }

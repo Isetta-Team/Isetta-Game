@@ -14,13 +14,14 @@
 #include "Gameplay/Score.h"
 #include "Player/PlayerHealth.h"
 #include <Input/Input.h>
+#include "Consts.h"
 
 using namespace Isetta;
 using CameraProperty = CameraComponent::Property;
 
 void SinglePlayerLevel::OnLevelLoad() {
   // TODO: remove
-  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", 50.f, "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::MID_SIZE, "Neon");
 
   Entity* cameraEntity = Entity::Instantiate("Camera");
   cameraEntity->AddComponent<CameraComponent>();

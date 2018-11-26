@@ -5,6 +5,7 @@
 #include "Core/Math/Vector3.h"
 #include "Graphics/Texture.h"
 #include "Scene/Component.h"
+#include <stack>
 
 using namespace Isetta;
 
@@ -14,20 +15,19 @@ class AudioSource;
 
 BEGIN_COMPONENT(MainMenu, Isetta::Component, true)
 private:
+void Start() override;
+void GuiUpdate() override;
 float btnLerp = 0.0f;
 float btnSpeed = 2.f;
 
-char ipAddress[16];
+char ipAddress[16]{};
 int playerCnt = 0;
-enum class MenuState : U16 {
-  MainMenu = 0, Multiplayer, Host, Client
-};
-
-MenuState menuState {MenuState::MainMenu};
 
 Texture backgroundTexture;
-AudioSource* buttonAudio;
+AudioSource* buttonAudio{nullptr};
 
-void Start() override;
-void GuiUpdate() override;
+enum class MenuState : U16 { MainMenu = 0, Multiplayer, Host, Client };
+MenuState menuState{MenuState::MainMenu};
+std::stack<Action<>> onCancel;
+
 END_COMPONENT(MainMenu, Isetta::Component)
