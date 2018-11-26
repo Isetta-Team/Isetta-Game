@@ -111,14 +111,13 @@ void MainMenu::GuiUpdate() {
         networkDiscovery->StartBroadcasting(SystemInfo::GetMachineName(), 600,
                                             broadcastInterval);
 
-        NetworkManager::Instance().StartServer(
-            SystemInfo::GetIpAddressWithPrefix(
-                CONFIG_VAL(networkConfig.ipPrefix)));
+        NetworkManager::Instance().StartHost(SystemInfo::GetIpAddressWithPrefix(
+            CONFIG_VAL(networkConfig.ipPrefix)));
 
         onCancel.push([this]() {
           this->menuState = MenuState::Multiplayer;
           this->networkDiscovery->StopBroadcasting();
-          NetworkManager::Instance().StopServer();
+          NetworkManager::Instance().StopHost();
         });
       }
 
@@ -130,7 +129,6 @@ void MainMenu::GuiUpdate() {
         handle = networkDiscovery->AddOnMessageReceivedListener(
             [this](const char* data, const char* ip) {
               this->OnMessageReceived(data, ip);
-              LOG_INFO(Debug::Channel::Networking, "[%s] said {%s}", ip, data);
             });
         networkDiscovery->StartListening();
 
@@ -143,44 +141,43 @@ void MainMenu::GuiUpdate() {
 
     } else if (menuState == MenuState::Host) {
       if (GUI::Button(rect, "READY", btnStyle)) buttonAudio->Play();
-
       rect.rect.y += height + padding;
+
       GUI::Child(rect, "host_options", [&]() {
         RectTransform localRect{
             {0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
+        GUI::Text(localRect, "PLAYERS: ", textStyle);
 
-        if (playerCnt == 0) {
-          GUI::Text(localRect, "WAITING FOR PLAYERS: ", textStyle);
-        } else {
-          GUI::Text(localRect, "PLAYERS: ", textStyle);
-
-          localRect.anchor = GUI::Pivot::Right;
-          localRect.pivot = GUI::Pivot::Right;
-          const char* players = Util::StrFormat("%d/4", playerCnt);
-          GUI::Text(localRect, players, textStyle);
-        }
+        localRect.anchor = GUI::Pivot::Right;
+        localRect.pivot = GUI::Pivot::Right;
+        const char* players = Util::StrFormat("%d/4", playerCnt);
+        GUI::Text(localRect, players, textStyle);
       });
 
     } else if (menuState == MenuState::Client) {
       int count = 0;
+      rect.rect.y += height + padding;
+
       for (auto& host : availableHosts) {
         if (host.second.remainTime <= 0.f) continue;
         const char* ip = host.second.ip.c_str();
-        const char* name = (host.second.name + "'S GAME").c_str();
-        static float textWidth = 300.f;
-        GUI::Text(RectTransform{{rect.rect.x, rect.rect.y, textWidth - 5,
-                                 rect.rect.height},
-                                GUI::Pivot::Center,
-                                GUI::Pivot::Center},
-                  name, textStyle);
-        if (GUI::Button(RectTransform{{rect.rect.x + textWidth + 5, rect.rect.y,
-                                       rect.rect.width - textWidth - 5,
-                                       rect.rect.height},
-                                      GUI::Pivot::Center,
-                                      GUI::Pivot::Center},
-                        "JOIN!", btnStyle)) {
-          NetworkManager::Instance().StartClient(ip);
-        }
+        std::string name = host.second.name;
+        name += "\'S GAME";
+
+        GUI::Child(rect, "Host", [&]() {
+          RectTransform localRect{
+              {0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
+
+          GUI::Text(localRect, name, textStyle);
+
+          localRect.anchor = GUI::Pivot::Right;
+          localRect.pivot = GUI::Pivot::Right;
+          localRect.rect.width = 200;
+
+          if (GUI::Button(localRect, "JOIN!", btnStyle)) {
+            NetworkManager::Instance().StartClient(ip);
+          }
+        });
         rect.rect.y += height + padding;
         count++;
       }
@@ -218,6 +215,10 @@ void MainMenu::OnMessageReceived(const char* data, const char* ip) {
     info.remainTime = broadcastInterval + 0.1f;
     host->second = info;
   } else {
-    availableHosts.insert({SID(ip), {ip, data, broadcastInterval + 0.1f}});
+    HostInfo info;
+    info.ip = ip;
+    info.name = data;
+    info.remainTime = broadcastInterval + 0.1f;
+    availableHosts.insert({SID(ip), info});
   }
 }
