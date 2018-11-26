@@ -15,5 +15,4 @@ void GameManager::Awake() {
 }
 
 void GameManager::Update() {
-  LOG_INFO(Debug::Channel::Gameplay, "Name: %s", gameConfig.playerName.GetVal().c_str());
 }
