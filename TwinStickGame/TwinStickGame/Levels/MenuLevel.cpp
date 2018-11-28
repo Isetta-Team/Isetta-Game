@@ -12,17 +12,20 @@
 
 // GAME
 #include <Audio/AudioClip.h>
-#include "Menu/MainMenu.h"
-#include "Menu/MainMenuDraw.h"
 #include "Consts.h"
 #include "Gameplay/GameManager.h"
+#include "Menu/MainMenu.h"
+#include "Menu/MainMenuDraw.h"
 
 using namespace Isetta;
 
 void MenuLevel::OnLevelLoad() {
-  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::SMALL_SIZE, "Neon");
-  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::MID_SIZE, "Neon");
-  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::TITLE_SIZE, "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::SMALL_SIZE,
+                        "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::MID_SIZE,
+                        "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::TITLE_SIZE,
+                        "Neon");
 
   Entity* cameraEntity = Entity::Instantiate("Camera");
   cameraEntity->AddComponent<CameraComponent>();

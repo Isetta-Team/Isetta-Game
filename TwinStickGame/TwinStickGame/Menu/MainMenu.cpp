@@ -13,6 +13,7 @@
 #include "Graphics/Font.h"
 #include "Graphics/GUI.h"
 #include "Graphics/RectTransform.h"
+#include "Networking/NetworkDiscovery.h"
 #include "Scene/Entity.h"
 #include "Scene/LevelManager.h"
 #include "Util.h"
@@ -142,13 +143,12 @@ void MainMenu::GuiUpdate() {
       }
 
     } else if (menuState == MenuState::Host) {
-      if (GUI::Button(rect, "READY", btnStyle)) buttonAudio->Play();
       rect.rect.y += height + padding;
 
       GUI::Child(rect, "host_options", [&]() {
         RectTransform localRect{
             {0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
-        GUI::Text(localRect, "PLAYERS: ", textStyle);
+        GUI::Text(localRect, "Players: ", textStyle);
 
         localRect.anchor = GUI::Pivot::Right;
         localRect.pivot = GUI::Pivot::Right;
@@ -156,50 +156,61 @@ void MainMenu::GuiUpdate() {
         GUI::Text(localRect, players, textStyle);
       });
 
+      RectTransform rectCpy{rect};
+      // btnLerpFactor += btnSpeed * Time::GetDeltaTime();
+      btnLerpFactor = Math::Util::Min(btnLerpFactor, 1);
+      rectCpy.rect.y =
+          rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerpFactor);
+      GUI::Child(rectCpy, "host_ready", [&]() {
+        RectTransform localRect{{0, 0, rect.rect.width, rect.rect.height}};
+        if (GUI::Button(localRect, "READY", btnStyle)) buttonAudio->Play();
+      });
     } else if (menuState == MenuState::Client) {
-      int count = 0;
-      rect.rect.y += height + padding;
+      int actualHosts = 0;
+      RectTransform rectCpy{rect};
+      rectCpy.rect.y += height + 10.f;
+      rectCpy.rect.width -= padding;
+      rectCpy.rect.height = 2 * height - 10.f;
+      GUI::Child(rectCpy, "lobbies", [&]() {
+        for (auto& host : availableHosts) {
+          if (host.second.remainTime <= 0.f) continue;
+          const char* ip = host.second.ip.c_str();
+          std::string name = host.second.name;
+          name += "\'s Game";
 
-      for (auto& host : availableHosts) {
-        if (host.second.remainTime <= 0.f) continue;
-        const char* ip = host.second.ip.c_str();
-        std::string name = host.second.name;
-        name += "\'S GAME";
-
-        GUI::Child(rect, "Host", [&]() {
-          RectTransform localRect{Math::Rect{0, 0, 300, 60}, GUI::Pivot::Left,
-                                  GUI::Pivot::Left};
+          const float btnHeight = 60.f;
+          RectTransform localRect{
+              Math::Rect{0, actualHosts * (btnHeight + 10) + 10, 0, 0},
+              GUI::Pivot::TopLeft, GUI::Pivot::TopLeft};
           GUI::Text(localRect, name, textStyle);
 
           localRect.anchor = GUI::Pivot::TopRight;
           localRect.pivot = GUI::Pivot::TopRight;
+          localRect.rect.y -= 5;
           localRect.rect.width = 130;
-
+          localRect.rect.height = btnHeight;
           if (GUI::Button(localRect, "JOIN!", btnStyle)) {
             buttonAudio->Play();
             NetworkManager::Instance().StartClient(ip);
+            // LOG("%d", NetworkManager::Instance().IsClientRunning());
             menuState = MenuState::InRoom;
             onCancel.push([this]() {
               this->menuState = MenuState::Client;
               NetworkManager::Instance().StopClient();
             });
           }
-        });
-        rect.rect.y += height + padding;
-        count++;
+          ++actualHosts;
+        }
+      });
+      if (actualHosts > 0) {
+        dotElapsed += 2.5f * Time::GetDeltaTime();
+        if (dotElapsed > 4.f) dotElapsed = 0;
+        const int dotCnt = Math::Util::FloorToInt(dotElapsed);
+        std::string dots;
+        for (int i = 0; i < dotCnt; i++) dots += ".";
+        GUI::Text(rect, "LOOKING FOR HOSTS" + dots, textStyle);
       }
-
-      if (count == 0) {
-        GUI::Text(rect, "LOOKING FOR HOSTS", textStyle);
-      }
-
-      // RectTransform rectCpy{rect};
-      // btnLerpFactor += btnSpeed * Time::GetDeltaTime();
-      // btnLerpFactor = Math::Util::Min(btnLerpFactor, 1);
-      // rectCpy.rect.y =
-      //     rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerpFactor);
-
-      // if (GUI::Button(rectCpy, "READY", btnStyle)) buttonAudio->Play();
+      rect.rect.y += height + padding;
     } else if (menuState == MenuState::InRoom) {
       GUI::Text(rect, "WAITING FOR START", textStyle);
       rect.rect.y += height + padding;
