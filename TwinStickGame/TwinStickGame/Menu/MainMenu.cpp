@@ -116,7 +116,9 @@ void MainMenu::GuiUpdate() {
         NetworkManager::Instance().StartHost(SystemInfo::GetIpAddressWithPrefix(
             CONFIG_VAL(networkConfig.ipPrefix)));
 
-        onCancel.push([this]() {
+        GameManager::RegisterLoadLevelCallback();
+
+        onCancel.push([this, handle]() {
           this->menuState = MenuState::Multiplayer;
           this->networkDiscovery->StopBroadcasting();
           NetworkManager::Instance().StopHost();
@@ -127,8 +129,7 @@ void MainMenu::GuiUpdate() {
       if (GUI::Button(rect, "CONNECT", btnStyle)) {
         buttonAudio->Play();
         menuState = MenuState::Client;
-        static U64 handle;
-        handle = networkDiscovery->AddOnMessageReceivedListener(
+        static U64 handle = networkDiscovery->AddOnMessageReceivedListener(
             [this](const char* data, const char* ip) {
               this->OnMessageReceived(data, ip);
             });
@@ -142,7 +143,11 @@ void MainMenu::GuiUpdate() {
       }
 
     } else if (menuState == MenuState::Host) {
-      if (GUI::Button(rect, "READY", btnStyle)) buttonAudio->Play();
+      if (GUI::Button(rect, "READY", btnStyle)) {
+        buttonAudio->Play();
+        GameManager::Instance().LoadLevel("Level1");
+      }
+
       rect.rect.y += height + padding;
 
       GUI::Child(rect, "host_options", [&]() {
@@ -177,9 +182,11 @@ void MainMenu::GuiUpdate() {
 
           if (GUI::Button(localRect, "JOIN!", btnStyle)) {
             buttonAudio->Play();
-            NetworkManager::Instance().StartClient(ip);
+
+            GameManager::RegisterLoadLevelCallback();
+
             menuState = MenuState::InRoom;
-            onCancel.push([this]() {
+            onCancel.push([this, handle]() {
               this->menuState = MenuState::Client;
               NetworkManager::Instance().StopClient();
             });

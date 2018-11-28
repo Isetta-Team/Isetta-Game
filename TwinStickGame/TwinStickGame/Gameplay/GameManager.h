@@ -17,6 +17,8 @@ static GameManager& Instance();
 inline static GameConfig gameConfig;
 void Awake() override;
 void Update() override;
+void LoadLevel(std::string_view levelName);
+void RegisterLoadLevelCallback();
 
 private:
 inline static GameManager* instance;
