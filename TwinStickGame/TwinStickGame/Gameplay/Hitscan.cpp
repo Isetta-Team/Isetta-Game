@@ -22,8 +22,8 @@ void Hitscan::Update() {
       Math::Util::Max(0, cooldownTimer - deltaTime);  // Gotta avoid underflow
 
   Ray bullet = Ray(Math::Vector3::zero, Math::Vector3::forward);
-  auto it = shots.begin();
-  while (it != shots.end()) {
+  auto it = bullets.begin();
+  while (it != bullets.end()) {
     bullet.SetOrigin(it->ray.GetOrigin() + it->ray.GetDirection() * it->travel);
     bullet.SetDirection(it->ray.GetDirection());
 
@@ -52,7 +52,7 @@ void Hitscan::Update() {
 
       if (!it->props->piercing) {
         --it->props->refCount;
-        it = shots.erase(it);
+        it = bullets.erase(it);
         continue;
       }
     }
@@ -60,7 +60,7 @@ void Hitscan::Update() {
     it->travel += it->props->speed * deltaTime;
     if (it->travel > it->props->range) {
       --it->props->refCount;
-      it = shots.erase(it);
+      it = bullets.erase(it);
     } else {
       ++it;
     }
@@ -69,26 +69,26 @@ void Hitscan::Update() {
 
 void Hitscan::Fire(Math::Vector3 origin, Math::Vector3 direction) {
   if (cooldownTimer <= 0) {
-    // Generate the shot
+    // Generate the bullet
     Ray ray(origin, direction);
-    HitscanShot& shot = shots.emplace_back(ray);
+    HitscanBullet& bullet = bullets.emplace_back(ray);
 
-    // Connect the shot properties to the shot
-    if (propertiesChanged || shotProps.size() == 0) {
-      shot.props = &shotProps.emplace_back(properties);
+    // Connect the bullet properties to the bullet
+    if (propertiesChanged || bulletProps.size() == 0) {
+      bullet.props = &bulletProps.emplace_back(properties);
       propertiesChanged = false;
     } else {
-      shot.props = &shotProps.back();
+      bullet.props = &bulletProps.back();
     }
-    ++shot.props->refCount;
+    ++bullet.props->refCount;
 
     // Reset the cooldown
     cooldownTimer = cooldown;
   }
 }
 
-int Hitscan::GetNumFired() { return shots.size(); }
-int Hitscan::GetNumProps() { return shotProps.size(); }
+int Hitscan::GetNumFired() { return bullets.size(); }
+int Hitscan::GetNumProps() { return bulletProps.size(); }
 
 float Hitscan::GetRange() { return properties.range; }
 void Hitscan::SetRange(float r) {
@@ -111,9 +111,9 @@ void Hitscan::SetPiercing(bool p) {
   propertiesChanged = true;
 }
 
-HitscanShot::HitscanShot(Ray inRay) : ray{inRay} {}
+HitscanBullet::HitscanBullet(Ray inRay) : ray{inRay} {}
 
-bool HitscanShot::operator==(const HitscanShot& rhs) {
+bool HitscanBullet::operator==(const HitscanBullet& rhs) {
   return ray.GetDirection() == rhs.ray.GetDirection() &&
          ray.GetOrigin() == rhs.ray.GetOrigin() && travel == rhs.travel;
 }
