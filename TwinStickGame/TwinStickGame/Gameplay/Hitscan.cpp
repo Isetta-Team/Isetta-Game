@@ -21,9 +21,12 @@ void Hitscan::Update() {
   cooldownTimer =
       Math::Util::Max(0, cooldownTimer - deltaTime);  // Gotta avoid underflow
 
-  Array<RaycastHit> hits;
+  Ray bullet = Ray(Math::Vector3::zero, Math::Vector3::forward);
   auto it = shots.begin();
   while (it != shots.end()) {
+    bullet.SetOrigin(it->ray.GetOrigin() + it->ray.GetDirection() * it->travel);
+    bullet.SetDirection(it->ray.GetDirection());
+
     // Draw the ray
 #ifdef _EDITOR
     DebugDraw::Line(
@@ -34,28 +37,17 @@ void Hitscan::Update() {
 #endif
 
     // If the ray hits at the appropriate range, it's a hit
-    float closestDist = INFINITY;
-    RaycastHit* closestHit = nullptr;
-    hits = Collisions::RaycastAll(
-        it->ray, it->travel + it->props->speed * deltaTime);
-    for (auto& hit : hits) {
-      if (hit.GetDistance() - it->travel >= 0 &&
-          hit.GetDistance() - it->travel < closestDist) {
-        closestDist = hit.GetDistance() - it->travel;
-        closestHit = &hit;
-      }
-    }
-
-    if (closestHit) {
+    RaycastHit hit;
+    if (Collisions::Raycast(bullet, &hit, it->props->speed * deltaTime)) {
       Damageable* damageable =
-          closestHit->GetCollider()->entity->GetComponent<Damageable>();
+          hit.GetCollider()->entity->GetComponent<Damageable>();
       if (damageable) {
         damageable->DealDamage(it->props->damage);
       }
 
       // Draw the collision
 #ifdef _EDITOR
-      DebugDraw::Point(closestHit->GetPoint(), Color::white, 5, .5);
+      DebugDraw::Point(hit.GetPoint(), Color::white, 5, .5);
 #endif
 
       if (!it->props->piercing) {
@@ -72,12 +64,7 @@ void Hitscan::Update() {
     } else {
       ++it;
     }
-
-    hits.Clear();
   }
-
-  // Clear out all of the unused properties objects
-  shotProps.remove_if([](HitscanProps props) { return props.refCount <= 0; });
 }
 
 void Hitscan::Fire(Math::Vector3 origin, Math::Vector3 direction) {
