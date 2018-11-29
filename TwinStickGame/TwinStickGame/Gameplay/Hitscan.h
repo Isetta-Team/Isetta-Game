@@ -17,25 +17,25 @@ struct HitscanProps {
   int refCount = 0;
 };
 
-struct HitscanShot {
-  HitscanShot(Ray inRay);
+struct HitscanBullet {
+  HitscanBullet(Ray inRay);
 
   Ray ray;
   float travel = 0;
   HitscanProps* props = nullptr;
 
-  bool operator==(const HitscanShot& rhs);
+  bool operator==(const HitscanBullet& rhs);
 };
 
 BEGIN_COMPONENT(Hitscan, Component, true)
 void Update() override;
 
 HitscanProps properties;
-std::list<HitscanProps> shotProps;
+std::list<HitscanProps> bulletProps;
 bool propertiesChanged = true;
 
 float cooldownTimer = 0;
-std::list<HitscanShot> shots;
+std::list<HitscanBullet> bullets;
 
 public:
 Hitscan() = default;

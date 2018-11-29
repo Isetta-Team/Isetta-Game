@@ -16,10 +16,11 @@
 #include "Gameplay/GameManager.h"
 #include "Menu/MainMenu.h"
 #include "Menu/MainMenuDraw.h"
+#include "Consts.h"
 
 using namespace Isetta;
 
-void MenuLevel::OnLevelLoad() {
+void MenuLevel::Load() {
   Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::SMALL_SIZE,
                         "Neon");
   Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::MID_SIZE,

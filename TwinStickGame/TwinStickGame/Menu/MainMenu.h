@@ -6,6 +6,7 @@
 #include <stack>
 #include "Core/Math/Vector3.h"
 #include "Graphics/Texture.h"
+#include "Networking/NetworkDiscovery.h"
 #include "Scene/Component.h"
 using namespace Isetta;
 

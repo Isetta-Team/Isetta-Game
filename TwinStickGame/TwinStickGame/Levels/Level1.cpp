@@ -5,7 +5,7 @@
 #include "Levels/Level1.h"
 #include <Core/IsettaCore.h>
 
-void Level1::OnLevelLoad() {
+void Level1::Load() {
   // Spawn the scene
 
   // Spawn player with network ID
