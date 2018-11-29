@@ -116,9 +116,9 @@ void MainMenu::GuiUpdate() {
         NetworkManager::Instance().StartHost(SystemInfo::GetIpAddressWithPrefix(
             CONFIG_VAL(networkConfig.ipPrefix)));
 
-        GameManager::RegisterLoadLevelCallback();
+        GameManager::Instance().RegisterLoadLevelCallback();
 
-        onCancel.push([this, handle]() {
+        onCancel.push([this]() {
           this->menuState = MenuState::Multiplayer;
           this->networkDiscovery->StopBroadcasting();
           NetworkManager::Instance().StopHost();
@@ -162,9 +162,9 @@ void MainMenu::GuiUpdate() {
       });
 
     } else if (menuState == MenuState::Client) {
-      int count = 0;
       rect.rect.y += height + padding;
 
+      int count = 0;
       for (auto& host : availableHosts) {
         if (host.second.remainTime <= 0.f) continue;
         const char* ip = host.second.ip.c_str();
@@ -183,10 +183,10 @@ void MainMenu::GuiUpdate() {
           if (GUI::Button(localRect, "JOIN!", btnStyle)) {
             buttonAudio->Play();
 
-            GameManager::RegisterLoadLevelCallback();
+            GameManager::Instance().RegisterLoadLevelCallback();
 
             menuState = MenuState::InRoom;
-            onCancel.push([this, handle]() {
+            onCancel.push([this]() {
               this->menuState = MenuState::Client;
               NetworkManager::Instance().StopClient();
             });

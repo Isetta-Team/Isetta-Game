@@ -2,38 +2,41 @@
  * Copyright (c) 2018 Isetta
  */
 #include "Gameplay/GameManager.h"
-#include <Networking/NetworkManager>
+
 #include <Core/IsettaCore.h>
+#include <Networking/NetworkManager.h>
+// #include "Networking/NetworkMessages.h"
 
 using namespace Isetta;
 
 GameManager& GameManager::Instance() {
-  return *instance;
+  static GameManager instance;
+  return instance;
 }
 
-void GameManager::Awake() {
-  instance = this;
+void GameManager::LoadLevel(std::string_view levelName) const {
+  if (NetworkManager::Instance().IsHost()) {
+    // auto loadLevelMsg =
+        // NetworkManager::Instance().GenerateMessageFromServer<LoadLevelMessage>(
+            // 0);
+    // strcpy_s(loadLevelMsg->levelName, levelName.data());
+    // NetworkManager::Instance().SendMessageFromServerToAll<LoadLevelMessage>(
+        // loadLevelMsg);
+  }
 }
 
-void GameManager::Update() {
-}
-
-void GameManager::LoadLevel(std::string_view levelName) {
-	if (NetworkManager::Instance().IsHost()) {
-		auto loadLevelMsg = NetworkManager::Instance().GenerateMessageFromServer<LoadLevelMessage>(0);
-		strcpy_s(loadLevelMsg->levelName, levelName.data());
-		NetworkManager::Instance().SendMessageFromServerToAll<LoadLevelMessage>(loadLevelMsg);
-	}
-}
-
-void GameManager::RegisterLoadLevelCallback() {
-	U64 handle1 = NetworkManager::Instance().RegisterClientCallback<LoadLevelMessage>(
-              [](yojimbo::Message* message) {
-                auto* loadLevelMsg = reinterpret_cast<LoadLevelMessage>(message);
-                LevelManager::Instance().LoadLevel(loadLevelMsg->levelName);
-              });
-        U64 handle2 = NetworkManager::Instance().AddDisconnectedFromServerListener([handle1, handle2](){
-          NetworkManager::Instance().UnregisterClientCallback(handle);
-          NetworkManager::Instance().RemoveDIsconnectedFromServerListener(handle2);
-        });
+void GameManager::RegisterLoadLevelCallback() const {
+  // int handle1 =
+      // NetworkManager::Instance().RegisterClientCallback<LoadLevelMessage>(
+          // [](yojimbo::Message* message) {
+            // auto* loadLevelMsg = reinterpret_cast<LoadLevelMessage*>(message);
+            // LevelManager::Instance().LoadLevel(loadLevelMsg->levelName);
+          // });
+  // int handle2 = NetworkManager::Instance().AddDisconnectedFromServerListener(
+      // [handle1, handle2]() {
+        // NetworkManager::Instance().UnregisterClientCallback<LoadLevelMessage>(
+            // handle1);
+        // NetworkManager::Instance().RemoveDisconnectedFromServerListener(
+            // handle2);
+      // });
 }

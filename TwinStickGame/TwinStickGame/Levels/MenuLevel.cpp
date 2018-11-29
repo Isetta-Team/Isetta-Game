@@ -41,5 +41,4 @@ void MenuLevel::OnLevelLoad() {
       0b010, AudioClip::Load("audio/bgm/Signal-in-the-Noise.mp3", "bgm"));
   bgm->SetVolume(0.4f);
   bgm->Play();
-  manager->AddComponent<GameManager>();
 }
