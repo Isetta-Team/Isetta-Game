@@ -19,7 +19,7 @@
 using namespace Isetta;
 using CameraProperty = CameraComponent::Property;
 
-void SinglePlayerLevel::OnLevelLoad() {
+void SinglePlayerLevel::Load() {
   // TODO: remove
   Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::MID_SIZE, "Neon");
 

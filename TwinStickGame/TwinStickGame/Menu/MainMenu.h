@@ -12,7 +12,8 @@ using namespace Isetta;
 
 namespace Isetta {
 class AudioSource;
-}
+class NetworkDiscovery;
+}  // namespace Isetta
 
 BEGIN_COMPONENT(MainMenu, Isetta::Component, true)
 private:
@@ -24,13 +25,13 @@ void OnMessageReceived(const char* data, const char* ip);
 float btnLerpFactor = 0.0f;
 float btnSpeed = 2.f;
 
-char ipAddress[16]{};
 int playerCnt = 0;
+float dotElapsed = 0;
 
 Texture backgroundTexture;
 AudioSource* buttonAudio{nullptr};
 
-enum class MenuState : U16 { MainMenu = 0, Multiplayer, Host, Client };
+enum class MenuState : U16 { MainMenu = 0, Multiplayer, Host, Client, InRoom };
 MenuState menuState{MenuState::MainMenu};
 std::stack<Action<>> onCancel;
 NetworkDiscovery* networkDiscovery{nullptr};

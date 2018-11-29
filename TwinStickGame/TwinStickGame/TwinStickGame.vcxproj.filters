@@ -66,6 +66,15 @@
     <ClCompile Include="Test\HitscanTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\GameManager.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Levels\Level1.cpp">
+      <Filter>Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\NetworkTestComp.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -106,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="Consts.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\GameManager.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Levels\Level1.h">
+      <Filter>Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\NetworkTestComp.h">
+      <Filter>Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

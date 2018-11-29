@@ -7,5 +7,5 @@
 using namespace Isetta;
 
 CREATE_LEVEL(HitscanTestLevel)
-void OnLevelLoad() override;
+void Load() override;
 CREATE_LEVEL_END

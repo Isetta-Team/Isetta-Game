@@ -13,6 +13,7 @@
 #include "Graphics/Font.h"
 #include "Graphics/GUI.h"
 #include "Graphics/RectTransform.h"
+#include "Networking/NetworkDiscovery.h"
 #include "Scene/Entity.h"
 #include "Scene/LevelManager.h"
 #include "Util.h"
@@ -21,6 +22,7 @@
 // GAME
 #include "ColorScheme.h"
 #include "Consts.h"
+#include "Gameplay/GameManager.h"
 #include "Gameplay/Score.h"
 
 using namespace Isetta;
@@ -32,10 +34,10 @@ void MainMenu::Start() {
   networkDiscovery = entity->AddComponent<NetworkDiscovery>();
 
   NetworkManager::Instance().AddClientConnectedListener(
-      [this](int clientIndex) { this->playerCnt++; });
+      [this](ClientInfo info) { this->playerCnt++; });
 
   NetworkManager::Instance().AddClientDisconnectedListener(
-      [this](int clientIndex) { this->playerCnt--; });
+      [this](ClientInfo info) { this->playerCnt--; });
 }
 
 void MainMenu::Update() {
@@ -71,10 +73,10 @@ void MainMenu::GuiUpdate() {
   const Color sunsetLightAlpha{ColorScheme::SUNSET_LIGHT.r,
                                ColorScheme::SUNSET_LIGHT.g,
                                ColorScheme::SUNSET_LIGHT.b, 0.25f};
+
   const GUI::InputStyle ipStyle{sunsetLightAlpha, sunsetLightAlpha,
                                 sunsetLightAlpha, Color::white};
-  const GUI::TextStyle textStyle{
-      GUI::TextStyle{Color::white, Consts::MID_SIZE, "Neon"}};
+  const GUI::TextStyle textStyle{Color::white, Consts::MID_SIZE, "Neon"};
 
   struct FilterIP {
     static int Filter(InputTextCallbackData* data) {
@@ -89,15 +91,15 @@ void MainMenu::GuiUpdate() {
       buttonAudio->Play();
       LevelManager::Instance().LoadLevel("SinglePlayerLevel");
     }
-
     rect.rect.y += height + padding;
+
     if (GUI::Button(rect, "MULTIPLAYER", btnStyle)) {
       buttonAudio->Play();
       menuState = MenuState::Multiplayer;
       onCancel.push([this]() { this->menuState = MenuState::MainMenu; });
     }
-
     rect.rect.y += height + padding;
+
     if (GUI::Button(rect, "EXIT", btnStyle)) {
       buttonAudio->Play();
       Application::Exit();
@@ -108,17 +110,19 @@ void MainMenu::GuiUpdate() {
       if (GUI::Button(rect, "HOST", btnStyle)) {
         buttonAudio->Play();
         menuState = MenuState::Host;
-        networkDiscovery->StartBroadcasting(SystemInfo::GetMachineName(), 600,
-                                            broadcastInterval);
+        networkDiscovery->StartBroadcasting(
+            GameManager::gameConfig.playerName.GetVal(), 600,
+            broadcastInterval);
 
-        NetworkManager::Instance().StartServer(
-            SystemInfo::GetIpAddressWithPrefix(
-                CONFIG_VAL(networkConfig.ipPrefix)));
+        NetworkManager::Instance().StartHost(SystemInfo::GetIpAddressWithPrefix(
+            CONFIG_VAL(networkConfig.ipPrefix)));
+
+        GameManager::Instance().RegisterLoadLevelCallback();
 
         onCancel.push([this]() {
           this->menuState = MenuState::Multiplayer;
           this->networkDiscovery->StopBroadcasting();
-          NetworkManager::Instance().StopServer();
+          NetworkManager::Instance().StopHost();
         });
       }
 
@@ -126,11 +130,9 @@ void MainMenu::GuiUpdate() {
       if (GUI::Button(rect, "CONNECT", btnStyle)) {
         buttonAudio->Play();
         menuState = MenuState::Client;
-        static U64 handle;
-        handle = networkDiscovery->AddOnMessageReceivedListener(
+        static U64 handle = networkDiscovery->AddOnMessageReceivedListener(
             [this](const char* data, const char* ip) {
               this->OnMessageReceived(data, ip);
-              LOG_INFO(Debug::Channel::Networking, "[%s] said {%s}", ip, data);
             });
         networkDiscovery->StartListening();
 
@@ -142,60 +144,82 @@ void MainMenu::GuiUpdate() {
       }
 
     } else if (menuState == MenuState::Host) {
-      if (GUI::Button(rect, "READY", btnStyle)) buttonAudio->Play();
+      if (GUI::Button(rect, "START!", btnStyle)) {
+        buttonAudio->Play();
+        GameManager::Instance().LoadLevel("Level1");
+      }
 
       rect.rect.y += height + padding;
+
       GUI::Child(rect, "host_options", [&]() {
         RectTransform localRect{
             {0, 0, 0, 0}, GUI::Pivot::Left, GUI::Pivot::Left};
+        GUI::Text(localRect, "Players: ", textStyle);
 
-        if (playerCnt == 0) {
-          GUI::Text(localRect, "WAITING FOR PLAYERS: ", textStyle);
-        } else {
-          GUI::Text(localRect, "PLAYERS: ", textStyle);
-
-          localRect.anchor = GUI::Pivot::Right;
-          localRect.pivot = GUI::Pivot::Right;
-          const char* players = Util::StrFormat("%d/4", playerCnt);
-          GUI::Text(localRect, players, textStyle);
-        }
+        localRect.anchor = GUI::Pivot::Right;
+        localRect.pivot = GUI::Pivot::Right;
+        const char* players = Util::StrFormat("%d/4", playerCnt);
+        GUI::Text(localRect, players, textStyle);
       });
 
-    } else if (menuState == MenuState::Client) {
-      int count = 0;
-      for (auto& host : availableHosts) {
-        if (host.second.remainTime <= 0.f) continue;
-        const char* ip = host.second.ip.c_str();
-        const char* name = (host.second.name + "'S GAME").c_str();
-        static float textWidth = 300.f;
-        GUI::Text(RectTransform{{rect.rect.x, rect.rect.y, textWidth - 5,
-                                 rect.rect.height},
-                                GUI::Pivot::Center,
-                                GUI::Pivot::Center},
-                  name, textStyle);
-        if (GUI::Button(RectTransform{{rect.rect.x + textWidth + 5, rect.rect.y,
-                                       rect.rect.width - textWidth - 5,
-                                       rect.rect.height},
-                                      GUI::Pivot::Center,
-                                      GUI::Pivot::Center},
-                        "JOIN!", btnStyle)) {
-          NetworkManager::Instance().StartClient(ip);
-        }
-        rect.rect.y += height + padding;
-        count++;
-      }
-
-      if (count == 0) {
-        GUI::Text(rect, "LOOKING FOR HOSTS", textStyle);
-      }
-
-      // RectTransform rectCpy{rect};
+      RectTransform rectCpy{rect};
       // btnLerpFactor += btnSpeed * Time::GetDeltaTime();
-      // btnLerpFactor = Math::Util::Min(btnLerpFactor, 1);
-      // rectCpy.rect.y =
-      //     rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerpFactor);
+      btnLerpFactor = Math::Util::Min(btnLerpFactor, 1);
+      rectCpy.rect.y =
+          rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerpFactor);
+      GUI::Child(rectCpy, "host_ready", [&]() {
+        RectTransform localRect{{0, 0, rect.rect.width, rect.rect.height}};
+        if (GUI::Button(localRect, "READY", btnStyle)) buttonAudio->Play();
+      });
+    } else if (menuState == MenuState::Client) {
+      int actualHosts = 0;
+      RectTransform rectCpy{rect};
+      rectCpy.rect.y += height + 10.f;
+      rectCpy.rect.width -= padding;
+      rectCpy.rect.height = 2 * height - 10.f;
+      GUI::Child(rectCpy, "lobbies", [&]() {
+        for (auto& host : availableHosts) {
+          if (host.second.remainTime <= 0.f) continue;
+          const char* ip = host.second.ip.c_str();
+          std::string name = host.second.name;
+          name += "\'s Game";
 
-      // if (GUI::Button(rectCpy, "READY", btnStyle)) buttonAudio->Play();
+          const float btnHeight = 60.f;
+          RectTransform localRect{
+              Math::Rect{0, actualHosts * (btnHeight + 10) + 10, 0, 0},
+              GUI::Pivot::TopLeft, GUI::Pivot::TopLeft};
+          GUI::Text(localRect, name, textStyle);
+
+          localRect.anchor = GUI::Pivot::TopRight;
+          localRect.pivot = GUI::Pivot::TopRight;
+          localRect.rect.y -= 5;
+          localRect.rect.width = 130;
+          localRect.rect.height = btnHeight;
+          if (GUI::Button(localRect, "JOIN!", btnStyle)) {
+            buttonAudio->Play();
+            GameManager::Instance().RegisterLoadLevelCallback();
+            NetworkManager::Instance().StartClient(ip);
+            menuState = MenuState::InRoom;
+            onCancel.push([this]() {
+              this->menuState = MenuState::Client;
+              NetworkManager::Instance().StopClient();
+            });
+          }
+          ++actualHosts;
+        }
+      });
+      if (actualHosts > 0) {
+        dotElapsed += 2.5f * Time::GetDeltaTime();
+        if (dotElapsed > 4.f) dotElapsed = 0;
+        const int dotCnt = Math::Util::FloorToInt(dotElapsed);
+        std::string dots;
+        for (int i = 0; i < dotCnt; i++) dots += ".";
+        GUI::Text(rect, "LOOKING FOR HOSTS" + dots, textStyle);
+      }
+      rect.rect.y += height + padding;
+    } else if (menuState == MenuState::InRoom) {
+      GUI::Text(rect, "WAITING FOR START", textStyle);
+      rect.rect.y += height + padding;
     }
 
     rect.rect.y += height + padding;
@@ -218,6 +242,10 @@ void MainMenu::OnMessageReceived(const char* data, const char* ip) {
     info.remainTime = broadcastInterval + 0.1f;
     host->second = info;
   } else {
-    availableHosts.insert({SID(ip), {ip, data, broadcastInterval + 0.1f}});
+    HostInfo info;
+    info.ip = ip;
+    info.name = data;
+    info.remainTime = broadcastInterval + 0.1f;
+    availableHosts.insert({SID(ip), info});
   }
 }

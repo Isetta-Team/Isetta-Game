@@ -12,16 +12,21 @@
 
 // GAME
 #include <Audio/AudioClip.h>
+#include "Consts.h"
+#include "Gameplay/GameManager.h"
 #include "Menu/MainMenu.h"
 #include "Menu/MainMenuDraw.h"
 #include "Consts.h"
 
 using namespace Isetta;
 
-void MenuLevel::OnLevelLoad() {
-  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::SMALL_SIZE, "Neon");
-  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::MID_SIZE, "Neon");
-  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::TITLE_SIZE, "Neon");
+void MenuLevel::Load() {
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::SMALL_SIZE,
+                        "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::MID_SIZE,
+                        "Neon");
+  Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::TITLE_SIZE,
+                        "Neon");
 
   Entity* cameraEntity = Entity::Instantiate("Camera");
   cameraEntity->AddComponent<CameraComponent>();
@@ -35,7 +40,7 @@ void MenuLevel::OnLevelLoad() {
   mainMenu->AddComponent<AudioSource>(
       0b000, AudioClip::Load("audio/button.wav", "button-click"));
 
-  Entity* manager = Entity::Instantiate("Manager");
+  Entity* manager = Entity::Instantiate("Game Manager");
   auto bgm = manager->AddComponent<AudioSource>(
       0b010, AudioClip::Load("audio/bgm/Signal-in-the-Noise.mp3", "bgm"));
   bgm->SetVolume(0.4f);

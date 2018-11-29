@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseEditor|Win32">
-      <Configuration>ReleaseEditor</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseEditor|x64">
       <Configuration>ReleaseEditor</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -33,26 +21,6 @@
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseEditor|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -78,15 +46,6 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseEditor|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -101,22 +60,6 @@
     <OutDir>$(ProjectDir)..\Build\$(ProjectName)-$(Platform)-$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\Build\$(ProjectName)-$(Platform)-$(Configuration)-intermediate\</IntDir>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Engine\External;$(ProjectDir);$(SolutionDir)Engine\External</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>$(SolutionDir)Engine\Build\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-    <PreBuildEvent>
-      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\*.dll" "$(TargetDir)"</Command>
-    </PreBuildEvent>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -133,46 +76,6 @@
     <PreBuildEvent>
       <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"
 XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</Command>
-    </PreBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Engine\External;$(ProjectDir);$(SolutionDir)Engine\External</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)Engine\Build\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-    <PreBuildEvent>
-      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\*.dll" "$(TargetDir)"</Command>
-    </PreBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseEditor|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Engine\External;$(ProjectDir);$(SolutionDir)Engine\External</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)Engine\Build\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-    <PreBuildEvent>
-      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\*.dll" "$(TargetDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -222,9 +125,11 @@ XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Gameplay\Damageable.cpp" />
+    <ClCompile Include="Gameplay\GameManager.cpp" />
     <ClCompile Include="Gameplay\Hitscan.cpp" />
     <ClCompile Include="Gameplay\Score.cpp" />
     <ClCompile Include="Levels\HitscanTestLevel.cpp" />
+    <ClCompile Include="Levels\Level1.cpp" />
     <ClCompile Include="Levels\MenuLevel.cpp" />
     <ClCompile Include="Levels\SinglePlayerLevel.cpp" />
     <ClCompile Include="Menu\MainMenu.cpp" />
@@ -232,13 +137,16 @@ XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</
     <ClCompile Include="Player\PlayerController.cpp" />
     <ClCompile Include="Player\PlayerHealth.cpp" />
     <ClCompile Include="Test\HitscanTest.cpp" />
+    <ClCompile Include="Test\NetworkTestComp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consts.h" />
     <ClInclude Include="Gameplay\Damageable.h" />
+    <ClInclude Include="Gameplay\GameManager.h" />
     <ClInclude Include="Gameplay\Hitscan.h" />
     <ClInclude Include="Gameplay\Score.h" />
     <ClInclude Include="Levels\HitscanTestLevel.h" />
+    <ClInclude Include="Levels\Level1.h" />
     <ClInclude Include="Levels\MenuLevel.h" />
     <ClInclude Include="Levels\SinglePlayerLevel.h" />
     <ClInclude Include="Menu\ColorScheme.h" />
@@ -247,6 +155,7 @@ XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</
     <ClInclude Include="Player\PlayerController.h" />
     <ClInclude Include="Player\PlayerHealth.h" />
     <ClInclude Include="Test\HitscanTest.h" />
+    <ClInclude Include="Test\NetworkTestComp.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.cfg" />

@@ -16,7 +16,7 @@
 #include "Gameplay/Hitscan.h"
 #include "Test/HitscanTest.h"
 
-void HitscanTestLevel::OnLevelLoad() {
+void HitscanTestLevel::Load() {
   Entity* cameraEntity = Entity::Instantiate("Camera");
   cameraEntity->AddComponent<CameraComponent>();
   cameraEntity->SetTransform(Math::Vector3{0, 10, 0}, Math::Vector3{-90, 0, 0},

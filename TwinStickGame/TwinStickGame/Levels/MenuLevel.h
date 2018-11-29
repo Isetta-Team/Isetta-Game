@@ -5,5 +5,5 @@
 #include "Scene/IsettaLevel.h"
 
 CREATE_LEVEL(MenuLevel)
-void OnLevelLoad() override;
+void Load() override;
 CREATE_LEVEL_END
