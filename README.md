@@ -8,8 +8,7 @@ To setup a new project using the IsettaEngine:
 - Create a Visual Studio Project
 - Create a `.cpp` file to start the engine, copy:
     ```cpp
-    #include <iostream>
-    #include "EngineLoop.h"
+    #include <EngineLoop.h>
 
     int main() {
         Isetta::Application::Start();
