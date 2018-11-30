@@ -75,6 +75,12 @@
     <ClCompile Include="Test\NetworkTestComp.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="Levels\MessageTestLevel.cpp">
+      <Filter>Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\MessageTestComponent.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -123,6 +129,12 @@
       <Filter>Levels</Filter>
     </ClInclude>
     <ClInclude Include="Test\NetworkTestComp.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Levels\MessageTestLevel.h">
+      <Filter>Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\MessageTestComponent.h">
       <Filter>Test</Filter>
     </ClInclude>
   </ItemGroup>

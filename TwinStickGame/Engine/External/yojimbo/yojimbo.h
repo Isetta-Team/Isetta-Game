@@ -209,19 +209,19 @@ enum ChannelType {
 
 /**
     Configuration properties for a message channel.
- 
+
 
 
 
     Channels let you specify different reliability and ordering guarantees for
 messages sent across a connection.
- 
+
 
 
 
     They may be configured as one of two types: reliable-ordered or
 unreliable-unordered.
- 
+
 
 
 
@@ -235,13 +235,13 @@ messages will arrive, and messages may arrive out of order. This channel type is
 designed for data that is time critical and should not be resent if dropped,
 like snapshots of world state sent rapidly from server to client, or cosmetic
 events such as effects and sounds.
-    
+
 
 
 
     Both channel types support blocks of data attached to messages (see
 BlockMessage), but their treatment of blocks is quite different.
-    
+
 
 
 
@@ -252,7 +252,7 @@ server configuration data sent down to a client on connect. These blocks are
 sent by splitting them into fragments and resending each fragment until the
 other side has received the entire block. This allows for sending blocks of data
 larger that maximum packet size quickly and reliably even under packet loss.
-    
+
 
 
 
@@ -262,7 +262,7 @@ used on top of the generated packet to split it up into into smaller packets
 that can be sent across typical Internet MTU (<1500 bytes). Because of this, you
 need to make sure that the maximum block size for an unreliable-unordered
 channel fits within the maximum packet size.
-    
+
 
 
 
@@ -528,8 +528,8 @@ void yojimbo_log_level(int level);
 
 void yojimbo_printf(int level, const char *format, ...);
 
-extern void (*yojimbo_assert_function)(const char *, const char *,
-                                       const char *file, int line);
+__declspec(dllexport) void yojimbo_assert_function(const char *, const char *,
+                                                   const char *file, int line);
 
 /**
     Assert function used by yojimbo.
@@ -3620,7 +3620,7 @@ class Serializable {
    Connection class. Messages can be sent reliable-ordered, or
    unreliable-unordered, depending on the configuration of the channel they are
    sent over.
-    
+
 
 
 
@@ -3628,44 +3628,44 @@ class Serializable {
    this class (or from BlockMessage, if you want to attach data blocks to your
    message), then setup an enum of all your message types and derive a message
    factory class to create your message instances by type.
-    
+
 
 
 
     There are macros to help make defining your message factory painless:
-    
+
 
 
 
         YOJIMBO_MESSAGE_FACTORY_START
         YOJIMBO_DECLARE_MESSAGE_TYPE
         YOJIMBO_MESSAGE_FACTORY_FINISH
-    
+
 
 
 
     Once you have a message factory, register it with your declared inside your
    client and server classes using:
-    
+
 
 
 
         YOJIMBO_MESSAGE_FACTORY
-    
+
 
 
 
     which overrides the Client::CreateMessageFactory and
    Server::CreateMessageFactory methods so the client and server classes use
    your message factory type.
-    
+
 
 
 
     See tests/shared.h for an example showing you how to do this, and the
    functional tests inside tests/test.cpp for examples showing how how to send
    and receive messages.
-    
+
 
 
 
@@ -3981,14 +3981,14 @@ enum MessageFactoryErrorLevel {
 
     You can derive a message factory yourself to create your own message types,
    or you can use these helper macros to do it for you:
-    
+
 
 
 
         YOJIMBO_MESSAGE_FACTORY_START
         YOJIMBO_DECLARE_MESSAGE_TYPE
         YOJIMBO_MESSAGE_FACTORY_FINISH
-    
+
 
 
 
@@ -6232,11 +6232,11 @@ class Client : public BaseClient {
 
   void InsecureConnect(const uint8_t privateKey[], uint64_t clientId,
                        const Address &address,
-                       std::function<void(bool)> connectionCallback);
+                       std::function<void(int)> connectionCallback);
 
   void InsecureConnect(const uint8_t privateKey[], uint64_t clientId,
                        const Address serverAddresses[], int numServerAddresses,
-                       std::function<void(bool)> connectionCallback);
+                       std::function<void(int)> connectionCallback);
 
   void Connect(uint64_t clientId, uint8_t *connectToken);
 
@@ -6300,7 +6300,7 @@ class Client : public BaseClient {
   Address m_boundAddress;  ///< Address after socket bind, eg. with valid port
   uint64_t m_clientId;  ///< The globally unique client id (set on each call to
                         ///< connect)
-  std::function<void(bool)> m_connectionCallback;
+  std::function<void(int)> m_connectionCallback;
 };
 
 /**

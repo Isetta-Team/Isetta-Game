@@ -11,7 +11,6 @@
 #include "Networking/ClientInfo.h"
 #include "Networking/Messages.h"
 #include "yojimbo/yojimbo.h"
-#include "Core/DataStructures/Delegate.h"
 
 namespace Isetta {
 /**
