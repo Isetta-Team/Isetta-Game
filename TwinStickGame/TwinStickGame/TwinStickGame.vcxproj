@@ -131,12 +131,14 @@ XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</
     <ClCompile Include="Levels\HitscanTestLevel.cpp" />
     <ClCompile Include="Levels\Level1.cpp" />
     <ClCompile Include="Levels\MenuLevel.cpp" />
+    <ClCompile Include="Levels\MessageTestLevel.cpp" />
     <ClCompile Include="Levels\SinglePlayerLevel.cpp" />
     <ClCompile Include="Menu\MainMenu.cpp" />
     <ClCompile Include="Menu\MainMenuDraw.cpp" />
     <ClCompile Include="Player\PlayerController.cpp" />
     <ClCompile Include="Player\PlayerHealth.cpp" />
     <ClCompile Include="Test\HitscanTest.cpp" />
+    <ClCompile Include="Test\MessageTestComponent.cpp" />
     <ClCompile Include="Test\NetworkTestComp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +150,7 @@ XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</
     <ClInclude Include="Levels\HitscanTestLevel.h" />
     <ClInclude Include="Levels\Level1.h" />
     <ClInclude Include="Levels\MenuLevel.h" />
+    <ClInclude Include="Levels\MessageTestLevel.h" />
     <ClInclude Include="Levels\SinglePlayerLevel.h" />
     <ClInclude Include="Menu\ColorScheme.h" />
     <ClInclude Include="Menu\MainMenu.h" />
@@ -155,6 +158,7 @@ XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</
     <ClInclude Include="Player\PlayerController.h" />
     <ClInclude Include="Player\PlayerHealth.h" />
     <ClInclude Include="Test\HitscanTest.h" />
+    <ClInclude Include="Test\MessageTestComponent.h" />
     <ClInclude Include="Test\NetworkTestComp.h" />
   </ItemGroup>
   <ItemGroup>

@@ -528,8 +528,8 @@ void yojimbo_log_level(int level);
 
 void yojimbo_printf(int level, const char *format, ...);
 
-extern void (*yojimbo_assert_function)(const char *, const char *,
-                                       const char *file, int line);
+__declspec(dllexport) void yojimbo_assert_function(const char *, const char *,
+                                                   const char *file, int line);
 
 /**
     Assert function used by yojimbo.
