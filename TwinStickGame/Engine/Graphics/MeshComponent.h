@@ -9,21 +9,19 @@
 #include "Scene/Component.h"
 
 namespace Isetta {
-BEGIN_COMPONENT(MeshComponent, Component, false)
+DEFINE_COMPONENT(MeshComponent, Component, false)
 H3DNode renderNode{0};
 H3DRes renderResource{0};
 
 std::unordered_map<StringId, H3DNode> joints;
 
-explicit MeshComponent(std::string_view resourceName,
-                       bool isEngineResource = false);
+explicit MeshComponent(std::string_view resourceName);
 ~MeshComponent();
 
 void UpdateTransform() const;
 
 protected:
-static H3DRes LoadResourceFromFile(std::string_view resourceName,
-                                   bool isEngineResource);
+static H3DRes LoadResourceFromFile(std::string_view resourceName);
 
 void OnEnable() override;
 void OnDisable() override;
@@ -40,5 +38,5 @@ std::tuple<Math::Vector3, Math::Quaternion> GetJointWorldTransform(
     std::string jointName);
 
 static class RenderModule* renderModule;
-END_COMPONENT(MeshComponent, Component)
+DEFINE_COMPONENT_END(MeshComponent, Component)
 }  // namespace Isetta

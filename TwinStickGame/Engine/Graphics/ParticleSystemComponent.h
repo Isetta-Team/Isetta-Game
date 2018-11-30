@@ -7,7 +7,7 @@
 #include "Scene/Component.h"
 
 namespace Isetta {
-BEGIN_COMPONENT(ParticleSystemComponent, Component, false)
+DEFINE_COMPONENT(ParticleSystemComponent, Component, false)
 H3DNode renderNode{0};
 Array<H3DNode> emitters;
 H3DRes renderResource{0};
@@ -20,7 +20,7 @@ void UpdateTransform() const;
 void UpdateEmitter(float deltaTime) const;
 
 protected:
-static H3DRes LoadResourceFromFile(std::string_view resourceName, bool isEngineResource);
+static H3DRes LoadResourceFromFile(std::string_view resourceName);
 void Awake() override;
 void OnEnable() override;
 void OnDisable() override;
@@ -33,5 +33,5 @@ friend class RenderModule;
 
 static inline class RenderModule* renderModule;
 
-END_COMPONENT(ParticleSystemComponent, Component)
+DEFINE_COMPONENT_END(ParticleSystemComponent, Component)
 }  // namespace Isetta
