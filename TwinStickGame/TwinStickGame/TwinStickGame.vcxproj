@@ -48,12 +48,15 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="IsettaEngine.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="IsettaEngine.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseEditor|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="IsettaEngine.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -74,22 +77,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Engine\External;$(ProjectDir)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_EDITOR;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>$(SolutionDir)Engine\Build\$(Configuration)\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-    <PreBuildEvent>
-      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"
-XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</Command>
-    </PreBuildEvent>
-    <PostBuildEvent>
-      <Command>XCOPY /Y /R /S /I "$(SolutionDir)Engine\Resources\*" "$(TargetDir)Resources"
-XCOPY /Y /R /S /I "$(ProjectDir)Resources\*" "$(TargetDir)Resources"
-XCOPY /Y /R "$(ProjectDir)*.cfg" "$(TargetDir)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -99,24 +89,13 @@ XCOPY /Y /R "$(ProjectDir)*.cfg" "$(TargetDir)"</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Engine\External;$(ProjectDir)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)Engine\Build\$(Configuration)\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PreBuildEvent>
-      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"
-XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</Command>
-    </PreBuildEvent>
-    <PostBuildEvent>
-      <Command>XCOPY /Y /R /S /I "$(SolutionDir)Engine\Resources\*" "$(TargetDir)Resources"
-XCOPY /Y /R /S /I "$(ProjectDir)Resources\*" "$(TargetDir)Resources"
-XCOPY /Y /R "$(ProjectDir)*.cfg" "$(TargetDir)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseEditor|x64'">
     <ClCompile>
@@ -126,24 +105,13 @@ XCOPY /Y /R "$(ProjectDir)*.cfg" "$(TargetDir)"</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Engine\External;$(ProjectDir)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_EDITOR;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)Engine\Build\$(Configuration)\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PreBuildEvent>
-      <Command>XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.dll" "$(TargetDir)"
-XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</Command>
-    </PreBuildEvent>
-    <PostBuildEvent>
-      <Command>XCOPY /Y /R /S /I "$(SolutionDir)Engine\Resources\*" "$(TargetDir)Resources"
-XCOPY /Y /R /S /I "$(ProjectDir)Resources\*" "$(TargetDir)Resources"
-XCOPY /Y /R "$(ProjectDir)*.cfg" "$(TargetDir)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
