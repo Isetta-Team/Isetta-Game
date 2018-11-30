@@ -28,6 +28,9 @@
     <Filter Include="Test">
       <UniqueIdentifier>{cb056d9d-f7f5-43b2-9bf0-d1de8093887c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Networking">
+      <UniqueIdentifier>{43134b64-0529-47b3-8ae2-551f8ab02e4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -80,7 +83,7 @@
     </ClCompile>
     <ClCompile Include="Test\MessageTestComponent.cpp">
       <Filter>Test</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Gameplay\EntityFactory.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
@@ -139,9 +142,12 @@
     </ClInclude>
     <ClInclude Include="Test\MessageTestComponent.h">
       <Filter>Test</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Gameplay\EntityFactory.h">
       <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\NetworkMessages.h">
+      <Filter>Networking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

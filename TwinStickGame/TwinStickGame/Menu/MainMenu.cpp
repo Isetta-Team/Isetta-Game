@@ -32,12 +32,6 @@ void MainMenu::Start() {
   buttonAudio = entity->GetComponent<AudioSource>();
   buttonAudio->SetVolume(0.25f);
   networkDiscovery = entity->AddComponent<NetworkDiscovery>();
-
-  NetworkManager::Instance().AddClientConnectedListener(
-      [this](ClientInfo info) { this->playerCnt++; });
-
-  NetworkManager::Instance().AddClientDisconnectedListener(
-      [this](ClientInfo info) { this->playerCnt--; });
 }
 
 void MainMenu::Update() {
@@ -117,8 +111,6 @@ void MainMenu::GuiUpdate() {
         NetworkManager::Instance().StartHost(SystemInfo::GetIpAddressWithPrefix(
             CONFIG_VAL(networkConfig.ipPrefix)));
 
-        GameManager::Instance().RegisterLoadLevelCallback();
-
         onCancel.push([this]() {
           this->menuState = MenuState::Multiplayer;
           this->networkDiscovery->StopBroadcasting();
@@ -197,7 +189,6 @@ void MainMenu::GuiUpdate() {
           localRect.rect.height = btnHeight;
           if (GUI::Button(localRect, "JOIN!", btnStyle)) {
             buttonAudio->Play();
-            GameManager::Instance().RegisterLoadLevelCallback();
             NetworkManager::Instance().StartClient(ip);
             menuState = MenuState::InRoom;
             onCancel.push([this]() {

@@ -3,23 +3,24 @@
  */
 #include "MenuLevel.h"
 
-// ENGINE
-#include "Audio/AudioListener.h"
-#include "Audio/AudioSource.h"
-#include "Graphics/CameraComponent.h"
-#include "Graphics/Font.h"
-#include "Scene/Entity.h"
-
-// GAME
+#include <Audio/AudioListener.h>
+#include <Audio/AudioSource.h>
+#include <Graphics/CameraComponent.h>
+#include <Graphics/Font.h>
+#include <Scene/Entity.h>
 #include <Audio/AudioClip.h>
+
 #include "Consts.h"
+#include "Gameplay/EntityFactory.h"
+#include "Gameplay/GameManager.h"
 #include "Menu/MainMenu.h"
 #include "Menu/MainMenuDraw.h"
-#include "Gameplay/EntityFactory.h"
 
 using namespace Isetta;
 
 void MenuLevel::Load() {
+  GameManager::Instance();
+
   Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::SMALL_SIZE,
                         "Neon");
   Font::AddFontFromFile("fonts\\NeonAbsoluteSans.ttf", Consts::MID_SIZE,

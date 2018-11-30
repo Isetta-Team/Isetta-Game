@@ -28,9 +28,9 @@ Entity* EntityFactory::CreateDebugEntity() {
   return entity;
 }
 
-Entity* EntityFactory::CreatePlayer() {
+Entity* EntityFactory::CreatePlayer(std::string_view playerName) {
   Entity* player = Primitive::Create(Primitive::Type::Capsule);
-  player->SetName("Player");
+  player->SetName(playerName);
   player->AddComponent<PlayerHealth>();
   player->AddComponent<PlayerController>();
   return player;

@@ -7,6 +7,7 @@
 #include <Core/IsettaCore.h>
 #include <Scene/Primitive.h>
 #include "Gameplay/EntityFactory.h"
+#include "Gameplay/GameManager.h"
 
 void Level1::Load() {
   Entity* camera = Entity::Instantiate("Camera");
@@ -25,14 +26,14 @@ void Level1::Load() {
   ground->transform->SetLocalScale({50, 0.1, 50});
   ground->transform->SetWorldPos({0, -0.051, 0});
 
-  // Spawn player with network ID
-  Entity* player = EntityFactory::CreatePlayer();
-
   // Spawn an enemy spawner
 
   // Spawn a score tracker
 
   // Spawn an UI manager?
+
+  // Spawn a player
+  
 
   // Tests
   EntityFactory::CreateNetworkEntity();
@@ -40,4 +41,6 @@ void Level1::Load() {
 
   Input::RegisterKeyPressCallback(KeyCode::ESCAPE,
                                   []() { Application::Exit(); });
+
+  GameManager::Instance().SendLevelLoadedMessage();
 }

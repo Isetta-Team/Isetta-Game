@@ -157,6 +157,7 @@ XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</
     <ClInclude Include="Menu\ColorScheme.h" />
     <ClInclude Include="Menu\MainMenu.h" />
     <ClInclude Include="Menu\MainMenuDraw.h" />
+    <ClInclude Include="Networking\NetworkMessages.h" />
     <ClInclude Include="Player\PlayerController.h" />
     <ClInclude Include="Player\PlayerHealth.h" />
     <ClInclude Include="Test\HitscanTest.h" />

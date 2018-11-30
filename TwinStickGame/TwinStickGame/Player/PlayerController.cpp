@@ -4,12 +4,21 @@
 #include "Player/PlayerController.h"
 
 #include <Core/IsettaCore.h>
-#include <Graphics/AnimationComponent.h>
+#include <Networking/NetworkId.h>
 
 void PlayerController::Start() {
+  networkId = entity->GetComponent<NetworkId>();
 }
 
 void PlayerController::Update() {
+  if (!networkId->HasClientAuthority()) {
+    return;
+  }
+
+  Move();
+}
+
+void PlayerController::Move() {
   float dt = Time::GetDeltaTime();
   Math::Vector3 lookDir;
   Math::Vector3 movement{};

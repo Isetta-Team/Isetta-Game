@@ -10,5 +10,5 @@ class EntityFactory {
  public:
   static Entity* CreateNetworkEntity();
   static Entity* CreateDebugEntity();
-  static Entity* CreatePlayer();
+  static Entity* CreatePlayer(std::string_view playerName);
 };

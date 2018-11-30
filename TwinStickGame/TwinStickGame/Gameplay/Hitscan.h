@@ -27,7 +27,7 @@ struct HitscanBullet {
   bool operator==(const HitscanBullet& rhs);
 };
 
-BEGIN_COMPONENT(Hitscan, Component, true)
+DEFINE_COMPONENT(Hitscan, Component, true)
 void Update() override;
 
 HitscanProps properties;
@@ -56,4 +56,4 @@ void SetPiercing(bool p);
 
 float cooldown = .1;
 
-END_COMPONENT(Hitscan, Component)
+DEFINE_COMPONENT_END(Hitscan, Component)
