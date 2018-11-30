@@ -125,6 +125,7 @@ XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Gameplay\Damageable.cpp" />
+    <ClCompile Include="Gameplay\EntityFactory.cpp" />
     <ClCompile Include="Gameplay\GameManager.cpp" />
     <ClCompile Include="Gameplay\Hitscan.cpp" />
     <ClCompile Include="Gameplay\Score.cpp" />
@@ -144,6 +145,7 @@ XCOPY /Y /R "$(SolutionDir)Engine\Build\$(Configuration)\*.lib" "$(TargetDir)"</
   <ItemGroup>
     <ClInclude Include="Consts.h" />
     <ClInclude Include="Gameplay\Damageable.h" />
+    <ClInclude Include="Gameplay\EntityFactory.h" />
     <ClInclude Include="Gameplay\GameManager.h" />
     <ClInclude Include="Gameplay\Hitscan.h" />
     <ClInclude Include="Gameplay\Score.h" />

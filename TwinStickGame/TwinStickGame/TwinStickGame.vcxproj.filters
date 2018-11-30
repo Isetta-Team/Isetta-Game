@@ -80,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="Test\MessageTestComponent.cpp">
       <Filter>Test</Filter>
+	</ClCompile>
+    <ClCompile Include="Gameplay\EntityFactory.cpp">
+      <Filter>Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="Test\MessageTestComponent.h">
       <Filter>Test</Filter>
+	</ClInclude>
+    <ClInclude Include="Gameplay\EntityFactory.h">
+      <Filter>Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

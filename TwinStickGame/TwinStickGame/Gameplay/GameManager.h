@@ -12,8 +12,9 @@ class GameManager {
     CVarString playerName{"player_name", "Unknown"};
   };
 
+  static GameConfig gameConfig;
+
   static GameManager& Instance();
-  inline static GameConfig gameConfig;
   void LoadLevel(std::string_view levelName) const;
   void RegisterLoadLevelCallback() const;
 };

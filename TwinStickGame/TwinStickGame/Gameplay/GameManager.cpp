@@ -9,6 +9,8 @@
 
 using namespace Isetta;
 
+GameManager::GameConfig GameManager::gameConfig;
+
 GameManager& GameManager::Instance() {
   static GameManager instance;
   return instance;
@@ -16,27 +18,8 @@ GameManager& GameManager::Instance() {
 
 void GameManager::LoadLevel(std::string_view levelName) const {
   if (NetworkManager::Instance().IsHost()) {
-    // auto loadLevelMsg =
-        // NetworkManager::Instance().GenerateMessageFromServer<LoadLevelMessage>(
-            // 0);
-    // strcpy_s(loadLevelMsg->levelName, levelName.data());
-    // NetworkManager::Instance().SendMessageFromServerToAll<LoadLevelMessage>(
-        // loadLevelMsg);
   }
 }
 
 void GameManager::RegisterLoadLevelCallback() const {
-  // int handle1 =
-      // NetworkManager::Instance().RegisterClientCallback<LoadLevelMessage>(
-          // [](yojimbo::Message* message) {
-            // auto* loadLevelMsg = reinterpret_cast<LoadLevelMessage*>(message);
-            // LevelManager::Instance().LoadLevel(loadLevelMsg->levelName);
-          // });
-  // int handle2 = NetworkManager::Instance().AddDisconnectedFromServerListener(
-      // [handle1, handle2]() {
-        // NetworkManager::Instance().UnregisterClientCallback<LoadLevelMessage>(
-            // handle1);
-        // NetworkManager::Instance().RemoveDisconnectedFromServerListener(
-            // handle2);
-      // });
 }
