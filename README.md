@@ -16,17 +16,26 @@ To setup a new project using the IsettaEngine:
     }
     ```
 - Download zip file of the [engine](https://github.com/Isetta-Team/Isetta-Engine/releases) (includes `.dll` and `.h`)
-    - TODO: Create [release](https://help.github.com/articles/creating-releases/)
+    - TODO (JACOB!): Create [release](https://help.github.com/articles/creating-releases/)
     - Extract in `.sln` directory
-    - Move the `Resources` folder to the project level folder
 - Project Properties:
     - Configuration Manager > Active solution platform: > <Edit...> > Click x86 > Remove
+    - Configuration Manager > Active solution configuration: > <New...> > Put "ReleaseEditor" in name > OK
+    - (Make sure you do the following changes with "All Configurations" selected as Configuration)
+    - Debugging > Change Working Directory to "$(TargetDir)"
     - C/C++ (you will need a .cpp file to view this section)
         - General > Additional Includes: > Add `$(SolutionDir)Engine; $(SolutionDir)Engine\External;`
         - Language > C++ Language Standard > `ISO C++17 Standard (/std:c++17)`
     - Linker > Input > Add `$(SolutionDir)Engine\Build\*.lib;`
         - This will need to be different for `Debug` and `Release` builds (not currently setup)
-    - Build Events > Pre-Build Event > Command Line > Add `XCOPY /Y /R "$(SolutionDir)Engine\Build\*.dll" "$(TargetDir)"`
+    - Build Events
+        - Pre-Build Event > Command Line > Add `XCOPY /Y /R "$(SolutionDir)Engine\Build\*.dll" "$(TargetDir)"`
+        - Post-Build Event > Command Line > Add:
+        ```
+        XCOPY /Y /R /S /I "$(SolutionDir)Engine\Resources\*" "$(TargetDir)Resources"
+        XCOPY /Y /R /S /I "$(ProjectDir)Resources\*" "$(TargetDir)Resources"
+        XCOPY /Y /R "$(ProjectDir)*.cfg" "$(TargetDir)"
+        ```
 - Configuration files
     - Create a `config.cfg` or copy a premade one (see Engine/Resources/Config/)
         - No `.cfg` in Engine/Resources/Config/ currently
@@ -61,7 +70,7 @@ Components in the Isetta Engine are similar to components in other engines, they
 - `bool isActive = true` is whether the component starts enabled/disabled and defaults to starting active
 - `Component constructor args...` are the arguments to pass to the component's constructor (can be empty to use the default constructor -- a component MUST have a default constructor in addition to any other constructors)
 
-A component is created with Isetta component macros: `BEGIN_COMPONENT(COMPONENT, PARENT, bool unique)` and `END_COMPONENT(COMPONENT_NAME, PARENT)`. Where:
+A component is created with Isetta component macros: `DEFINE_COMPONENT(COMPONENT, PARENT, bool unique)` and `DEFINE_COMPONENT_END(COMPONENT_NAME, PARENT)`. Where:
 - `COMPONENT` is the name of your new component class, ie. `ExampleComponent`
 - `PARENT` is the name of the parent/base class of component, use `Component` if you have no base class
 - `bool unique` is whether the component must be unique on an entity (whether an entity could have multiple of this component)
@@ -72,9 +81,9 @@ To create a component, create a header (.h) and cpp (.cpp) file of the name of y
 `ExampleComponent.h`
 ```cpp
 #pragma once
-#include "Scene/Component.h"
+#include <Scene/Component.h>
 
-BEGIN_COMPONENT(ExampleComponent, Component, true)
+DEFINE_COMPONENT(ExampleComponent, Component, true)
 private:
 // Private variables of your component
 public:
@@ -100,7 +109,7 @@ void FixedUpdate() override;
 // OnDestroy is called once when the component is destroyed
 void OnDestroy() override;
 
-END_COMPONENT(ExampleComponent, Component)
+DEFINE_COMPONENT_END(ExampleComponent, Component)
 ```
 
 The cpp file then contains the definitions for each of these functions. Not all functions need to be defined, if not overriden, the function update will run faster.
@@ -108,13 +117,13 @@ The cpp file then contains the definitions for each of these functions. Not all 
 Here are empty template of component header to copy:
 ```cpp
 #pragma once
-#include "Scene/Component.h"
+#include <Scene/Component.h>
 
-BEGIN_COMPONENT(COMPONENT_NAME, Component, true)
+DEFINE_COMPONENT(COMPONENT_NAME, Component, true)
 private:
 public:
 COMPONENT_NAME() = default;
-END_COMPONENT(COMPONENT_NAME, Component)
+DEFINE_COMPONENT_END(COMPONENT_NAME, Component)
 ```
 
 ## Levels
@@ -122,13 +131,13 @@ END_COMPONENT(COMPONENT_NAME, Component)
 `LEVEL_NAME.h`
 ```cpp
 #pragma once
-#include "Scene/IsettaLevel.h"
-#include "Scene/Level.h"
+#include <Scene/IsettaLevel.h>
+#include <Scene/Level.h>
 
-CREATE_LEVEL(LEVEL_NAME)
-void OnLevelLoad() override;
+DEFINE_LEVEL(LEVEL_NAME)
+void Load() override;
 void OnLevelUnload() override;
-CREATE_LEVEL_END
+DEFINE_LEVEL_END
 ```
 
 `LEVEL_NAME.cpp`
@@ -136,12 +145,12 @@ CREATE_LEVEL_END
 #include "LEVEL_NAME.h"
 
 // IsettaCore not necessarily needed, holds a number of useful header files
-#include "Core/IsettaCore.h"
-#include "Graphics/CameraComponent.h"
+#include <Core/IsettaCore.h>
+#include <Graphics/CameraComponent.h>
 
-void LEVEL_NAME::OnLevelLoad() {
+void LEVEL_NAME::Load() {
     // Level NEEDS a camera
-    Entity* cameraEntity{Entity::Instantiate("Camera")};
+    Entity* cameraEntity = Entity::Instantiate("Camera");
     cameraEntity->AddComponent<CameraComponent>();
     cameraEntity->SetTransform(Math::Vector3{0, 5, 10}, Math::Vector3{-15, 0, 0},
                              Math::Vector3::one);
