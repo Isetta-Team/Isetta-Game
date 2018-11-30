@@ -118,14 +118,14 @@ void GameManager::RegisterAllPlayerReadyCallback() {
 }
 
 void GameManager::RegisterClientConnectionCallbacks() {
-  NetworkManager::Instance().AddClientConnectedListener(
+  NetworkManager::Instance().RegisterClientConnectedCallback(
       [this](ClientInfo info) {
         playerCount++;
         LOG_INFO(Debug::Channel::Networking, "A player joined, count: %d",
                  playerCount);
       });
 
-  NetworkManager::Instance().AddClientDisconnectedListener(
+  NetworkManager::Instance().RegisterClientDisconnectedCallback(
       [this](ClientInfo info) {
         playerCount--;
         LOG_INFO(Debug::Channel::Networking, "A player left, count: %d",
