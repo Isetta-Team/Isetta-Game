@@ -136,11 +136,6 @@ void MainMenu::GuiUpdate() {
       }
 
     } else if (menuState == MenuState::Host) {
-      if (GUI::Button(rect, "START!", btnStyle)) {
-        buttonAudio->Play();
-        GameManager::Instance().LoadLevel("Level1");
-      }
-
       rect.rect.y += height + padding;
 
       GUI::Child(rect, "host_options", [&]() {
@@ -155,13 +150,15 @@ void MainMenu::GuiUpdate() {
       });
 
       RectTransform rectCpy{rect};
-      // btnLerpFactor += btnSpeed * Time::GetDeltaTime();
+      btnLerpFactor += btnSpeed * Time::GetDeltaTime();
       btnLerpFactor = Math::Util::Min(btnLerpFactor, 1);
       rectCpy.rect.y =
           rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerpFactor);
       GUI::Child(rectCpy, "host_ready", [&]() {
         RectTransform localRect{{0, 0, rect.rect.width, rect.rect.height}};
-        if (GUI::Button(localRect, "READY", btnStyle)) buttonAudio->Play();
+        if (GUI::Button(localRect, "START!", btnStyle)) {buttonAudio->Play();
+        GameManager::Instance().LoadLevel("Level1");
+        }
       });
     } else if (menuState == MenuState::Client) {
       int actualHosts = 0;
