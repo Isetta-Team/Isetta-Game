@@ -25,7 +25,6 @@ void OnMessageReceived(const char* data, const char* ip);
 float btnLerpFactor = 0.0f;
 float btnSpeed = 2.f;
 
-int playerCnt = 0;
 float dotElapsed = 0;
 
 Texture backgroundTexture;

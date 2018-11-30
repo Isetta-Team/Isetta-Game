@@ -145,7 +145,7 @@ void MainMenu::GuiUpdate() {
 
         localRect.anchor = GUI::Pivot::Right;
         localRect.pivot = GUI::Pivot::Right;
-        const char* players = Util::StrFormat("%d/4", playerCnt);
+        const char* players = Util::StrFormat("%d/4", GameManager::Instance().playerCount);
         GUI::Text(localRect, players, textStyle);
       });
 
