@@ -15,7 +15,7 @@ class AudioSource;
 class NetworkDiscovery;
 }  // namespace Isetta
 
-BEGIN_COMPONENT(MainMenu, Isetta::Component, true)
+DEFINE_COMPONENT(MainMenu, Isetta::Component, true)
 private:
 void Start() override;
 void Update() override;
@@ -45,4 +45,4 @@ struct HostInfo {
 std::unordered_map<StringId, HostInfo> availableHosts;
 float broadcastInterval = 0.2f;
 
-END_COMPONENT(MainMenu, Isetta::Component)
+DEFINE_COMPONENT_END(MainMenu, Isetta::Component)

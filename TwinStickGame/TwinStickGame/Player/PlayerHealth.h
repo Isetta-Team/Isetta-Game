@@ -6,11 +6,11 @@
 
 using namespace Isetta;
 
-BEGIN_COMPONENT(PlayerHealth, Component, true)
+DEFINE_COMPONENT(PlayerHealth, Component, true)
 private:
 class Damageable* health;
 
 public:
 void Start() override;
 void GuiUpdate() override;
-END_COMPONENT(PlayerHealth, Component)
+DEFINE_COMPONENT_END(PlayerHealth, Component)

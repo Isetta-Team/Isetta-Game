@@ -6,10 +6,10 @@
 
 using namespace Isetta;
 
-BEGIN_COMPONENT(Score, Component, true)
+DEFINE_COMPONENT(Score, Component, true)
 private:
 int score = 0;
 
 public:
 void GuiUpdate() override;
-END_COMPONENT(Score, Component)
+DEFINE_COMPONENT_END(Score, Component)

@@ -7,9 +7,9 @@
 
 using namespace Isetta;
 
-BEGIN_COMPONENT(MessageTestComponent, Component, false)
+DEFINE_COMPONENT(MessageTestComponent, Component, false)
 public:
 void GuiUpdate() override;
 
 int counter = 0;
-END_COMPONENT(MessageTestComponent, Component)
+DEFINE_COMPONENT_END(MessageTestComponent, Component)

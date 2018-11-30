@@ -6,7 +6,7 @@
 
 using namespace Isetta;
 
-BEGIN_COMPONENT(Damageable, Component, true)
+DEFINE_COMPONENT(Damageable, Component, true)
 private:
 int health, maxHealth;
 
@@ -17,4 +17,4 @@ void DealDamage(int dealDmg);
 
 inline int GetHealth() const { return health; }
 inline int GetMaxHealth() const { return maxHealth; }
-END_COMPONENT(Damageable, Component)
+DEFINE_COMPONENT_END(Damageable, Component)

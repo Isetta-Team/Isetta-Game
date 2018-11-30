@@ -10,7 +10,7 @@ namespace Isetta {
 class NetworkId;
 }
 
-BEGIN_COMPONENT(PlayerController, Component, true)
+DEFINE_COMPONENT(PlayerController, Component, true)
 public:
 void Start() override;
 void Update() override;
@@ -23,4 +23,4 @@ bool isMoving{false};
 float lookSmooth{30.f};
 NetworkId* networkId{nullptr};
 
-END_COMPONENT(PlayerController, Component)
+DEFINE_COMPONENT_END(PlayerController, Component)

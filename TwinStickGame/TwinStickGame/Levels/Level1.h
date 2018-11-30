@@ -6,6 +6,6 @@
 
 using namespace Isetta;
 
-CREATE_LEVEL(Level1)
+DEFINE_LEVEL(Level1)
 void Load() override;
-CREATE_LEVEL_END
+DEFINE_LEVEL_END

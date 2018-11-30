@@ -6,6 +6,6 @@
 
 using namespace Isetta;
 
-CREATE_LEVEL(HitscanTestLevel)
+DEFINE_LEVEL(HitscanTestLevel)
 void Load() override;
-CREATE_LEVEL_END
+DEFINE_LEVEL_END

@@ -9,11 +9,11 @@
 
 using namespace Isetta;
 
-CREATE_LEVEL(MessageTestLevel)
+DEFINE_LEVEL(MessageTestLevel)
 void Load() override;
-CREATE_LEVEL_END
+DEFINE_LEVEL_END
 
-RPC_MESSAGE_DEFINE(TestingMessage)
+DEFINE_NETWORK_MESSAGE(TestingMessage)
 template <typename Stream>
 bool Serialize(Stream* stream) {
   serialize_int(stream, number, 0, 10000);
@@ -27,4 +27,4 @@ void Copy(const yojimbo::Message* otherMessage) override {
 }
 
 int number = 0;
-RPC_MESSAGE_FINISH
+DEFINE_NETWORK_MESSAGE_END

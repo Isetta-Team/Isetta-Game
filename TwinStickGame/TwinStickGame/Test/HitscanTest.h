@@ -6,11 +6,11 @@
 
 using namespace Isetta;
 
-BEGIN_COMPONENT(HitscanTest, Component, true)
+DEFINE_COMPONENT(HitscanTest, Component, true)
 void Start() override;
 void Update() override;
 void GuiUpdate() override;
 
 private:
 class Hitscan* hitscan;
-END_COMPONENT(HitscanTest, Component)
+DEFINE_COMPONENT_END(HitscanTest, Component)

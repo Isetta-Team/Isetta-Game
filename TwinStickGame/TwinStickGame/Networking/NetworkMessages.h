@@ -25,7 +25,7 @@ void Copy(const yojimbo::Message* otherMessage) override {
 int netId = 0;
 int clientAuthorityId = 0;
 char playerName[32];
-Math::Vector3 startPos = Math::Vector3::zero;
+Isetta::Math::Vector3 startPos = Isetta::Math::Vector3::zero;
 DEFINE_NETWORK_MESSAGE_END
 
 DEFINE_NETWORK_MESSAGE(LevelLoadedMessage)
