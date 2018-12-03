@@ -28,7 +28,7 @@ Entity* EntityFactory::CreateDebugEntity() {
   return entity;
 }
 
-Entity* EntityFactory::CreatePlayer(std::string_view playerName) {
+Entity* EntityFactory::CreatePlayer(const std::string_view playerName) {
   // Entity* player = Primitive::Create(Primitive::Type::Capsule);
   Entity* player = Entity::Instantiate("");
   player->SetName(playerName);

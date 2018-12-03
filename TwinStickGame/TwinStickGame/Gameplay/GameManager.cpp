@@ -43,6 +43,7 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
       [this](const int clientIndex, yojimbo::Message* inMessage) {
         auto* spawnMessage = reinterpret_cast<SpawnPlayerMessage*>(inMessage);
         Entity* player = EntityFactory::CreatePlayer(spawnMessage->playerName);
+        player->transform->SetWorldPos(GetPlayerStartPos());
         NetworkId* networkId = player->AddComponent<NetworkId>();
         networkId->clientAuthorityId = clientIndex;
 
@@ -50,7 +51,7 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
 
         spawnMessage->netId = networkId->id;
         spawnMessage->clientAuthorityId = networkId->clientAuthorityId;
-        spawnMessage->startPos = GetPlayerStartPos();
+        spawnMessage->startPos = player->transform->GetWorldPos();
 
         NetworkManager::Instance()
             .SendMessageFromServerToAll<SpawnPlayerMessage>(spawnMessage);
