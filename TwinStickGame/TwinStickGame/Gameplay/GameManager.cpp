@@ -32,6 +32,7 @@ void GameManager::SendSpawnPlayerMessage() {
       [](SpawnPlayerMessage* message) {
         strcpy_s(message->playerName, gameConfig.playerName.GetVal().c_str());
       });
+
   LOG_INFO(Debug::Channel::Networking,
            "Spawn player (%s) message sent from client",
            gameConfig.playerName.GetVal().c_str());
@@ -43,10 +44,12 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
         auto* spawnMessage = reinterpret_cast<SpawnPlayerMessage*>(inMessage);
         Entity* player = EntityFactory::CreatePlayer(spawnMessage->playerName);
         NetworkId* networkId = player->AddComponent<NetworkId>();
+        networkId->clientAuthorityId = clientIndex;
+
         player->AddComponent<NetworkTransform>();
 
         spawnMessage->netId = networkId->id;
-        spawnMessage->clientAuthorityId = clientIndex;
+        spawnMessage->clientAuthorityId = networkId->clientAuthorityId;
         spawnMessage->startPos = GetPlayerStartPos();
 
         NetworkManager::Instance()
@@ -61,6 +64,7 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
         if (NetworkManager::Instance().IsHost()) {
           return;
         }
+
         auto* spawnMessage = reinterpret_cast<SpawnPlayerMessage*>(inMessage);
         Entity* player = EntityFactory::CreatePlayer(spawnMessage->playerName);
         NetworkId* networkId =
