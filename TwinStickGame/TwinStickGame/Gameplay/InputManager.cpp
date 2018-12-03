@@ -2,7 +2,6 @@
  * Copyright (c) 2018 Isetta
  */
 #include "Gameplay/InputManager.h"
-#include <Core/Math/Util.h>
 #include <Input/Input.h>
 
 using namespace Isetta;

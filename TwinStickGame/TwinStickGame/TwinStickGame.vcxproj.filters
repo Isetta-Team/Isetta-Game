@@ -31,6 +31,9 @@
     <Filter Include="Networking">
       <UniqueIdentifier>{43134b64-0529-47b3-8ae2-551f8ab02e4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{9de491cb-260e-491d-81f0-b4e5248418c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -89,6 +92,12 @@
     </ClCompile>
     <ClCompile Include="Gameplay\InputManager.cpp">
       <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyController.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Bullet.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +163,15 @@
     </ClInclude>
     <ClInclude Include="Gameplay\InputManager.h">
       <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyController.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\PlayerMessages.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Bullet.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
