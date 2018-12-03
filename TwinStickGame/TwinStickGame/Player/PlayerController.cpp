@@ -5,12 +5,16 @@
 
 #include <Core/IsettaCore.h>
 #include <Networking/NetworkId.h>
+#include "Gameplay/InputManager.h"
 
 void PlayerController::Start() {
   networkId = entity->GetComponent<NetworkId>();
 }
 
 void PlayerController::Update() {
+  DebugDraw::WireCapsule(transform->GetLocalToWorldMatrix(), 0.5f, 2.f,
+                         Color::green);
+
   if (!networkId->HasClientAuthority()) {
     return;
   }
@@ -20,12 +24,9 @@ void PlayerController::Update() {
 
 void PlayerController::Move() {
   float dt = Time::GetDeltaTime();
-  Math::Vector3 lookDir;
-  Math::Vector3 movement{};
 
-  movement +=
-      Input::GetGamepadAxis(GamepadAxis::L_HORIZONTAL) * Math::Vector3::left +
-      Input::GetGamepadAxis(GamepadAxis::L_VERTICAL) * Math::Vector3::forward;
+  Math::Vector3 movement{InputManager::GetMovementInput().x, 0,
+                         InputManager::GetMovementInput().y};
 
   if (movement.Magnitude() > 1) {
     movement.Normalize();
@@ -42,9 +43,8 @@ void PlayerController::Move() {
     }
   }
 
-  lookDir +=
-      Input::GetGamepadAxis(GamepadAxis::R_HORIZONTAL) * Math::Vector3::left +
-      Input::GetGamepadAxis(GamepadAxis::R_VERTICAL) * Math::Vector3::forward;
+  Math::Vector3 lookDir{InputManager::GetShootInput().x, 0,
+                        InputManager::GetShootInput().y};
 
   if (lookDir.Magnitude() >= 1.f) {
     lookDir.Normalize();

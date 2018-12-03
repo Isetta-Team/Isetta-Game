@@ -3,9 +3,10 @@
  */
 
 #include "Levels/Level1.h"
+
 #include <Components/FlyController.h>
 #include <Core/IsettaCore.h>
-#include <Scene/Primitive.h>
+
 #include "Gameplay/EntityFactory.h"
 #include "Gameplay/GameManager.h"
 
@@ -22,9 +23,9 @@ void Level1::Load() {
                       Math::Vector3::one);
 
   // Spawn the scene
-  Entity* ground = Primitive::Create(Primitive::Type::Cube);
-  ground->transform->SetLocalScale({50, 0.1, 50});
-  ground->transform->SetWorldPos({0, -0.051, 0});
+  // Entity* ground = Primitive::Create(Primitive::Type::Cube);
+  // ground->transform->SetLocalScale({50, 0.1, 50});
+  // ground->transform->SetWorldPos({0, -0.051, 0});
 
   // Spawn an enemy spawner
 
@@ -33,7 +34,6 @@ void Level1::Load() {
   // Spawn an UI manager?
 
   // Spawn a player
-  
 
   // Tests
   EntityFactory::CreateNetworkEntity();

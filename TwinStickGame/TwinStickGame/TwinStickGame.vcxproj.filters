@@ -87,6 +87,9 @@
     <ClCompile Include="Gameplay\EntityFactory.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\InputManager.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -149,13 +152,12 @@
     <ClInclude Include="Networking\NetworkMessages.h">
       <Filter>Networking</Filter>
     </ClInclude>
+    <ClInclude Include="Gameplay\InputManager.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="config.cfg">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="user.cfg">
-      <Filter>Source Files</Filter>
-    </None>
+    <CustomBuild Include="**/*.cfg;" />
+    <CustomBuild Include="**/*.cfg;" />
   </ItemGroup>
 </Project>

@@ -119,6 +119,7 @@
     <ClCompile Include="Gameplay\EntityFactory.cpp" />
     <ClCompile Include="Gameplay\GameManager.cpp" />
     <ClCompile Include="Gameplay\Hitscan.cpp" />
+    <ClCompile Include="Gameplay\InputManager.cpp" />
     <ClCompile Include="Gameplay\Score.cpp" />
     <ClCompile Include="Levels\HitscanTestLevel.cpp" />
     <ClCompile Include="Levels\Level1.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Gameplay\EntityFactory.h" />
     <ClInclude Include="Gameplay\GameManager.h" />
     <ClInclude Include="Gameplay\Hitscan.h" />
+    <ClInclude Include="Gameplay\InputManager.h" />
     <ClInclude Include="Gameplay\Score.h" />
     <ClInclude Include="Levels\HitscanTestLevel.h" />
     <ClInclude Include="Levels\Level1.h" />
@@ -154,10 +156,6 @@
     <ClInclude Include="Test\HitscanTest.h" />
     <ClInclude Include="Test\MessageTestComponent.h" />
     <ClInclude Include="Test\NetworkTestComp.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="config.cfg" />
-    <None Include="user.cfg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
