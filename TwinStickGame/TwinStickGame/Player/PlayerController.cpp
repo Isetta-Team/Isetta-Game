@@ -62,6 +62,7 @@ void PlayerController::Update() {
 
     Math::Vector3 lookDir{InputManager::GetShootInput().x, 0,
                           InputManager::GetShootInput().y};
+    DebugDraw::Line(transform->GetWorldPos(), transform->GetWorldPos() + lookDir, Color::blue);
 
     if (lookDir.Magnitude() >= 1.f) {
       lookDir.Normalize();

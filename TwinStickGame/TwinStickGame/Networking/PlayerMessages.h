@@ -10,8 +10,8 @@ bool Serialize(Stream* stream) {
   serialize_float(stream, startPos.y);
   serialize_float(stream, startPos.z);
   serialize_float(stream, dir.x);
-  serialize_float(stream, dir.x);
-  serialize_float(stream, dir.x);
+  serialize_float(stream, dir.y);
+  serialize_float(stream, dir.z);
   serialize_int(stream, playerNetId, 0, 10000);
   return true;
 }

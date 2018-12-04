@@ -14,6 +14,6 @@ void Update() override;
 
 private:
 Math::Vector3 dir;
-float speed = 5;
+float speed = 15;
 
 DEFINE_COMPONENT_END(Bullet, Component)

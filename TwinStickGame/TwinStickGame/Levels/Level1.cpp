@@ -17,10 +17,14 @@ void Level1::Load() {
   camera->transform->LookAt(Math::Vector3::zero);
   camera->AddComponent<FlyController>();
 
-  Entity* light = Entity::Instantiate("Light");
-  light->AddComponent<LightComponent>();
-  light->SetTransform(Math::Vector3{0, 200, 600}, Math::Vector3::zero,
-                      Math::Vector3::one);
+  Entity* lightEntity{Entity::Instantiate("Light")};
+  lightEntity->AddComponent<LightComponent>();
+  lightEntity->SetTransform(Math::Vector3{0, 200, 600},
+                            Math::Vector3{-30, 0, 0});
+
+    // instantiate the ground
+  Entity* ground{Entity::Instantiate("Ground")};
+  ground->AddComponent<MeshComponent>("models/Ground/Level.scene.xml");
 
   // Spawn the scene
   // Entity* ground = Primitive::Create(Primitive::Type::Cube);
