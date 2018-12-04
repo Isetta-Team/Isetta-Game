@@ -2,12 +2,7 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-#include <SID/sid.h>
-#include <stack>
-#include "Core/Math/Vector3.h"
-#include "Graphics/Texture.h"
-#include "Networking/NetworkDiscovery.h"
-#include "Scene/Component.h"
+#include <IsettaEngine.h>
 using namespace Isetta;
 
 namespace Isetta {

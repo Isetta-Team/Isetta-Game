@@ -1,11 +1,10 @@
 /*
  * Copyright (c) 2018 Isetta
  */
-
+#include <IsettaEngine.h>
 #include "Levels/Level1.h"
 #include <Components/FlyController.h>
-#include <Core/IsettaCore.h>
-#include <Scene/Primitive.h>
+
 #include "Gameplay/EntityFactory.h"
 #include "Gameplay/GameManager.h"
 

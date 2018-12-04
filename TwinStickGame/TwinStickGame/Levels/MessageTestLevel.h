@@ -2,10 +2,7 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-
-#include "Core/IsettaCore.h"
-#include "External/yojimbo/yojimbo.h"
-#include "Networking/Messages.h"
+#include <IsettaEngine.h>
 
 using namespace Isetta;
 

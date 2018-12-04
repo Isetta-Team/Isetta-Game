@@ -1,12 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "Damageable.h"
-
-// ENGINE
-#include "Events/EventObject.h"
-#include "Events/Events.h"
-#include "Scene/Entity.h"
 
 using namespace Isetta;
 

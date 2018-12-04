@@ -87,6 +87,9 @@
     <ClCompile Include="Gameplay\EntityFactory.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="IsettaEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="Networking\NetworkMessages.h">
       <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="IsettaEngine.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

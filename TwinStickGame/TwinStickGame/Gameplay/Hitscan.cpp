@@ -1,13 +1,9 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "Gameplay/Hitscan.h"
-#include "Collisions/Collider.h"
-#include "Collisions/Collisions.h"
-#include "Collisions/RaycastHit.h"
-#include "Core/IsettaCore.h"
 #include "Gameplay/Damageable.h"
-#include "brofiler/ProfilerCore/Brofiler.h"
 
 Hitscan::Hitscan(float range, float rate, float speed, int damage) {
   properties.range = range;

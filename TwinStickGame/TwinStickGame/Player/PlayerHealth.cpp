@@ -1,16 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "PlayerHealth.h"
-
-// ENGINE
-#include "Core/Color.h"
-#include "Graphics/GUI.h"
-#include "Graphics/RectTransform.h"
-#include "Scene/Entity.h"
-
-#include "Input/Input.h"  // TODO(Jacob) remove
-
 // GAME
 #include "Gameplay/Damageable.h"
 #include "Consts.h"

@@ -1,5 +1,5 @@
+#include <IsettaEngine.h>
 #include "HitscanTest.h"
-#include "Core/IsettaCore.h"
 #include "Gameplay/Hitscan.h"
 
 void HitscanTest::Start() {
@@ -19,7 +19,7 @@ void HitscanTest::Start() {
 }
 
 void HitscanTest::Update() {
-  if (Input::IsMouseButtonPressed(MouseButtonCode::MOUSE_LEFT)) {
+  if (Input::IsMouseButtonPressed(MouseButton::LEFT)) {
     hitscan->Fire(Math::Vector3::zero,
                   Math::Vector3((Input::GetMousePosition().x - 960) / 960, 0,
                                 (Input::GetMousePosition().y - 540) / 540));

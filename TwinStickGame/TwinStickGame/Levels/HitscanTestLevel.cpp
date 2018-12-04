@@ -1,17 +1,11 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "HitscanTestLevel.h"
-#include "Core/IsettaCore.h"
-
 #include "Components/Editor/EditorComponent.h"
 #include "Components/Editor/FrameReporter.h"
 #include "Components/GridComponent.h"
-
-#include "Collisions/BoxCollider.h"
-#include "Collisions/CapsuleCollider.h"
-#include "Collisions/SphereCollider.h"
-#include "Scene/Primitive.h"
 
 #include "Gameplay/Hitscan.h"
 #include "Test/HitscanTest.h"

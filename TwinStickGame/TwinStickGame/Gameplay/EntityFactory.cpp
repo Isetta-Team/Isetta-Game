@@ -1,12 +1,12 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "Gameplay/EntityFactory.h"
 
 #include <Components/Editor/EditorComponent.h>
 #include <Components/GridComponent.h>
 #include <Components/NetworkMonitor.h>
-#include <Scene/Primitive.h>
 
 #include "Player/PlayerController.h"
 #include "Player/PlayerHealth.h"

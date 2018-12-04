@@ -1,13 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "SinglePlayerLevel.h"
-
-// ENGINE
-#include "Core/Config/Config.h"
-#include "Graphics/CameraComponent.h"
-#include "Graphics/Font.h"
-#include "Scene/Entity.h"
 
 // GAME
 #include "Gameplay/Damageable.h"

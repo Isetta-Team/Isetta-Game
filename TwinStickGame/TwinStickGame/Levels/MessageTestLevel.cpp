@@ -1,11 +1,10 @@
 /*
  * Copyright (c) 2018 Isetta
  */
-
+#include <IsettaEngine.h>
 #include "MessageTestLevel.h"
 
 #include "Components/Editor/EditorComponent.h"
-#include "Networking/NetworkManager.h"
 #include "Test/MessageTestComponent.h"
 #include "Test/NetworkTestComp.h"
 

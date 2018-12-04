@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-#include "Core/Color.h"
+#include <IsettaEngine.h>
 
 using namespace Isetta;
 

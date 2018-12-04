@@ -1,13 +1,10 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "MainMenuDraw.h"
 
-// ENGINE
-#include "Core/Debug/DebugDraw.h"
-#include "Core/Time/Time.h"
-
-// GAME
+ // GAME
 #include "ColorScheme.h"
 
 void MainMenuDraw::Update() {

@@ -1,12 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "Gameplay/GameManager.h"
-
-#include <Core/IsettaCore.h>
-#include <Networking/NetworkId.h>
-#include <Networking/NetworkManager.h>
-#include <Networking/NetworkTransform.h>
 #include "EntityFactory.h"
 #include "Networking/NetworkMessages.h"
 

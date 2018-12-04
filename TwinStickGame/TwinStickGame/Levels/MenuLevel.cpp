@@ -1,14 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "MenuLevel.h"
-
-#include <Audio/AudioListener.h>
-#include <Audio/AudioSource.h>
-#include <Graphics/CameraComponent.h>
-#include <Graphics/Font.h>
-#include <Scene/Entity.h>
-#include <Audio/AudioClip.h>
 
 #include "Consts.h"
 #include "Gameplay/EntityFactory.h"

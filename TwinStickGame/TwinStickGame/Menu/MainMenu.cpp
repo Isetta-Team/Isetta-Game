@@ -1,23 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "MainMenu.h"
-
-// ENGINE
-#include "Application.h"
-#include "Audio/AudioClip.h"
-#include "Audio/AudioSource.h"
-#include "Core/Color.h"
-#include "Core/SystemInfo.h"
-#include "Core/Time/Time.h"
-#include "Graphics/Font.h"
-#include "Graphics/GUI.h"
-#include "Graphics/RectTransform.h"
-#include "Networking/NetworkDiscovery.h"
-#include "Scene/Entity.h"
-#include "Scene/LevelManager.h"
-#include "Util.h"
-#include "imgui/imgui.h"
 
 // GAME
 #include "ColorScheme.h"

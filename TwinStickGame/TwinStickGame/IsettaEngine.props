@@ -33,11 +33,11 @@ XCOPY /Y /R "$(EngineDir)Build\$(Configuration)\*.lib" "$(TargetDir)"</Command>
     </BuildMacro>
   </ItemGroup>
   <PropertyGroup Label="Debugging Properties">
-    <LocalDebuggerWorkingDirectory>$(SolutionDir)Build\GameTemplate-x64-Debug</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Label="Debugging">
-    <LocalDebuggerWorkingDirectory>$(SolutionDir)Build\GameTemplate-x64-Debug</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)\</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

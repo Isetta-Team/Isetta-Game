@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-#include "Scene/IsettaLevel.h"
+#include <IsettaEngine.h>
 
 DEFINE_LEVEL(MenuLevel)
 void Load() override;
