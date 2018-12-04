@@ -90,9 +90,6 @@
     <ClCompile Include="Gameplay\EntityFactory.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="Gameplay\InputManager.cpp">
-      <Filter>Gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\EnemyController.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -161,9 +158,6 @@
     <ClInclude Include="Networking\NetworkMessages.h">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="Gameplay\InputManager.h">
-      <Filter>Gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\EnemyController.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -175,7 +169,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="user.cfg" />
     <CustomBuild Include="**/*.cfg;" />
-    <CustomBuild Include="**/*.cfg;" />
+    <CustomBuild Include="*.cfg;" />
+    <CustomBuild Include="*.cfg;" />
   </ItemGroup>
 </Project>

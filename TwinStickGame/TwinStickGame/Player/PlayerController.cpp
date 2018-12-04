@@ -6,11 +6,101 @@
 #include <Core/IsettaCore.h>
 #include <Networking/NetworkId.h>
 
-#include "Bullet.h"
-#include "Gameplay/InputManager.h"
 #include "Networking/PlayerMessages.h"
+#include "Player/Bullet.h"
+#include "Player/PlayerHealth.h"
 
 void PlayerController::Awake() {
+  RegisterNetworkCallbacks();
+  entity->AddComponent<PlayerHealth>();
+  auto* mesh =
+      entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
+  animator = entity->AddComponent<AnimationComponent>(mesh);
+  idleState =
+      animator->AddAnimation("models/Player/Player_Idle.anim", 0, "", false);
+  // idleState = animator->AddAnimation("Halves/Soldier/Soldier_Idle.anim", 0,
+  // "", false);
+  runState =
+      animator->AddAnimation("models/Player/Player_Run.anim", 0, "", false);
+  shootState =
+      animator->AddAnimation("models/Player/Player_Shoot.anim", 0, "", false);
+  // runShootState = animator->AddAnimation("models/Player/Player_ShootRun.anim",
+                                         // 0, "", false);
+  runShootState = animator->AddAnimation("Halves/Soldier/Soldier.anim", 0,
+  "", false);
+  dieState =
+      animator->AddAnimation("models/Player/Player_Die.anim", 0, "", false);
+}
+
+void PlayerController::Start() {
+  networkId = entity->GetComponent<NetworkId>();
+}
+
+void PlayerController::Update() {
+  if (networkId->HasClientAuthority()) {
+    float dt = Time::GetDeltaTime();
+
+    Math::Vector3 movement(Input::GetGamepadAxis(GamepadAxis::L_HORIZONTAL), 0,
+                           Input::GetGamepadAxis(GamepadAxis::L_VERTICAL));
+    bool shouldRun = movement.Magnitude() > 0.2f;
+    if (movement.Magnitude() > 1.f) movement.Normalize();
+
+    Math::Vector3 shootDir =
+        Math::Vector3(Input::GetGamepadAxis(GamepadAxis::R_HORIZONTAL), 0,
+                      Input::GetGamepadAxis(GamepadAxis::R_VERTICAL));
+    bool shouldShoot = shootDir.Magnitude() >= 1.f;
+
+    // Translation
+    if (shouldRun) {
+      transform->TranslateWorld(movement * moveSpeed * dt);
+    }
+
+    // Shoot
+    if (shouldShoot) {
+      shootDir.Normalize();
+
+      // Shoot countdown
+      if (shootCooldown <= 0.f) {
+        Shoot();
+        shootCooldown += shootInterval;
+      }
+      shootCooldown -= Time::GetDeltaTime();
+
+      DebugDraw::Line(transform->GetWorldPos(),
+                      transform->GetWorldPos() + shootDir, Color::blue);
+    } else {
+      shootCooldown = 0.f;
+    }
+
+    // Animation & Look Dir
+    if (shouldShoot && shouldRun) {
+      transform->LookAt(transform->GetWorldPos() + shootDir);
+      if (state != State::RunShoot) {
+        animator->TransitToAnimationState(runShootState, transitionDuration);
+        state = State::RunShoot;
+      }
+    } else if (shouldRun) {
+      transform->LookAt(transform->GetWorldPos() + movement);
+      if (state != State::Run) {
+        animator->TransitToAnimationState(runState, transitionDuration);
+        state = State::Run;
+      }
+    } else if (shouldShoot) {
+      transform->LookAt(transform->GetWorldPos() + shootDir);
+      if (state != State::Shoot) {
+        animator->TransitToAnimationState(shootState, transitionDuration);
+        state = State::Shoot;
+      }
+    } else {
+      if (state != State::Idle) {
+        animator->TransitToAnimationState(idleState, transitionDuration);
+        state = State::Idle;
+      }
+    }
+  }
+}
+
+void PlayerController::RegisterNetworkCallbacks() {
   static bool registered = false;
   if (!registered) {
     NetworkManager::Instance().RegisterServerCallback<ShootMessage>(
@@ -28,54 +118,6 @@ void PlayerController::Awake() {
                                                      inMessage->dir);
         });
     registered = true;
-  }
-}
-
-void PlayerController::Start() {
-  networkId = entity->GetComponent<NetworkId>();
-}
-
-void PlayerController::Update() {
-  DebugDraw::WireCapsule(transform->GetLocalToWorldMatrix(), 0.5f, 2.f,
-                         Color::green);
-
-  if (networkId->HasClientAuthority()) {
-    float dt = Time::GetDeltaTime();
-
-    Math::Vector3 movement{InputManager::GetMovementInput().x, 0,
-                           InputManager::GetMovementInput().y};
-
-    if (movement.Magnitude() > 1) {
-      movement.Normalize();
-    }
-
-    if (movement.Magnitude() > 0) {
-      if (!isMoving) {
-        isMoving = true;
-      }
-      transform->TranslateWorld(movement * moveSpeed * dt);
-    } else {
-      if (isMoving) {
-        isMoving = false;
-      }
-    }
-
-    Math::Vector3 lookDir{InputManager::GetShootInput().x, 0,
-                          InputManager::GetShootInput().y};
-    DebugDraw::Line(transform->GetWorldPos(), transform->GetWorldPos() + lookDir, Color::blue);
-
-    if (lookDir.Magnitude() >= 1.f) {
-      lookDir.Normalize();
-      transform->LookAt(transform->GetWorldPos() + lookDir);
-
-      if (shootCooldown <= 0.f) {
-        Shoot();
-        shootCooldown += shootInterval;
-      }
-      shootCooldown -= Time::GetDeltaTime();
-    } else {
-      shootCooldown = 0.f;
-    }
   }
 }
 

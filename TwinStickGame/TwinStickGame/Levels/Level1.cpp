@@ -25,6 +25,7 @@ void Level1::Load() {
     // instantiate the ground
   Entity* ground{Entity::Instantiate("Ground")};
   ground->AddComponent<MeshComponent>("models/Ground/Level.scene.xml");
+  ground->transform->SetWorldPos({0, -0.01f, 0});
 
   // Spawn the scene
   // Entity* ground = Primitive::Create(Primitive::Type::Cube);
