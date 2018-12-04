@@ -3,6 +3,7 @@
  */
 #pragma once
 #include <IsettaEngine.h>
+#include "Player/PlayerController.h"
 
 using namespace Isetta;
 
@@ -21,6 +22,7 @@ class GameManager {
   void SendSpawnPlayerMessage();        // from client
   void RegisterSpawnPlayerCallbacks();  // on both client and server
   Math::Vector3 GetPlayerStartPos();
+  Array<PlayerController*> players;
 
   // Level loading stuff
   void LoadLevel(std::string_view levelName);
@@ -28,6 +30,6 @@ class GameManager {
   void RegisterClientLevelLoadedCallback();  // on server
   void RegisterAllPlayerReadyCallback();     // on client
   void RegisterClientConnectionCallbacks();  // on server
-  U8 playerCount = 0;
-  U8 levelLoadCompletePlayerCount = 0;
+  U8 playerCount = 0; // server only
+  U8 levelLoadCompletePlayerCount = 0; // server only
 };

@@ -2,8 +2,9 @@
  * Copyright (c) 2018 Isetta
  */
 #include <IsettaEngine.h>
+
 #include "Gameplay/GameManager.h"
-#include "EntityFactory.h"
+#include "Gameplay/EntityFactory.h"
 #include "Networking/NetworkMessages.h"
 
 using namespace Isetta;
@@ -22,7 +23,6 @@ GameManager::GameManager() {
   RegisterSpawnPlayerCallbacks();
 }
 
-// ReSharper disable once CppMemberFunctionMayBeConst
 void GameManager::SendSpawnPlayerMessage() {
   NetworkManager::Instance().SendMessageFromClient<SpawnPlayerMessage>(
       [](SpawnPlayerMessage* message) {
@@ -49,6 +49,7 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
         spawnMessage->clientAuthorityId = networkId->clientAuthorityId;
         spawnMessage->startPos = player->transform->GetWorldPos();
 
+        players[clientIndex] = player->GetComponent<PlayerController>();
         NetworkManager::Instance()
             .SendMessageFromServerToAll<SpawnPlayerMessage>(spawnMessage);
         LOG_INFO(Debug::Channel::Networking,
@@ -57,7 +58,7 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
       });
 
   NetworkManager::Instance().RegisterClientCallback<SpawnPlayerMessage>(
-      [](yojimbo::Message* inMessage) {
+      [this](yojimbo::Message* inMessage) {
         if (NetworkManager::Instance().IsHost()) {
           return;
         }
@@ -69,13 +70,12 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
         player->AddComponent<NetworkTransform>();
         networkId->clientAuthorityId = spawnMessage->clientAuthorityId;
         player->transform->SetWorldPos(spawnMessage->startPos);
+        players[spawnMessage->clientAuthorityId] =
+            player->GetComponent<PlayerController>();
       });
 }
 
-// ReSharper disable CppMemberFunctionMayBeStatic
-// ReSharper disable once CppMemberFunctionMayBeConst
 Math::Vector3 GameManager::GetPlayerStartPos() {
-  // ReSharper restore CppMemberFunctionMayBeStatic
   static int count = 0;
   count++;
   return Math::Vector3(count, 0, 0);
@@ -86,10 +86,7 @@ void GameManager::LoadLevel(const std::string_view levelName) {
   NetworkManager::Instance().NetworkLoadLevel(levelName);
 }
 
-// ReSharper disable CppMemberFunctionMayBeStatic
-// ReSharper disable once CppMemberFunctionMayBeConst
 void GameManager::SendLevelLoadedMessage() {
-  // ReSharper restore CppMemberFunctionMayBeStatic
   NetworkManager::Instance().SendMessageFromClient<LevelLoadedMessage>(
       [](LevelLoadedMessage* message) {});
   LOG_INFO(Debug::Channel::Networking, "Level loaded message sent");
@@ -107,7 +104,9 @@ void GameManager::RegisterClientLevelLoadedCallback() {
         if (levelLoadCompletePlayerCount == playerCount) {
           NetworkManager::Instance()
               .SendMessageFromServerToAll<AllPlayerReadyMessage>(
-                  [](AllPlayerReadyMessage* message) {});
+                  [this](AllPlayerReadyMessage* message) {
+                    message->playerCount = playerCount;
+                  });
           LOG_INFO(Debug::Channel::Networking, "All player ready message sent");
         }
       });
@@ -115,7 +114,11 @@ void GameManager::RegisterClientLevelLoadedCallback() {
 
 void GameManager::RegisterAllPlayerReadyCallback() {
   NetworkManager::Instance().RegisterClientCallback<AllPlayerReadyMessage>(
-      [this](yojimbo::Message* inMessage) { SendSpawnPlayerMessage(); });
+      [this](yojimbo::Message* inMessage) {
+        auto* message = reinterpret_cast<AllPlayerReadyMessage*>(inMessage);
+        SendSpawnPlayerMessage();
+        players.Resize(message->playerCount, nullptr);
+      });
 }
 
 void GameManager::RegisterClientConnectionCallbacks() {

@@ -35,13 +35,19 @@ bool Serialize(Stream* stream) {
 }
 
 void Copy(const yojimbo::Message* otherMessage) override {}
+
 DEFINE_NETWORK_MESSAGE_END
 
 DEFINE_NETWORK_MESSAGE(AllPlayerReadyMessage)
 template <typename Stream>
 bool Serialize(Stream* stream) {
+  serialize_int(stream, playerCount, 0, 100);
   return true;
 }
 
-void Copy(const yojimbo::Message* otherMessage) override {}
+void Copy(const yojimbo::Message* otherMessage) override {
+  auto* message = reinterpret_cast<const AllPlayerReadyMessage*>(otherMessage);
+  playerCount = message->playerCount;
+}
+int playerCount = 0;
 DEFINE_NETWORK_MESSAGE_END

@@ -2,8 +2,10 @@
  * Copyright (c) 2018 Isetta
  */
 #include <IsettaEngine.h>
+
 #include "Player/PlayerController.h"
 
+#include "Gameplay/GameManager.h"
 #include "Networking/PlayerMessages.h"
 #include "Player/Bullet.h"
 #include "Player/PlayerHealth.h"
@@ -14,20 +16,15 @@ void PlayerController::Awake() {
   auto* mesh =
       entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
   animator = entity->AddComponent<AnimationComponent>(mesh);
-  idleState =
-      animator->AddAnimation("models/Player/Player_Idle.anim", 0, "", false);
+  animator->AddAnimation("models/Player/Player_Idle.anim");
   // idleState = animator->AddAnimation("Halves/Soldier/Soldier_Idle.anim", 0,
   // "", false);
-  runState =
-      animator->AddAnimation("models/Player/Player_Run.anim", 0, "", false);
-  shootState =
-      animator->AddAnimation("models/Player/Player_Shoot.anim", 0, "", false);
-  // runShootState = animator->AddAnimation("models/Player/Player_ShootRun.anim",
-                                         // 0, "", false);
-  runShootState = animator->AddAnimation("Halves/Soldier/Soldier.anim", 0,
-  "", false);
-  dieState =
-      animator->AddAnimation("models/Player/Player_Die.anim", 0, "", false);
+  animator->AddAnimation("models/Player/Player_Run.anim");
+  animator->AddAnimation("models/Player/Player_Shoot.anim");
+  // runShootState =
+  // animator->AddAnimation("models/Player/Player_ShootRun.anim", 0, "", false);
+  animator->AddAnimation("Halves/Soldier/Soldier.anim");
+  animator->AddAnimation("models/Player/Player_Die.anim");
 }
 
 void PlayerController::Start() {
@@ -59,7 +56,7 @@ void PlayerController::Update() {
 
       // Shoot countdown
       if (shootCooldown <= 0.f) {
-        Shoot();
+        CmdShoot();
         shootCooldown += shootInterval;
       }
       shootCooldown -= Time::GetDeltaTime();
@@ -73,28 +70,44 @@ void PlayerController::Update() {
     // Animation & Look Dir
     if (shouldShoot && shouldRun) {
       transform->LookAt(transform->GetWorldPos() + shootDir);
-      if (state != State::RunShoot) {
-        animator->TransitToAnimationState(runShootState, transitionDuration);
-        state = State::RunShoot;
-      }
+      ChangeState(static_cast<int>(State::RunShoot));
     } else if (shouldRun) {
       transform->LookAt(transform->GetWorldPos() + movement);
-      if (state != State::Run) {
-        animator->TransitToAnimationState(runState, transitionDuration);
-        state = State::Run;
-      }
+      ChangeState(static_cast<int>(State::Run));
     } else if (shouldShoot) {
       transform->LookAt(transform->GetWorldPos() + shootDir);
-      if (state != State::Shoot) {
-        animator->TransitToAnimationState(shootState, transitionDuration);
-        state = State::Shoot;
-      }
+      ChangeState(static_cast<int>(State::Shoot));
     } else {
-      if (state != State::Idle) {
-        animator->TransitToAnimationState(idleState, transitionDuration);
-        state = State::Idle;
-      }
+      ChangeState(static_cast<int>(State::Idle));
     }
+  }
+}
+
+void PlayerController::GuiUpdate() {
+  if (!networkId->HasClientAuthority()) {
+    return;
+  }
+
+  static bool isOpen = true;
+  GUI::Window(
+      RectTransform{
+          {-200, 200, 300, 200}, GUI::Pivot::TopRight, GUI::Pivot::TopRight},
+      "Players",
+      []() {
+        float y = 5, x = 5, height = 20, width = 250;
+        for (PlayerController* player : GameManager::Instance().players) {
+          GUI::Text(RectTransform{Math::Rect{x, y, width, height}},
+                    player->entity->GetName());
+          y += height;
+        }
+      },
+      &isOpen);
+}
+
+void PlayerController::ChangeState(int newState) {
+  if (static_cast<int>(state) != newState) {
+    animator->TransitToAnimationState(newState, transitionDuration);
+    state = static_cast<State>(newState);
   }
 }
 
@@ -119,7 +132,7 @@ void PlayerController::RegisterNetworkCallbacks() {
   }
 }
 
-void PlayerController::Shoot() {
+void PlayerController::CmdShoot() {
   NetworkManager::Instance().SendMessageFromClient<ShootMessage>(
       [this](ShootMessage* message) {
         message->startPos = GetBulletPos();

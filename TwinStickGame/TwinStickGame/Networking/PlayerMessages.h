@@ -28,3 +28,22 @@ Math::Vector3 dir{};
 int playerNetId = 0;
 
 DEFINE_NETWORK_MESSAGE_END
+
+DEFINE_NETWORK_MESSAGE(PlayerStateChangeMessage)
+template <typename Stream>
+bool Serialize(Stream* stream) {
+  serialize_int(stream, playerIndex, 0, 100);
+  serialize_int(stream, newState, 0, 10);
+  return true;
+}
+
+void Copy(const yojimbo::Message* otherMessage) override {
+  auto* message = reinterpret_cast<const PlayerStateChangeMessage*>(otherMessage);
+  playerIndex = message->playerIndex;
+  newState = message->newState;
+}
+
+int playerIndex = 0;
+int newState = 0;
+
+DEFINE_NETWORK_MESSAGE_END

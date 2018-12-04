@@ -15,10 +15,13 @@ public:
 void Awake() override;
 void Start() override;
 void Update() override;
+void GuiUpdate() override;
+
+void ChangeState(int newState);
 
 private:
 static void RegisterNetworkCallbacks();
-void Shoot();
+void CmdShoot();
 Math::Vector3 GetBulletPos();
 
 float moveSpeed{15.0f};
@@ -28,16 +31,16 @@ float shootInterval{0.1f};
 float shootCooldown{0.f};
 
 // Animation
-enum class State : U8 {
-  Idle, Run, Shoot, RunShoot, Die
+enum class State : int {
+  Idle = 0, Run = 1, Shoot = 2, RunShoot = 3, Die = 4
 };
 
 AnimationComponent* animator = nullptr;
-int idleState = 0;
-int runState = 0;
-int shootState = 0;
-int runShootState = 0;
-int dieState = 0;
+// int idleState = 0;
+// int runState = 0;
+// int shootState = 0;
+// int runShootState = 0;
+// int dieState = 0;
 State state = State::Idle;
 float transitionDuration = 0.1f;
 

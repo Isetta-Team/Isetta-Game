@@ -1,8 +1,9 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "Bullet.h"
-#include <Core/IsettaCore.h>
+
 
 using namespace Isetta;
 
