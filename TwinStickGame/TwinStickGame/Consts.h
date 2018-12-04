@@ -1,4 +1,5 @@
 #pragma once
+#include <IsettaEngine.h>
 namespace Consts {
 // font sizes
 const float SMALL_SIZE = 16.f;

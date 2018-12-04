@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-#include <Scene/Entity.h>
+#include <IsettaEngine.h>
 
 using namespace Isetta;
 

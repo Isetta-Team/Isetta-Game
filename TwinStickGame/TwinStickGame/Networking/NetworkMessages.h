@@ -1,5 +1,5 @@
 #pragma once
-#include "Networking/Messages.h"
+#include <IsettaEngine.h>
 
 DEFINE_NETWORK_MESSAGE(SpawnPlayerMessage)
 template <typename Stream>

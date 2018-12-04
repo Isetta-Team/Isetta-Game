@@ -1,10 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
-
+#include <IsettaEngine.h>
 #include "MessageTestComponent.h"
-
-#include "Core/IsettaCore.h"
 
 void MessageTestComponent::GuiUpdate() {
   static bool isOpen = true;

@@ -2,8 +2,7 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-#include <Core/Config/CVar.h>
-#include <Core/IsettaAlias.h>
+#include <IsettaEngine.h>
 
 using namespace Isetta;
 

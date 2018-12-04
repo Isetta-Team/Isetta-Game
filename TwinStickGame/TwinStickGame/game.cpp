@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 Isetta
  */
-#include <EngineLoop.h>
+#include <IsettaEngine.h>
 
 int main() {
   Isetta::Application::Start();

@@ -1,13 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "NetworkTestComp.h"
-
-#include "Core/Config/Config.h"
-#include "Core/IsettaCore.h"
-#include "Core/SystemInfo.h"
-#include "Networking/NetworkDiscovery.h"
-#include "Networking/NetworkManager.h"
 
 namespace Isetta {
 void NetworkTestComp::Start() {

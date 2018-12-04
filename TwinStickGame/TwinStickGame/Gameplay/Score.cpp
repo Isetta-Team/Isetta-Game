@@ -1,16 +1,9 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "Score.h"
 
-// ENGINE
-#include "Core/Color.h"
-//#include "Events/EventObject.h"
-//#include "Events/Events.h"
-#include "Graphics/GUI.h"
-#include "Graphics/RectTransform.h"
-//#include "Scene/Entity.h"
-#include "Util.h"
 #include "Consts.h"
 
 using namespace Isetta;

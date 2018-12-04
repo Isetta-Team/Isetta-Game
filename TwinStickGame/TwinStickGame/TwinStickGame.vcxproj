@@ -79,6 +79,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_EDITOR;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>IsettaEngine.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -91,6 +93,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>IsettaEngine.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -107,6 +111,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_EDITOR;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>IsettaEngine.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -121,6 +127,11 @@
     <ClCompile Include="Gameplay\GameManager.cpp" />
     <ClCompile Include="Gameplay\Hitscan.cpp" />
     <ClCompile Include="Gameplay\Score.cpp" />
+    <ClCompile Include="IsettaEngine.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseEditor|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Levels\HitscanTestLevel.cpp" />
     <ClCompile Include="Levels\Level1.cpp" />
     <ClCompile Include="Levels\MenuLevel.cpp" />
@@ -143,6 +154,7 @@
     <ClInclude Include="Gameplay\GameManager.h" />
     <ClInclude Include="Gameplay\Hitscan.h" />
     <ClInclude Include="Gameplay\Score.h" />
+    <ClInclude Include="IsettaEngine.h" />
     <ClInclude Include="Levels\HitscanTestLevel.h" />
     <ClInclude Include="Levels\Level1.h" />
     <ClInclude Include="Levels\MenuLevel.h" />

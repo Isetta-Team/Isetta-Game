@@ -96,6 +96,9 @@
     <ClCompile Include="Player\Bullet.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="IsettaEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="Player\Bullet.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="IsettaEngine.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,9 +2,7 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-#include <map>
-#include "Core/Geometry/Ray.h"
-#include "Scene/Component.h"
+#include <IsettaEngine.h>
 
 using namespace Isetta;
 

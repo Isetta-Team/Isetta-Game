@@ -1,10 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "Player/PlayerController.h"
-
-#include <Core/IsettaCore.h>
-#include <Networking/NetworkId.h>
 
 #include "Networking/PlayerMessages.h"
 #include "Player/Bullet.h"

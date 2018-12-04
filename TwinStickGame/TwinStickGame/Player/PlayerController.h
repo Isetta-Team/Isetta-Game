@@ -2,10 +2,7 @@
  * Copyright (c) 2018 Isetta
  */
 #pragma once
-#include <Core/Math/Vector3.h>
-#include <Graphics/AnimationComponent.h>
-#include <Scene/Component.h>
-#include <Core/IsettaAlias.h>
+#include <IsettaEngine.h>
 
 using namespace Isetta;
 

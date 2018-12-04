@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "Gameplay/EntityFactory.h"
 
 #include <Components/Editor/EditorComponent.h>
