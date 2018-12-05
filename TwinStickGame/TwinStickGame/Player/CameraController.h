@@ -11,5 +11,5 @@ public:
 void Update() override;
 void GuiUpdate() override;
 private:
-Math::Vector3 offset{10, 15, 0};
+Math::Vector3 offset{0, 15, 10};
 DEFINE_COMPONENT_END(CameraController, Component)

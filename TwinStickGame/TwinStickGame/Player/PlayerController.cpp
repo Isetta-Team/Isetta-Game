@@ -47,28 +47,6 @@ void PlayerController::Update() {
                       Input::GetGamepadAxis(GamepadAxis::R_VERTICAL));
     bool shouldShoot = shootDir.Magnitude() >= 1.f;
 
-    // Translation
-    if (shouldRun) {
-      transform->TranslateWorld(movement * moveSpeed * dt);
-    }
-
-    // Shoot
-    if (shouldShoot) {
-      shootDir.Normalize();
-
-      // Shoot countdown
-      if (shootCooldown <= 0.f) {
-        CmdShoot();
-        shootCooldown += shootInterval;
-      }
-      shootCooldown -= Time::GetDeltaTime();
-
-      DebugDraw::Line(transform->GetWorldPos(),
-                      transform->GetWorldPos() + shootDir, Color::blue);
-    } else {
-      shootCooldown = 0.f;
-    }
-
     // Animation & Look Dir
     if (shouldShoot && shouldRun) {
       transform->LookAt(transform->GetWorldPos() + shootDir);
@@ -81,6 +59,28 @@ void PlayerController::Update() {
       CmdChangeState(State::Shoot);
     } else {
       CmdChangeState(State::Idle);
+    }
+
+    // Translation
+    if (shouldRun) {
+      transform->TranslateWorld(movement * moveSpeed * dt);
+    }
+
+    // Shoot
+    if (shouldShoot) {
+      shootDir.Normalize();
+
+      // Shoot countdown
+      if (shootCooldown < 0.f) {
+        CmdShoot();
+        shootCooldown += shootInterval;
+      }
+      shootCooldown -= Time::GetDeltaTime();
+
+      DebugDraw::Line(transform->GetWorldPos(),
+                      transform->GetWorldPos() + shootDir, Color::blue);
+    } else {
+      shootCooldown = 0.f;
     }
   }
 }
