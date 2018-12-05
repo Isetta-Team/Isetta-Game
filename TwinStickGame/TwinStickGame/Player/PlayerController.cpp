@@ -93,7 +93,7 @@ void PlayerController::GuiUpdate() {
   static bool isOpen = true;
   GUI::Window(
       RectTransform{
-          {-200, 200, 500, 300}, GUI::Pivot::TopRight, GUI::Pivot::TopRight},
+          {-100, 100, 500, 200}, GUI::Pivot::TopRight, GUI::Pivot::TopRight},
       "Players",
       [this]() {
         float y = 5, x = 5, height = 20, width = 250;

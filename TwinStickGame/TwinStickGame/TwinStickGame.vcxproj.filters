@@ -99,6 +99,9 @@
     <ClCompile Include="IsettaEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Player\CameraController.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -173,10 +176,13 @@
     <ClInclude Include="IsettaEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Player\CameraController.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="user.cfg" />
-    <CustomBuild Include="**/*.cfg;" />
+    <CustomBuild Include="*.cfg;" />
     <CustomBuild Include="*.cfg;" />
     <CustomBuild Include="*.cfg;" />
   </ItemGroup>

@@ -2,19 +2,21 @@
  * Copyright (c) 2018 Isetta
  */
 #include <IsettaEngine.h>
-#include "Levels/Level1.h"
 
+#include "Levels/Level1.h"
 #include <Components/FlyController.h>
 
 #include "Gameplay/EntityFactory.h"
 #include "Gameplay/GameManager.h"
+#include "Player/CameraController.h"
 
 void Level1::Load() {
   Entity* camera = Entity::Instantiate("Camera");
   camera->AddComponent<CameraComponent>();
+  camera->AddComponent<CameraController>();
+  // camera->AddComponent<FlyController>();
   camera->transform->SetWorldPos({15, 15, 30});
   camera->transform->LookAt(Math::Vector3::zero);
-  camera->AddComponent<FlyController>();
 
   Entity* lightEntity{Entity::Instantiate("Light")};
   lightEntity->AddComponent<LightComponent>();

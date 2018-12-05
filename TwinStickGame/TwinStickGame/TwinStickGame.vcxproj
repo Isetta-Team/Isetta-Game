@@ -140,6 +140,7 @@
     <ClCompile Include="Menu\MainMenu.cpp" />
     <ClCompile Include="Menu\MainMenuDraw.cpp" />
     <ClCompile Include="Player\Bullet.cpp" />
+    <ClCompile Include="Player\CameraController.cpp" />
     <ClCompile Include="Player\PlayerController.cpp" />
     <ClCompile Include="Player\PlayerHealth.cpp" />
     <ClCompile Include="Test\HitscanTest.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Networking\NetworkMessages.h" />
     <ClInclude Include="Networking\PlayerMessages.h" />
     <ClInclude Include="Player\Bullet.h" />
+    <ClInclude Include="Player\CameraController.h" />
     <ClInclude Include="Player\PlayerController.h" />
     <ClInclude Include="Player\PlayerHealth.h" />
     <ClInclude Include="Test\HitscanTest.h" />
