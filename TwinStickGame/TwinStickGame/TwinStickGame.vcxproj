@@ -61,15 +61,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)-immediate\</IntDir>
+    <IntDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)-intermediate\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)-immediate\</IntDir>
+    <IntDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)-intermediate\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseEditor|x64'">
     <OutDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)-immediate\</IntDir>
+    <IntDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)-intermediate\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -133,6 +133,7 @@
     </ClCompile>
     <ClCompile Include="Levels\HitscanTestLevel.cpp" />
     <ClCompile Include="Levels\Level1.cpp" />
+    <ClCompile Include="Levels\Level1Map.cpp" />
     <ClCompile Include="Levels\MenuLevel.cpp" />
     <ClCompile Include="Levels\MessageTestLevel.cpp" />
     <ClCompile Include="Levels\SinglePlayerLevel.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="IsettaEngine.h" />
     <ClInclude Include="Levels\HitscanTestLevel.h" />
     <ClInclude Include="Levels\Level1.h" />
+    <ClInclude Include="Levels\Level1Map.h" />
     <ClInclude Include="Levels\MenuLevel.h" />
     <ClInclude Include="Levels\MessageTestLevel.h" />
     <ClInclude Include="Levels\SinglePlayerLevel.h" />

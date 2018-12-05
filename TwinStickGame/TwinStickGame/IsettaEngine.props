@@ -6,7 +6,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)-immediate\</IntDir>
+    <IntDir>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)-intermediate\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -32,12 +32,14 @@ XCOPY /Y /R "$(EngineDir)Build\$(Configuration)\*.lib" "$(TargetDir)"</Command>
       <Value>$(EngineDir)</Value>
     </BuildMacro>
   </ItemGroup>
-  <PropertyGroup Label="Debugging Properties">
-    <LocalDebuggerWorkingDirectory>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)</LocalDebuggerWorkingDirectory>
-    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-  </PropertyGroup>
+  <ItemGroup>
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml">
+      <Command>copy /Y "%(Identity)" "$(TargetDir)%(Identity)"</Command>
+      <Outputs>$(TargetDir)%(Identity)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
   <PropertyGroup Label="Debugging">
-    <LocalDebuggerWorkingDirectory>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)\</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>$(SolutionDir)Build\$(ProjectName)-$(Platform)-$(Configuration)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

@@ -90,6 +90,9 @@
     <ClCompile Include="IsettaEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Levels\Level1Map.cpp">
+      <Filter>Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -152,8 +155,13 @@
     <ClInclude Include="Networking\NetworkMessages.h">
       <Filter>Networking</Filter>
     </ClInclude>
+<<<<<<< c5c5b5d351a6583d0e13379617b1a6a8eeeb73d9
     <ClInclude Include="IsettaEngine.h">
       <Filter>Header Files</Filter>
+=======
+    <ClInclude Include="Levels\Level1Map.h">
+      <Filter>Levels</Filter>
+>>>>>>> Models, map layout (start), updated build location
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
