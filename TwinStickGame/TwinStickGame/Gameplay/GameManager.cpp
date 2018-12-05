@@ -81,6 +81,10 @@ Math::Vector3 GameManager::GetPlayerStartPos() {
   return Math::Vector3(count, 0, 0);
 }
 
+PlayerController* GameManager::GetPlayer(const int index) {
+  return players[index];
+}
+
 void GameManager::LoadLevel(const std::string_view levelName) {
   levelLoadCompletePlayerCount = 0;
   NetworkManager::Instance().NetworkLoadLevel(levelName);

@@ -6,10 +6,6 @@
 
 using namespace Isetta;
 
-namespace Isetta {
-class NetworkId;
-}
-
 DEFINE_COMPONENT(PlayerController, Component, true)
 public:
 void Awake() override;
@@ -20,20 +16,23 @@ void GuiUpdate() override;
 void ChangeState(int newState);
 
 private:
+enum class State : int {
+  Idle = 0, Run = 1, Shoot = 2, RunShoot = 3, Die = 4
+};
+
 static void RegisterNetworkCallbacks();
 void CmdShoot();
-Math::Vector3 GetBulletPos();
+void CmdChangeState(State state) const;
+Math::Vector3 GetBulletPos() const;
 
 float moveSpeed{15.0f};
 bool isMoving{false};
 
 float shootInterval{0.1f};
 float shootCooldown{0.f};
+Math::Vector3 bulletOffset{};
 
 // Animation
-enum class State : int {
-  Idle = 0, Run = 1, Shoot = 2, RunShoot = 3, Die = 4
-};
 
 AnimationComponent* animator = nullptr;
 // int idleState = 0;

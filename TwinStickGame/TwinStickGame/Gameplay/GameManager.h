@@ -22,6 +22,7 @@ class GameManager {
   void SendSpawnPlayerMessage();        // from client
   void RegisterSpawnPlayerCallbacks();  // on both client and server
   Math::Vector3 GetPlayerStartPos();
+  PlayerController* GetPlayer(int index);
   Array<PlayerController*> players;
 
   // Level loading stuff
@@ -30,6 +31,6 @@ class GameManager {
   void RegisterClientLevelLoadedCallback();  // on server
   void RegisterAllPlayerReadyCallback();     // on client
   void RegisterClientConnectionCallbacks();  // on server
-  U8 playerCount = 0; // server only
-  U8 levelLoadCompletePlayerCount = 0; // server only
+  U8 playerCount = 0;                        // server only
+  U8 levelLoadCompletePlayerCount = 0;       // server only
 };

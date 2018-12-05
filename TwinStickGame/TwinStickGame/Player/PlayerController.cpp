@@ -13,8 +13,10 @@
 void PlayerController::Awake() {
   RegisterNetworkCallbacks();
   entity->AddComponent<PlayerHealth>();
+  // auto* mesh =
+  //     entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
   auto* mesh =
-      entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
+      entity->AddComponent<MeshComponent>("Halves/Soldier/Soldier.scene.xml");
   animator = entity->AddComponent<AnimationComponent>(mesh);
   animator->AddAnimation("models/Player/Player_Idle.anim");
   // idleState = animator->AddAnimation("Halves/Soldier/Soldier_Idle.anim", 0,
@@ -70,15 +72,15 @@ void PlayerController::Update() {
     // Animation & Look Dir
     if (shouldShoot && shouldRun) {
       transform->LookAt(transform->GetWorldPos() + shootDir);
-      ChangeState(static_cast<int>(State::RunShoot));
+      CmdChangeState(State::RunShoot);
     } else if (shouldRun) {
       transform->LookAt(transform->GetWorldPos() + movement);
-      ChangeState(static_cast<int>(State::Run));
+      CmdChangeState(State::Run);
     } else if (shouldShoot) {
       transform->LookAt(transform->GetWorldPos() + shootDir);
-      ChangeState(static_cast<int>(State::Shoot));
+      CmdChangeState(State::Shoot);
     } else {
-      ChangeState(static_cast<int>(State::Idle));
+      CmdChangeState(State::Idle);
     }
   }
 }
@@ -91,29 +93,35 @@ void PlayerController::GuiUpdate() {
   static bool isOpen = true;
   GUI::Window(
       RectTransform{
-          {-200, 200, 300, 200}, GUI::Pivot::TopRight, GUI::Pivot::TopRight},
+          {-200, 200, 500, 300}, GUI::Pivot::TopRight, GUI::Pivot::TopRight},
       "Players",
-      []() {
+      [this]() {
         float y = 5, x = 5, height = 20, width = 250;
         for (PlayerController* player : GameManager::Instance().players) {
           GUI::Text(RectTransform{Math::Rect{x, y, width, height}},
                     player->entity->GetName());
           y += height;
         }
+        GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Move Speed",
+                         &moveSpeed, 1, 15);
+        y += height;
+        GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Shoot Interval",
+                         &shootInterval, 0, 0.2);
+        y += height;
+        GUI::InputVector3(RectTransform{{x, y, width, height}}, "Bullet offset",
+                          &bulletOffset);
       },
       &isOpen);
 }
 
 void PlayerController::ChangeState(int newState) {
-  if (static_cast<int>(state) != newState) {
-    animator->TransitToAnimationState(newState, transitionDuration);
-    state = static_cast<State>(newState);
-  }
+  animator->TransitToAnimationState(newState, transitionDuration);
+  state = static_cast<State>(newState);
 }
 
 void PlayerController::RegisterNetworkCallbacks() {
-  static bool registered = false;
-  if (!registered) {
+  static bool isShared = false;
+  if (!isShared) {
     NetworkManager::Instance().RegisterServerCallback<ShootMessage>(
         [](int clientIndex, yojimbo::Message* message) {
           NetworkManager::Instance().SendMessageFromServerToAll<ShootMessage>(
@@ -128,7 +136,21 @@ void PlayerController::RegisterNetworkCallbacks() {
           bullet->AddComponent<Bullet>()->Initialize(inMessage->startPos,
                                                      inMessage->dir);
         });
-    registered = true;
+
+    NetworkManager::Instance().RegisterServerCallback<PlayerStateChangeMessage>(
+        [](int clientIndex, yojimbo::Message* inMessage) {
+          NetworkManager::Instance()
+              .SendMessageFromServerToAll<PlayerStateChangeMessage>(inMessage);
+        });
+    NetworkManager::Instance().RegisterClientCallback<PlayerStateChangeMessage>(
+        [](yojimbo::Message* inMessage) {
+          auto* message =
+              reinterpret_cast<PlayerStateChangeMessage*>(inMessage);
+          GameManager::Instance()
+              .GetPlayer(message->playerIndex)
+              ->ChangeState(message->newState);
+        });
+    isShared = true;
   }
 }
 
@@ -141,6 +163,16 @@ void PlayerController::CmdShoot() {
       });
 }
 
-Math::Vector3 PlayerController::GetBulletPos() {
-  return transform->GetWorldPos() + Math::Vector3::up * 0.5f;
+void PlayerController::CmdChangeState(State state) const {
+  if (this->state != state) {
+    NetworkManager::Instance().SendMessageFromClient<PlayerStateChangeMessage>(
+        [state](PlayerStateChangeMessage* message) {
+          message->playerIndex = NetworkManager::Instance().GetClientIndex();
+          message->newState = static_cast<int>(state);
+        });
+  }
+}
+
+Math::Vector3 PlayerController::GetBulletPos() const {
+  return transform->WorldPosFromLocalPos(bulletOffset);
 }

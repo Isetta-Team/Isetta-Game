@@ -26,7 +26,6 @@ void Copy(const yojimbo::Message* otherMessage) override {
 Math::Vector3 startPos{};
 Math::Vector3 dir{};
 int playerNetId = 0;
-
 DEFINE_NETWORK_MESSAGE_END
 
 DEFINE_NETWORK_MESSAGE(PlayerStateChangeMessage)
@@ -45,5 +44,4 @@ void Copy(const yojimbo::Message* otherMessage) override {
 
 int playerIndex = 0;
 int newState = 0;
-
 DEFINE_NETWORK_MESSAGE_END
