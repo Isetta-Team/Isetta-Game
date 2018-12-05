@@ -1,0 +1,4 @@
+<Model name="naturePack_032" geometry="MoreNature/naturePack_032.geo">
+
+	<Mesh name="Mesh1_Group1_Model_154" material="MoreNature/Stone_174.material.xml" rx="90" ry="0" rz="-0" batchStart="0" batchCount="516" vertRStart="0" vertREnd="471" />
+</Model>

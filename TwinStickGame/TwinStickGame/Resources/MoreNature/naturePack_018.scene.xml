@@ -1,0 +1,6 @@
+<Model name="naturePack_018" geometry="MoreNature/naturePack_018.geo">
+
+	<Mesh name="Mesh1_Group1_Model_143" material="MoreNature/Green_leafs_128.material.xml" rx="90" ry="0" rz="-0" batchStart="0" batchCount="48" vertRStart="0" vertREnd="18">
+		<Mesh name="#Mesh1_Group1_Model_143" material="MoreNature/Wood_313.material.xml" batchStart="48" batchCount="84" vertRStart="19" vertREnd="77" />
+	</Mesh>
+</Model>
