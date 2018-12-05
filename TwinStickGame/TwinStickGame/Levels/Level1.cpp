@@ -21,7 +21,7 @@ void Level1::Load() {
   lightEntity->SetTransform(Math::Vector3{0, 200, 600},
                             Math::Vector3{-30, 0, 0});
 
-    // instantiate the ground
+  // instantiate the ground
   Entity* ground{Entity::Instantiate("Ground")};
   ground->AddComponent<MeshComponent>("models/Ground/Level.scene.xml");
   ground->transform->SetWorldPos({0, -0.01f, 0});
