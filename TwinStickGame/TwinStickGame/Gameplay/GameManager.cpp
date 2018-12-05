@@ -3,8 +3,8 @@
  */
 #include <IsettaEngine.h>
 
-#include "Gameplay/GameManager.h"
 #include "Gameplay/EntityFactory.h"
+#include "Gameplay/GameManager.h"
 #include "Networking/NetworkMessages.h"
 
 using namespace Isetta;
@@ -50,6 +50,10 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
         spawnMessage->startPos = player->transform->GetWorldPos();
 
         players[clientIndex] = player->GetComponent<PlayerController>();
+        if (NetworkManager::Instance().GetClientIndex() ==
+            spawnMessage->clientAuthorityId) {
+          localPlayer = player->GetComponent<PlayerController>();
+        }
         NetworkManager::Instance()
             .SendMessageFromServerToAll<SpawnPlayerMessage>(spawnMessage);
         LOG_INFO(Debug::Channel::Networking,
@@ -72,6 +76,10 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
         player->transform->SetWorldPos(spawnMessage->startPos);
         players[spawnMessage->clientAuthorityId] =
             player->GetComponent<PlayerController>();
+        if (NetworkManager::Instance().GetClientIndex() ==
+            spawnMessage->clientAuthorityId) {
+          localPlayer = player->GetComponent<PlayerController>();
+        }
       });
 }
 

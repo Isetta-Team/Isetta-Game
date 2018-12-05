@@ -102,14 +102,17 @@ void PlayerController::GuiUpdate() {
                     player->entity->GetName());
           y += height;
         }
-        GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Move Speed",
+        GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Move Speed    ",
                          &moveSpeed, 1, 15);
         y += height;
         GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Shoot Interval",
                          &shootInterval, 0, 0.2);
         y += height;
-        GUI::InputVector3(RectTransform{{x, y, width, height}}, "Bullet offset",
-                          &bulletOffset);
+        GUI::InputVector3(RectTransform{{x, y, width, height}},
+                          "Bullet offset ", &bulletOffset);
+        y += height;
+        GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Shoot Speed   ",
+                         &shootSpeed, 10, 50);
       },
       &isOpen);
 }
@@ -133,8 +136,8 @@ void PlayerController::RegisterNetworkCallbacks() {
           auto* inMessage = reinterpret_cast<ShootMessage*>(message);
           auto* bullet = Entity::Instantiate("Bullet");
           bullet->AddComponent<MeshComponent>("models/Bullet/Bullet.scene.xml");
-          bullet->AddComponent<Bullet>()->Initialize(inMessage->startPos,
-                                                     inMessage->dir);
+          bullet->AddComponent<Bullet>()->Initialize(
+              inMessage->startPos, inMessage->dir, inMessage->speed);
         });
 
     NetworkManager::Instance().RegisterServerCallback<PlayerStateChangeMessage>(
@@ -159,6 +162,7 @@ void PlayerController::CmdShoot() {
       [this](ShootMessage* message) {
         message->startPos = GetBulletPos();
         message->dir = transform->GetForward();
+        message->speed = shootSpeed;
         message->playerNetId = networkId->id;
       });
 }

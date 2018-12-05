@@ -12,6 +12,7 @@ bool Serialize(Stream* stream) {
   serialize_float(stream, dir.x);
   serialize_float(stream, dir.y);
   serialize_float(stream, dir.z);
+  serialize_float(stream, speed);
   serialize_int(stream, playerNetId, 0, 10000);
   return true;
 }
@@ -20,11 +21,13 @@ void Copy(const yojimbo::Message* otherMessage) override {
   auto* message = reinterpret_cast<const ShootMessage*>(otherMessage);
   startPos = message->startPos;
   dir = message->dir;
+  speed = message->speed;
   playerNetId = message->playerNetId;
 }
 
 Math::Vector3 startPos{};
 Math::Vector3 dir{};
+float speed = 0.f;
 int playerNetId = 0;
 DEFINE_NETWORK_MESSAGE_END
 

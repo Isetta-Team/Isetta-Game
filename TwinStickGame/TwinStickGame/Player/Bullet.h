@@ -8,11 +8,12 @@ using namespace Isetta;
 
 DEFINE_COMPONENT(Bullet, Component, true)
 public:
-void Initialize(const Math::Vector3& pos, const Math::Vector3& dir);
+void Initialize(const Math::Vector3& pos, const Math::Vector3& dir,
+                float speed);
 void Update() override;
 
 private:
 Math::Vector3 dir;
-float speed = 15;
+float speed = 0.f;
 
 DEFINE_COMPONENT_END(Bullet, Component)

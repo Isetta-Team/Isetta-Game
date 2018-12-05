@@ -30,6 +30,7 @@ bool isMoving{false};
 
 float shootInterval{0.1f};
 float shootCooldown{0.f};
+float shootSpeed{30.f};
 Math::Vector3 bulletOffset{};
 
 // Animation

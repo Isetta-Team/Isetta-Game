@@ -23,7 +23,9 @@ class GameManager {
   void RegisterSpawnPlayerCallbacks();  // on both client and server
   Math::Vector3 GetPlayerStartPos();
   PlayerController* GetPlayer(int index);
+  PlayerController* GetLocalPlayer() const { return localPlayer; }
   Array<PlayerController*> players;
+  PlayerController* localPlayer;
 
   // Level loading stuff
   void LoadLevel(std::string_view levelName);
