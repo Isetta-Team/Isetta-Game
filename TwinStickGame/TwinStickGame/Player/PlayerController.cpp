@@ -7,24 +7,17 @@
 
 #include "Gameplay/GameManager.h"
 #include "Networking/PlayerMessages.h"
-#include "Player/Bullet.h"
 #include "Player/PlayerHealth.h"
 
 void PlayerController::Awake() {
   RegisterNetworkCallbacks();
   entity->AddComponent<PlayerHealth>();
-  // auto* mesh =
-  //     entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
   auto* mesh =
       entity->AddComponent<MeshComponent>("Halves/Soldier/Soldier.scene.xml");
   animator = entity->AddComponent<AnimationComponent>(mesh);
   animator->AddAnimation("models/Player/Player_Idle.anim");
-  // idleState = animator->AddAnimation("Halves/Soldier/Soldier_Idle.anim", 0,
-  // "", false);
   animator->AddAnimation("models/Player/Player_Run.anim");
   animator->AddAnimation("models/Player/Player_Shoot.anim");
-  // runShootState =
-  // animator->AddAnimation("models/Player/Player_ShootRun.anim", 0, "", false);
   animator->AddAnimation("Halves/Soldier/Soldier.anim");
   animator->AddAnimation("models/Player/Player_Die.anim");
 }
@@ -123,23 +116,9 @@ void PlayerController::ChangeState(int newState) {
 }
 
 void PlayerController::RegisterNetworkCallbacks() {
-  static bool isShared = false;
-  if (!isShared) {
-    NetworkManager::Instance().RegisterServerCallback<ShootMessage>(
-        [](int clientIndex, yojimbo::Message* message) {
-          NetworkManager::Instance().SendMessageFromServerToAll<ShootMessage>(
-              message);
-          // TODO(YIDI): hit scan
-        });
-    NetworkManager::Instance().RegisterClientCallback<ShootMessage>(
-        [](yojimbo::Message* message) {
-          auto* inMessage = reinterpret_cast<ShootMessage*>(message);
-          auto* bullet = Entity::Instantiate("Bullet");
-          bullet->AddComponent<MeshComponent>("models/Bullet/Bullet.scene.xml");
-          bullet->AddComponent<Bullet>()->Initialize(
-              inMessage->startPos, inMessage->dir, inMessage->speed);
-        });
-
+  static bool areSharedCallbacksInitialized = false;
+  if (!areSharedCallbacksInitialized) {
+    // Animation
     NetworkManager::Instance().RegisterServerCallback<PlayerStateChangeMessage>(
         [](int clientIndex, yojimbo::Message* inMessage) {
           NetworkManager::Instance()
@@ -153,7 +132,7 @@ void PlayerController::RegisterNetworkCallbacks() {
               .GetPlayer(message->playerIndex)
               ->ChangeState(message->newState);
         });
-    isShared = true;
+    areSharedCallbacksInitialized = true;
   }
 }
 
@@ -163,16 +142,17 @@ void PlayerController::CmdShoot() {
         message->startPos = GetBulletPos();
         message->dir = transform->GetForward();
         message->speed = shootSpeed;
-        message->playerNetId = networkId->id;
+        message->range = bulletRange;
+        message->playerIndex = playerIndex;
       });
 }
 
-void PlayerController::CmdChangeState(State state) const {
-  if (this->state != state) {
+void PlayerController::CmdChangeState(State newState) const {
+  if (state != newState) {
     NetworkManager::Instance().SendMessageFromClient<PlayerStateChangeMessage>(
-        [state](PlayerStateChangeMessage* message) {
-          message->playerIndex = NetworkManager::Instance().GetClientIndex();
-          message->newState = static_cast<int>(state);
+        [newState, this](PlayerStateChangeMessage* message) {
+          message->playerIndex = playerIndex;
+          message->newState = static_cast<int>(newState);
         });
   }
 }

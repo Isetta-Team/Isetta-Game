@@ -22,7 +22,7 @@ struct HitscanBullet {
   float travel = 0;
   HitscanProps* props = nullptr;
 
-  bool operator==(const HitscanBullet& rhs);
+  bool operator==(const HitscanBullet& rhs) const;
 };
 
 DEFINE_COMPONENT(Hitscan, Component, true)
@@ -32,26 +32,22 @@ HitscanProps properties;
 std::list<HitscanProps> bulletProps;
 bool propertiesChanged = true;
 
-float cooldownTimer = 0;
 std::list<HitscanBullet> bullets;
 
 public:
 Hitscan() = default;
-Hitscan(float range, float rate, float speed, int damage);
+Hitscan(float range, float speed, int damage);
 void Fire(Math::Vector3 origin, Math::Vector3 direction);
 
-int GetNumFired();
-int GetNumProps();
+int GetNumFired() const;
+int GetNumProps() const;
 
-float GetRange();
-void SetRange(float r);
-float GetSpeed();
-void SetSpeed(float s);
-int GetDamage();
-void SetDamage(int d);
-bool GetPiercing();
-void SetPiercing(bool p);
-
-float cooldown = .1;
-
+float GetRange() const;
+void SetRange(float range);
+float GetSpeed() const;
+void SetSpeed(float speed);
+int GetDamage() const;
+void SetDamage(int damage);
+bool GetPiercing() const;
+void SetPiercing(bool shouldPierce);
 DEFINE_COMPONENT_END(Hitscan, Component)

@@ -25,12 +25,12 @@ void HitscanTest::Update() {
                                 (Input::GetMousePosition().y - 540) / 540));
   }
 
-  if (Input::IsKeyPressed(KeyCode::T)) {
-    hitscan->cooldown += Time::GetDeltaTime() * .5;
-  }
-  if (Input::IsKeyPressed(KeyCode::G)) {
-    hitscan->cooldown -= Time::GetDeltaTime() * .5;
-  }
+  // if (Input::IsKeyPressed(KeyCode::T)) {
+    // hitscan->cooldown += Time::GetDeltaTime() * .5;
+  // }
+  // if (Input::IsKeyPressed(KeyCode::G)) {
+    // hitscan->cooldown -= Time::GetDeltaTime() * .5;
+  // }
   if (Input::IsKeyPressed(KeyCode::Y)) {
     hitscan->SetRange(hitscan->GetRange() + Time::GetDeltaTime() * 5);
   }
@@ -55,8 +55,8 @@ void HitscanTest::GuiUpdate() {
     GUI::Text(RectTransform{Math::Rect{5, 25, 50, 5}},
               Util::StrFormat("Number of Props: %d", hitscan->GetNumProps()),
               style);
-    GUI::Text(RectTransform{Math::Rect{5, 45, 50, 5}},
-              Util::StrFormat("Cooldown: %f", hitscan->cooldown), style);
+    // GUI::Text(RectTransform{Math::Rect{5, 45, 50, 5}},
+              // Util::StrFormat("Cooldown: %f", hitscan->cooldown), style);
     GUI::Text(RectTransform{Math::Rect{5, 65, 50, 5}},
               Util::StrFormat("Range: %.3f", hitscan->GetRange()), style);
     GUI::Text(RectTransform{Math::Rect{5, 85, 50, 5}},

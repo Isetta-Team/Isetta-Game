@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="Enemy\EnemyController.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="Gameplay\BulletManager.cpp" />
     <ClCompile Include="Gameplay\Damageable.cpp" />
     <ClCompile Include="Gameplay\EntityFactory.cpp" />
     <ClCompile Include="Gameplay\GameManager.cpp" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Consts.h" />
     <ClInclude Include="Enemy\EnemyController.h" />
+    <ClInclude Include="Gameplay\BulletManager.h" />
     <ClInclude Include="Gameplay\Damageable.h" />
     <ClInclude Include="Gameplay\EntityFactory.h" />
     <ClInclude Include="Gameplay\GameManager.h" />

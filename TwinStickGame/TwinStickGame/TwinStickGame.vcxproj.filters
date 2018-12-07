@@ -108,6 +108,9 @@
     <ClCompile Include="TestComponent.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\BulletManager.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -191,11 +194,86 @@
     <ClInclude Include="TestComponent.h">
       <Filter>Test</Filter>
     </ClInclude>
+    <ClInclude Include="Gameplay\BulletManager.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="*.cfg;" />
+    <CustomBuild Include="*.cfg;" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="user.cfg" />
+    <CustomBuild Include="Resources\Halves\Soldier\Soldier.geo" />
+    <CustomBuild Include="Resources\Halves\Soldier\Soldier_Idle.geo" />
+    <CustomBuild Include="Resources\models\Bullet\Bullet.geo" />
+    <CustomBuild Include="Resources\models\Enemy\running.geo" />
+    <CustomBuild Include="Resources\models\Ground\Level.geo" />
+    <CustomBuild Include="Resources\models\Neon_grid.geo" />
+    <CustomBuild Include="Resources\models\Player\Vanguard.geo" />
+    <CustomBuild Include="Resources\models\Soldier\idle.geo" />
+    <CustomBuild Include="Resources\models\Zombie\Zombie_Run.geo" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_001.geo" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_016.geo" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_018.geo" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_021.geo" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_032.geo" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_079.geo" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_119.geo" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_133.geo" />
+    <CustomBuild Include="Resources\WeaponAmmo\machinegun.geo" />
+    <CustomBuild Include="Resources\Halves\Soldier\Soldier.scene.xml" />
+    <CustomBuild Include="Resources\Halves\Soldier\Soldier_Idle.scene.xml" />
+    <CustomBuild Include="Resources\Halves\Soldier\VanguardBodyMat.material.xml" />
+    <CustomBuild Include="Resources\Halves\Soldier\Vanguard_VisorMat.material.xml" />
+    <CustomBuild Include="Resources\models\Bullet\Bullet.material.xml" />
+    <CustomBuild Include="Resources\models\Bullet\Bullet.scene.xml" />
+    <CustomBuild Include="Resources\models\Enemy\Body_MAT.material.xml" />
+    <CustomBuild Include="Resources\models\Enemy\Body_MAT_ncl1_1.material.xml" />
+    <CustomBuild Include="Resources\models\Enemy\Brows_MAT.material.xml" />
+    <CustomBuild Include="Resources\models\Enemy\Exo_MAT.material.xml" />
+    <CustomBuild Include="Resources\models\Enemy\Eye_MAT.material.xml" />
+    <CustomBuild Include="Resources\models\Enemy\Eye_Spec_MAT.material.xml" />
+    <CustomBuild Include="Resources\models\Enemy\running.scene.xml" />
+    <CustomBuild Include="Resources\models\Grid.material.xml" />
+    <CustomBuild Include="Resources\models\Ground\Ground.material.xml" />
+    <CustomBuild Include="Resources\models\Ground\Level.scene.xml" />
+    <CustomBuild Include="Resources\models\Neon_grid.scene.xml" />
+    <CustomBuild Include="Resources\models\Player\Vanguard.scene.xml" />
+    <CustomBuild Include="Resources\models\Player\VanguardBodyMat.material.xml" />
+    <CustomBuild Include="Resources\models\Player\Vanguard_VisorMat.material.xml" />
+    <CustomBuild Include="Resources\models\Soldier\idle.scene.xml" />
+    <CustomBuild Include="Resources\models\Soldier\VanguardBodyMat.material.xml" />
+    <CustomBuild Include="Resources\models\Soldier\Vanguard_VisorMat.material.xml" />
+    <CustomBuild Include="Resources\models\Zombie\parasitezombie_Material.material.xml" />
+    <CustomBuild Include="Resources\models\Zombie\Zombie_Run.scene.xml" />
+    <CustomBuild Include="Resources\MoreNature\Green_leafs_126.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Green_leafs_128.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Green_leafs_131.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Green_leafs_155.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Leafs_174.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Leafs_218.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Light_Wood_046.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_001.scene.xml" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_016.scene.xml" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_018.scene.xml" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_021.scene.xml" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_032.scene.xml" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_078.scene.xml" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_119.scene.xml" />
+    <CustomBuild Include="Resources\MoreNature\naturePack_133.scene.xml" />
+    <CustomBuild Include="Resources\MoreNature\Stone_174.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Wood_298.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Wood_311.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Wood_313.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Wood_316.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Wood_347.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Wood_368.material.xml" />
+    <CustomBuild Include="Resources\MoreNature\Wood_381.material.xml" />
+    <CustomBuild Include="Resources\WeaponAmmo\FrontColor_034.material.xml" />
+    <CustomBuild Include="Resources\WeaponAmmo\Gray5_041.material.xml" />
+    <CustomBuild Include="Resources\WeaponAmmo\Gray6_047.material.xml" />
+    <CustomBuild Include="Resources\WeaponAmmo\Gray8_095.material.xml" />
+    <CustomBuild Include="Resources\WeaponAmmo\machinegun.scene.xml" />
   </ItemGroup>
 </Project>

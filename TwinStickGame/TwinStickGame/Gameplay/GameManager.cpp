@@ -46,10 +46,12 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
         player->AddComponent<NetworkTransform>();
 
         spawnMessage->netId = networkId->id;
-        spawnMessage->clientAuthorityId = networkId->clientAuthorityId;
+        spawnMessage->clientAuthorityId = clientIndex;
         spawnMessage->startPos = player->transform->GetWorldPos();
 
         players[clientIndex] = player->GetComponent<PlayerController>();
+        players[clientIndex]->playerIndex = clientIndex;
+
         if (NetworkManager::Instance().GetClientIndex() ==
             spawnMessage->clientAuthorityId) {
           localPlayer = player->GetComponent<PlayerController>();
@@ -76,6 +78,9 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
         player->transform->SetWorldPos(spawnMessage->startPos);
         players[spawnMessage->clientAuthorityId] =
             player->GetComponent<PlayerController>();
+        players[spawnMessage->clientAuthorityId]->playerIndex =
+            spawnMessage->clientAuthorityId;
+
         if (NetworkManager::Instance().GetClientIndex() ==
             spawnMessage->clientAuthorityId) {
           localPlayer = player->GetComponent<PlayerController>();

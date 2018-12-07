@@ -1,21 +1,18 @@
 /*
  * Copyright (c) 2018 Isetta
  */
-#include <IsettaEngine.h>
 #include "Gameplay/Hitscan.h"
+#include <IsettaEngine.h>
 #include "Gameplay/Damageable.h"
 
-Hitscan::Hitscan(float range, float rate, float speed, int damage) {
+Hitscan::Hitscan(const float range, const float speed, const int damage) {
   properties.range = range;
-  cooldown = 1.f / rate;
   properties.speed = speed;
   properties.damage = damage;
 }
 
 void Hitscan::Update() {
   float deltaTime = Time::GetDeltaTime();
-  cooldownTimer =
-      Math::Util::Max(0, cooldownTimer - deltaTime);  // Gotta avoid underflow
 
   Ray bullet = Ray(Math::Vector3::zero, Math::Vector3::forward);
   auto it = bullets.begin();
@@ -53,6 +50,7 @@ void Hitscan::Update() {
       }
     }
 
+    // Move bullets
     it->travel += it->props->speed * deltaTime;
     if (it->travel > it->props->range) {
       --it->props->refCount;
@@ -64,52 +62,47 @@ void Hitscan::Update() {
 }
 
 void Hitscan::Fire(Math::Vector3 origin, Math::Vector3 direction) {
-  if (cooldownTimer <= 0) {
-    // Generate the bullet
-    Ray ray(origin, direction);
-    HitscanBullet& bullet = bullets.emplace_back(ray);
+  // Generate the bullet
+  Ray ray(origin, direction);
+  HitscanBullet& bullet = bullets.emplace_back(ray);
 
-    // Connect the bullet properties to the bullet
-    if (propertiesChanged || bulletProps.size() == 0) {
-      bullet.props = &bulletProps.emplace_back(properties);
-      propertiesChanged = false;
-    } else {
-      bullet.props = &bulletProps.back();
-    }
-    ++bullet.props->refCount;
-
-    // Reset the cooldown
-    cooldownTimer = cooldown;
+  // Connect the bullet properties to the bullet
+  if (propertiesChanged || bulletProps.size() == 0) {
+    bullet.props = &bulletProps.emplace_back(properties);
+    propertiesChanged = false;
+  } else {
+    bullet.props = &bulletProps.back();
   }
+  ++bullet.props->refCount;
 }
 
-int Hitscan::GetNumFired() { return bullets.size(); }
-int Hitscan::GetNumProps() { return bulletProps.size(); }
+int Hitscan::GetNumFired() const { return bullets.size(); }
+int Hitscan::GetNumProps() const { return bulletProps.size(); }
 
-float Hitscan::GetRange() { return properties.range; }
-void Hitscan::SetRange(float r) {
-  properties.range = r;
+float Hitscan::GetRange() const { return properties.range; }
+void Hitscan::SetRange(const float range) {
+  properties.range = range;
   propertiesChanged = true;
 }
-float Hitscan::GetSpeed() { return properties.speed; }
-void Hitscan::SetSpeed(float s) {
-  properties.speed = s;
+float Hitscan::GetSpeed() const { return properties.speed; }
+void Hitscan::SetSpeed(const float speed) {
+  properties.speed = speed;
   propertiesChanged = true;
 }
-int Hitscan::GetDamage() { return properties.damage; }
-void Hitscan::SetDamage(int d) {
-  properties.damage = d;
+int Hitscan::GetDamage() const { return properties.damage; }
+void Hitscan::SetDamage(const int damage) {
+  properties.damage = damage;
   propertiesChanged = true;
 }
-bool Hitscan::GetPiercing() { return properties.piercing; }
-void Hitscan::SetPiercing(bool p) {
-  properties.piercing = p;
+bool Hitscan::GetPiercing() const { return properties.piercing; }
+void Hitscan::SetPiercing(const bool shouldPierce) {
+  properties.piercing = shouldPierce;
   propertiesChanged = true;
 }
 
 HitscanBullet::HitscanBullet(Ray inRay) : ray{inRay} {}
 
-bool HitscanBullet::operator==(const HitscanBullet& rhs) {
+bool HitscanBullet::operator==(const HitscanBullet& rhs) const {
   return ray.GetDirection() == rhs.ray.GetDirection() &&
          ray.GetOrigin() == rhs.ray.GetOrigin() && travel == rhs.travel;
 }

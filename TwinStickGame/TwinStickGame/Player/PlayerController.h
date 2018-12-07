@@ -15,14 +15,14 @@ void GuiUpdate() override;
 
 void ChangeState(int newState);
 
+int playerIndex = 0;
+
 private:
-enum class State : int {
-  Idle = 0, Run = 1, Shoot = 2, RunShoot = 3, Die = 4
-};
+enum class State : int { Idle = 0, Run = 1, Shoot = 2, RunShoot = 3, Die = 4 };
 
 static void RegisterNetworkCallbacks();
 void CmdShoot();
-void CmdChangeState(State state) const;
+void CmdChangeState(State newState) const;
 Math::Vector3 GetBulletPos() const;
 
 float moveSpeed{15.0f};
@@ -31,10 +31,10 @@ bool isMoving{false};
 float shootInterval{0.1f};
 float shootCooldown{0.f};
 float shootSpeed{60.f};
-Math::Vector3 bulletOffset{};
+Math::Vector3 bulletOffset{0, 100, 0};
+float bulletRange{100.f};
 
 // Animation
-
 AnimationComponent* animator = nullptr;
 // int idleState = 0;
 // int runState = 0;
@@ -46,5 +46,7 @@ float transitionDuration = 0.1f;
 
 // Networking
 NetworkId* networkId = nullptr;
+
+// Server only
 
 DEFINE_COMPONENT_END(PlayerController, Component)
