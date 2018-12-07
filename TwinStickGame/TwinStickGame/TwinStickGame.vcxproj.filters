@@ -102,6 +102,12 @@
     <ClCompile Include="Player\CameraController.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Levels\Level1Map.cpp">
+      <Filter>Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="TestComponent.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -179,11 +185,17 @@
     <ClInclude Include="Player\CameraController.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="Levels\Level1Map.h">
+      <Filter>Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="TestComponent.h">
+      <Filter>Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="user.cfg" />
     <CustomBuild Include="*.cfg;" />
-    <CustomBuild Include="*.cfg;" />
-    <CustomBuild Include="*.cfg;" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
   </ItemGroup>
 </Project>
