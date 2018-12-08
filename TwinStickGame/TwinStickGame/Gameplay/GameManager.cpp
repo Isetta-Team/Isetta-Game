@@ -4,11 +4,13 @@
 #include <IsettaEngine.h>
 
 #include "BulletManager.h"
+#include "Consts.h"
 #include "Damageable.h"
 #include "Enemy/Enemy.h"
 #include "Enemy/EnemyManager.h"
 #include "Gameplay/EntityFactory.h"
 #include "Gameplay/GameManager.h"
+#include "Menu/ColorScheme.h"
 #include "Networking/NetworkMessages.h"
 
 using namespace Isetta;
@@ -28,6 +30,59 @@ GameManager::GameManager() {
   RegisterHitEnemyCallback();
   RegisterScoreCallbacks();
   RegisterHealthCallbacks();
+  RegisterGameOverCallback();
+}
+
+void GameManager::RegisterGameOverCallback() {
+  NetworkManager::Instance().RegisterClientCallback<GameOverMessage>(
+      [this](yojimbo::Message* inMessage) { isGameOver = true; });
+}
+
+void GameManager::DrawGUI() {
+  if (isGameOver) {
+    RectTransform rect{{0, -100, 0, 0}, GUI::Pivot::Center, GUI::Pivot::Center};
+    GUI::Text(
+        rect, "GAME OVER!",
+        GUI::TextStyle{ColorScheme::NEON_BLUE, Consts::TITLE_SIZE, "Neon"});
+  } else {
+    float x = 30, y = 60;
+    for (PlayerController* player : players) {
+      if (player != nullptr) {
+        auto* health = player->entity->GetComponent<Damageable>();
+        RectTransform rect{{x, y, 0, 0}};
+
+        rect.pivot = GUI::Pivot::Left;
+
+        auto name = player->entity->GetName();
+        GUI::Text(rect, Util::StrFormat("%s:", name.c_str()),
+                  GUI::TextStyle{Consts::MID_SIZE, "Neon"});
+
+        rect.pivot = GUI::Pivot::Left;
+        rect.rect.x += 130.f;
+
+        const float scale = 3.f;
+        rect.rect.width = scale * health->GetMaxHealth();
+        auto width = rect.rect.width;
+
+        if (player->isAlive) {
+          rect.rect.height = 30.f;
+          GUI::Draw::RectFilled(rect,
+                                Color{187.f / 255, 187.f / 255, 187.f / 255});
+
+          rect.rect.width = scale * health->GetHealth();
+          GUI::Draw::RectFilled(rect,
+                                Color{109.f / 255, 205.f / 255, 116.f / 255});
+        } else {
+          GUI::Text(rect, "Dead!", GUI::TextStyle{Consts::MID_SIZE, "Neon"});
+        }
+        rect.rect.x += width + 5;
+        rect.rect.height = rect.rect.width = 0;
+        GUI::Text(rect, Util::StrFormat("%.0f", player->GetScore()),
+                  GUI::TextStyle{Consts::MID_SIZE, "Neon"});
+        y += 35;
+      }
+    }
+  }
 }
 
 std::string GameManager::GetPlayerName(int playerIndex) {
@@ -119,6 +174,15 @@ void GameManager::RegisterHealthCallbacks() {
         ASSERT(damageable);
         damageable->DealDamage(-1, message->damage);
       });
+}
+
+// server only
+void GameManager::NotifyPlayerDied(int playerIndex) {
+  deadPlayerCount++;
+  if (deadPlayerCount == playerCount) {
+    NetworkManager::Instance().SendMessageFromServerToAll<GameOverMessage>(
+        [](GameOverMessage* message) {});
+  }
 }
 
 Math::Vector3 GameManager::GetPlayerStartPos() {

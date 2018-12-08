@@ -12,7 +12,8 @@ using namespace Isetta;
 
 void Enemy::Awake() {
   collider = entity->AddComponent<CapsuleCollider>();
-  collider->center = Math::Vector3::up * 1.f;
+  // collider->center = transform->GetLocalScale().y * Math::Vector3::up;
+  collider->center = Math::Vector3::up;
 
   damageable = entity->AddComponent<Damageable>(100);
   // health is synced by HitEnemyMessage
@@ -92,6 +93,7 @@ void Enemy::ChangeState(int newState) {
 
 void Enemy::OnReachTarget(Transform* target) {
   transform->LookAt(target->GetWorldPos());
+
   NetworkManager::Instance()
       .SendMessageFromServerToAll<EnemyStateChangeMessage>(
           [this](EnemyStateChangeMessage* message) {

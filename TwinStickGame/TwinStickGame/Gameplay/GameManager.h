@@ -17,6 +17,9 @@ class GameManager {
 
   static GameManager& Instance();
   GameManager();
+  void RegisterGameOverCallback();
+  void DrawGUI();
+  bool isGameOver = false;
 
   // Player stuff
   std::string GetPlayerName(int playerIndex);
@@ -24,11 +27,13 @@ class GameManager {
   void RegisterSpawnPlayerCallbacks();  // on both client and server
   void RegisterScoreCallbacks();
   void RegisterHealthCallbacks();
+  void NotifyPlayerDied(int playerIndex);
   Math::Vector3 GetPlayerStartPos();
   PlayerController* GetPlayer(int index);
   PlayerController* GetLocalPlayer() const { return localPlayer; }
   Array<PlayerController*> players;
   PlayerController* localPlayer;
+  U8 deadPlayerCount = 0;
 
   // Level loading stuff
   void LoadLevel(std::string_view levelName);
@@ -41,5 +46,4 @@ class GameManager {
 
   // Misc.
   void RegisterHitEnemyCallback();
-
 };

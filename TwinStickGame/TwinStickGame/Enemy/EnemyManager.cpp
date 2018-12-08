@@ -67,7 +67,7 @@ void EnemyManager::InitializeEnemies() {
   for (int i = 0; i < enemyPoolCount; ++i) {
     auto* enemyEntity = Entity::Instantiate("Enemy");
     enemyEntity->transform->SetLocalScale(Math::Vector3::one *
-                                          (Math::Random::GetRandom01() + 2));
+                                          (Math::Random::GetRandom01() + 1));
     auto* enemy = enemyEntity->AddComponent<Enemy>();
     enemy->enemyIndex = i;
 
@@ -75,7 +75,7 @@ void EnemyManager::InitializeEnemies() {
     int netId = networkId->id;
     enemyEntity->AddComponent<NetworkTransform>();
 
-    enemy->agent = enemyEntity->AddComponent<Nav2DAgent>(&plane, 5, 2, 0.1, 1.5);
+    enemy->agent = enemyEntity->AddComponent<Nav2DAgent>(&plane, 5, 2, 0.1, 1.7);
     enemy->agent->onTargetArrive.Subscribe(
         [enemy](Transform* target) { enemy->OnReachTarget(target); });
 

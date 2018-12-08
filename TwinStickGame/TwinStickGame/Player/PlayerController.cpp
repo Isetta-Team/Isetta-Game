@@ -7,7 +7,6 @@
 #include "Gameplay/GameManager.h"
 #include "Networking/NetworkMessages.h"
 #include "Player/PlayerController.h"
-#include "Player/PlayerHealth.h"
 
 void PlayerController::Awake() {
   RegisterNetworkCallbacks();
@@ -16,10 +15,12 @@ void PlayerController::Awake() {
   // called on each client automatically as health is synced
   damageable->onDeath.Subscribe([this](int playerIndex) {
     ChangeState(static_cast<int>(State::Die));
-    receiveInput = false;
+    isAlive = false;
+    if (NetworkManager::Instance().IsHost()) {
+      GameManager::Instance().NotifyPlayerDied(this->playerIndex);
+    }
   });
 
-  entity->AddComponent<PlayerHealth>();
   auto* mesh =
       entity->AddComponent<MeshComponent>("Halves/Soldier/Soldier.scene.xml");
   animator = entity->AddComponent<AnimationComponent>(mesh);
@@ -35,7 +36,7 @@ void PlayerController::Start() {
 }
 
 void PlayerController::Update() {
-  if (networkId->HasClientAuthority() && receiveInput) {
+  if (networkId->HasClientAuthority() && isAlive) {
     float dt = Time::GetDeltaTime();
 
     Math::Vector3 movement(Input::GetGamepadAxis(GamepadAxis::L_HORIZONTAL), 0,
@@ -87,7 +88,7 @@ void PlayerController::Update() {
 
   if (state == State::Die) {
     stateElapsed += Time::GetDeltaTime();
-    if (stateElapsed >= 1.75f && !isAnimationStopped) {
+    if (stateElapsed >= dieAnimationDuration && !isAnimationStopped) {
       animator->Stop();
       isAnimationStopped = true;
     }
@@ -98,7 +99,7 @@ void PlayerController::GuiUpdate() {
   if (!networkId->HasClientAuthority()) {
     return;
   }
-
+  GameManager::Instance().DrawGUI();
   static bool isOpen = true;
   GUI::Window(
       RectTransform{

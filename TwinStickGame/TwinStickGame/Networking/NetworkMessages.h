@@ -205,24 +205,6 @@ float score = 0;
 int playerIndex = 0;
 DEFINE_NETWORK_MESSAGE_END
 
-DEFINE_NETWORK_MESSAGE(PlayerLifeMessage)
-template <typename Stream>
-bool Serialize(Stream* stream) {
-  serialize_int(stream, state, 0, 10);
-  serialize_int(stream, playerIndex, 0, 10000);
-  return true;
-}
-
-void Copy(const yojimbo::Message* otherMessage) override {
-  auto* message = reinterpret_cast<const PlayerLifeMessage*>(otherMessage);
-  state = message->state;
-  playerIndex = message->playerIndex;
-}
-
-int state = 0; // 1 - die, 2 - revive
-int playerIndex = 0;
-DEFINE_NETWORK_MESSAGE_END
-
 DEFINE_NETWORK_MESSAGE(PlayerDamageMessage)
 template <typename Stream>
 bool Serialize(Stream* stream) {
@@ -257,4 +239,16 @@ void Copy(const yojimbo::Message* otherMessage) override {
 
 int newState = 0;
 int enemyIndex = 0;
+DEFINE_NETWORK_MESSAGE_END
+
+DEFINE_NETWORK_MESSAGE(GameOverMessage)
+template <typename Stream>
+bool Serialize(Stream* stream) {
+  return true;
+}
+
+void Copy(const yojimbo::Message* otherMessage) override {
+  auto* message = reinterpret_cast<const GameOverMessage*>(otherMessage);
+}
+
 DEFINE_NETWORK_MESSAGE_END

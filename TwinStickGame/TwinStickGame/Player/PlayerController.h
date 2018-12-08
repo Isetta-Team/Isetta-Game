@@ -15,8 +15,11 @@ void GuiUpdate() override;
 
 void ChangeState(int newState);
 void Score(float score);
+float GetScore() {return score;}
 
 int playerIndex = 0;
+bool isAlive{true};
+
 private:
 enum class State : int { Idle = 0, Run = 1, Shoot = 2, RunShoot = 3, Die = 4 };
 
@@ -27,7 +30,7 @@ Math::Vector3 GetBulletPos() const;
 
 float moveSpeed{15.0f};
 bool isMoving{false};
-bool receiveInput{true};
+
 float shootInterval{0.1f};
 float shootCooldown{0.f};
 float shootSpeed{60.f};
@@ -37,15 +40,10 @@ float bulletDamage{20.f};
 
 // Animation
 AnimationComponent* animator = nullptr;
-// int idleState = 0;
-// int runState = 0;
-// int shootState = 0;
-// int runShootState = 0;
-// int dieState = 0;
 State state = State::Idle;
 float transitionDuration = 0.1f;
 float stateElapsed = 0.f;
-float dieAnimationDuration = 1.75f;
+float dieAnimationDuration = 1.8f;
 float isAnimationStopped = false;
 
 // Networking
