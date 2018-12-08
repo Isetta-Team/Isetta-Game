@@ -55,6 +55,8 @@ void EnemyManager::Update() {
 void EnemyManager::InitializeEnemies() {
   for (int i = 0; i < enemyPoolCount; ++i) {
     auto* enemyEntity = Entity::Instantiate("Enemy");
+    enemyEntity->transform->SetLocalScale(Math::Vector3::one *
+                                          (Math::Random::GetRandom01() + 1));
     auto* enemy = enemyEntity->AddComponent<Enemy>();
     enemy->enemyIndex = i;
     auto* networkId = enemyEntity->AddComponent<NetworkId>();

@@ -10,6 +10,8 @@
 #include "Player/CameraController.h"
 #include "Gameplay/BulletManager.h"
 #include "Enemy/EnemyManager.h"
+#include <Components/Editor/EditorComponent.h>
+#include <Components/NetworkMonitor.h>
 
 void Level1::Load() {
   Entity* camera = Entity::Instantiate("Camera");
@@ -39,8 +41,8 @@ void Level1::Load() {
   bulletManager->AddComponent<BulletManager>();
 
   // Tests
-  EntityFactory::CreateNetworkEntity();
-  EntityFactory::CreateDebugEntity();
+  Entity* networkEntity = Entity::Instantiate("Network Entity");
+  networkEntity->AddComponent<NetworkMonitor>();
 
   Input::RegisterKeyPressCallback(KeyCode::ESCAPE,
                                   []() { Application::Exit(); });

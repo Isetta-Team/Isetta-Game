@@ -9,7 +9,8 @@
 using namespace Isetta;
 
 void Enemy::Awake() {
-  entity->AddComponent<CapsuleCollider>();
+  auto* collider = entity->AddComponent<CapsuleCollider>();
+  collider->center = Math::Vector3::up * 1.f;
   auto* damageable = entity->AddComponent<Damageable>(100);
 
   damageable->deathDelegate.Subscribe([this](int playerIndex) {
