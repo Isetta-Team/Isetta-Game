@@ -10,9 +10,11 @@ struct HitscanProps {
   float range = 10;
   float speed = 10;
   int damage = 2;
-  bool piercing =
-      false;  // TODO(Caleb): Make piercing not register damage every frame
+  // TODO(Caleb): Make piercing not register damage every frame
+  bool piercing = false;
   int refCount = 0;
+  int playerIndex = 0;
+  int bulletIndex = 0;  // bullet entity index
 };
 
 struct HitscanBullet {
@@ -50,4 +52,8 @@ int GetDamage() const;
 void SetDamage(int damage);
 bool GetPiercing() const;
 void SetPiercing(bool shouldPierce);
+int GetPlayerIndex() const;
+void SetPlayerIndex(int playerIndex);
+int GetBulletIndex() const;
+void SetBulletIndex(int bulletIndex);
 DEFINE_COMPONENT_END(Hitscan, Component)

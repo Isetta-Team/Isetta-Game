@@ -38,7 +38,6 @@ void Level1::Load() {
   // Spawn a score tracker
 
   // Spawn an UI manager?
-
   Entity* bulletManager = Entity::Instantiate("Bullet Manager");
   bulletManager->AddComponent<BulletManager>();
 

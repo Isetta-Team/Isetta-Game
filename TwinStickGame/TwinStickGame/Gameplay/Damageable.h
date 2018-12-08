@@ -7,14 +7,19 @@
 using namespace Isetta;
 
 DEFINE_COMPONENT(Damageable, Component, true)
+public:
+Delegate<> deathDelegate{};
+Delegate<> damageDelegate{};
+
+explicit Damageable(const int maxHealth)
+    : health{maxHealth}, maxHealth{maxHealth} {}
+
+void DealDamage(int damage);
+
+int GetHealth() const { return health; }
+int GetMaxHealth() const { return maxHealth; }
+
 private:
 int health, maxHealth;
-
-public:
-Damageable(int maxHealth) : maxHealth{maxHealth}, health{maxHealth} {}
-
-void DealDamage(int dealDmg);
-
-inline int GetHealth() const { return health; }
-inline int GetMaxHealth() const { return maxHealth; }
+bool isDead{false};
 DEFINE_COMPONENT_END(Damageable, Component)

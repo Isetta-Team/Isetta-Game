@@ -7,20 +7,14 @@
 
 using namespace Isetta;
 
-void Bullet::Initialize(const Math::Vector3& pos, const Math::Vector3& dir,
-                        const float speed, const float range) {
+void Bullet::Shoot(const Math::Vector3& pos, const Math::Vector3& dir,
+                        const float speed) {
   transform->LookAt(dir);
   transform->SetWorldPos(pos);
   this->dir = dir;
   this->speed = speed;
-  lifeTime = range / speed;
 }
 
 void Bullet::Update() {
   transform->TranslateWorld(dir * speed * Time::GetDeltaTime());
-  elapsedTime += Time::GetDeltaTime();
-  if (elapsedTime >= lifeTime) {
-    // TODO(YIDI): Destroy this
-    Entity::Destroy(entity);
-  }
 }

@@ -10,26 +10,71 @@
 
 using namespace Isetta;
 
+BulletManager* BulletManager::instance = nullptr;
+
 void BulletManager::Awake() {
+  instance = this;
   hitScan = entity->AddComponent<Hitscan>();
+  InitializeBullets();
   NetworkManager::Instance().RegisterServerCallback<ShootMessage>(
-      [](int clientIndex, yojimbo::Message* message) {
-        NetworkManager::Instance().SendMessageFromServerToAll<ShootMessage>(
-            message);
-      });
-  NetworkManager::Instance().RegisterClientCallback<ShootMessage>(
-      [this](yojimbo::Message* message) {
-        if (NetworkManager::Instance().IsHost()) {
-          auto* shootMessage = reinterpret_cast<ShootMessage*>(message);
+      [this](int clientIndex, yojimbo::Message* message) {
+        auto* shootMessage = reinterpret_cast<ShootMessage*>(message);
+        shootMessage->bulletIndex = GetBulletIndex();
+        if (shootMessage->bulletIndex == -1) {
+          LOG_WARNING(Debug::Channel::Gameplay, "Bullet not enough");
+        } else {
+          // Visual bullet
+          bulletPool[shootMessage->bulletIndex]->entity->SetActive(true);
+          bulletPool[shootMessage->bulletIndex]->Shoot(
+              shootMessage->startPos, shootMessage->dir, shootMessage->speed);
+
+          // Hitscan bullet
           hitScan->SetRange(shootMessage->range);
           hitScan->SetSpeed(shootMessage->speed);
+          hitScan->SetBulletIndex(shootMessage->bulletIndex);
+          hitScan->SetPlayerIndex(shootMessage->playerIndex);
           hitScan->Fire(shootMessage->startPos, shootMessage->dir);
+
+          NetworkManager::Instance().SendMessageFromServerToAll<ShootMessage>(
+              message);
         }
-        auto* shootMessage = reinterpret_cast<ShootMessage*>(message);
-        auto* bullet = Entity::Instantiate("Bullet");
-        bullet->AddComponent<MeshComponent>("models/Bullet/Bullet.scene.xml");
-        bullet->AddComponent<Bullet>()->Initialize(
-            shootMessage->startPos, shootMessage->dir, shootMessage->speed,
-            shootMessage->range);
       });
+
+  NetworkManager::Instance().RegisterClientCallback<ShootMessage>(
+      [this](yojimbo::Message* message) {
+        if (!NetworkManager::Instance().IsHost()) {
+          auto* shootMessage = reinterpret_cast<ShootMessage*>(message);
+          auto* bullet = bulletPool[shootMessage->bulletIndex];
+          bullet->entity->SetActive(true);
+          bullet->Shoot(shootMessage->startPos, shootMessage->dir,
+                        shootMessage->speed);
+        }
+      });
+}
+
+void BulletManager::DeactivateBullet(const int bulletIndex) {
+  bulletPool[bulletIndex]->entity->SetActive(false);
+}
+
+void BulletManager::InitializeBullets() {
+  bulletPool.Reserve(bulletPoolCount);
+
+  for (int i = 0; i < bulletPoolCount; ++i) {
+    auto* bulletEntity = Entity::Instantiate("Bullet");
+    bulletEntity->AddComponent<MeshComponent>("models/Bullet/Bullet.scene.xml");
+    auto* bullet = bulletEntity->AddComponent<Bullet>();
+    bulletEntity->SetActive(false);
+    bulletPool.PushBack(bullet);
+  }
+}
+
+int BulletManager::GetBulletIndex() {
+  for (int i = nextIndex; i < bulletPoolCount + nextIndex; ++i) {
+    Bullet* bullet = bulletPool[i % bulletPoolCount];
+    if (!bullet->entity->GetActive()) {
+      nextIndex = i + 1;
+      return i;
+    }
+  }
+  return -1;
 }

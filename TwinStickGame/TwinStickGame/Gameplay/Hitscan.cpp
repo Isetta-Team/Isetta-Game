@@ -3,7 +3,10 @@
  */
 #include "Gameplay/Hitscan.h"
 #include <IsettaEngine.h>
+#include "GameManager.h"
 #include "Gameplay/Damageable.h"
+#include "Networking/PlayerMessages.h"
+#include "BulletManager.h"
 
 Hitscan::Hitscan(const float range, const float speed, const int damage) {
   properties.range = range;
@@ -34,8 +37,28 @@ void Hitscan::Update() {
     if (Collisions::Raycast(bullet, &hit, it->props->speed * deltaTime)) {
       Damageable* damageable =
           hit.GetCollider()->entity->GetComponent<Damageable>();
+
+      // TODO(YIDI): Change to enemy
       if (damageable) {
+        auto props = it->props;
+        NetworkManager::Instance().SendMessageFromClient<HitEnemyMessage>(
+            [props](HitEnemyMessage* message) {
+              message->bulletIndex = props->bulletIndex;
+              message->damage = props->damage;
+              message->playerIndex = props->playerIndex;
+              // TODO(YIDI): Enemy index
+            });
+
+        // TODO(YIDI): move this to callback
         damageable->DealDamage(it->props->damage);
+        BulletManager::Instance().DeactivateBullet(props->bulletIndex);
+
+        LOG_INFO(Debug::Channel::Networking, "%s just hit %s with Bullet (%d)",
+                 GameManager::Instance()
+                     .GetPlayer(props->playerIndex)
+                     ->entity->GetName()
+                     .c_str(),
+                 damageable->entity->GetName().c_str(), props->bulletIndex);
       }
 
       // Draw the collision
@@ -67,7 +90,7 @@ void Hitscan::Fire(Math::Vector3 origin, Math::Vector3 direction) {
   HitscanBullet& bullet = bullets.emplace_back(ray);
 
   // Connect the bullet properties to the bullet
-  if (propertiesChanged || bulletProps.size() == 0) {
+  if (propertiesChanged || bulletProps.empty()) {
     bullet.props = &bulletProps.emplace_back(properties);
     propertiesChanged = false;
   } else {
@@ -84,19 +107,34 @@ void Hitscan::SetRange(const float range) {
   properties.range = range;
   propertiesChanged = true;
 }
+
 float Hitscan::GetSpeed() const { return properties.speed; }
 void Hitscan::SetSpeed(const float speed) {
   properties.speed = speed;
   propertiesChanged = true;
 }
+
 int Hitscan::GetDamage() const { return properties.damage; }
 void Hitscan::SetDamage(const int damage) {
   properties.damage = damage;
   propertiesChanged = true;
 }
+
 bool Hitscan::GetPiercing() const { return properties.piercing; }
 void Hitscan::SetPiercing(const bool shouldPierce) {
   properties.piercing = shouldPierce;
+  propertiesChanged = true;
+}
+
+int Hitscan::GetPlayerIndex() const { return properties.playerIndex; }
+void Hitscan::SetPlayerIndex(const int playerIndex) {
+  properties.playerIndex = playerIndex;
+  propertiesChanged = true;
+}
+
+int Hitscan::GetBulletIndex() const { return properties.bulletIndex; }
+void Hitscan::SetBulletIndex(const int bulletIndex) {
+  properties.bulletIndex = bulletIndex;
   propertiesChanged = true;
 }
 
