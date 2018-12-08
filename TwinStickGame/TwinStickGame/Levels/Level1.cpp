@@ -42,9 +42,26 @@ void Level1::Load() {
 }
 
 void Level1::BuildEnvironment() {
-  Entity* ground{Entity::Instantiate("Ground")};
-  ground->AddComponent<MeshComponent>("models/Ground/Level.scene.xml");
-  ground->transform->SetWorldPos({0, -0.01f, 0});
+  float floorHeight = -0.3;
+  Entity* leftFloor = Entity::Instantiate("Left Floor", nullptr, true);
+  leftFloor->SetTransform(Math::Vector3{0, floorHeight, 24}, Math::Vector3{},
+                          Math::Vector3{6, 1, 4});
+  leftFloor->AddComponent<MeshComponent>(
+      "MoreNature\\naturePack_001.scene.xml");
+  Entity* mainFloor = Entity::Instantiate("Right Floor", nullptr, true);
+  mainFloor->SetTransform(Math::Vector3{-54, floorHeight, 42}, Math::Vector3{},
+                          Math::Vector3{18, 1, 16});
+  mainFloor->AddComponent<MeshComponent>(
+      "MoreNature\\naturePack_001.scene.xml");
+  Entity* rightFloor = Entity::Instantiate("Main Floor", nullptr, true);
+  rightFloor->SetTransform(Math::Vector3{-66, floorHeight, 48}, Math::Vector3{},
+                           Math::Vector3{4, 1, 6});
+  rightFloor->AddComponent<MeshComponent>(
+      "MoreNature\\naturePack_001.scene.xml");
+  Entity* topFloor = Entity::Instantiate("Top Floor", nullptr, true);
+  topFloor->SetTransform(Math::Vector3{-48, floorHeight, 60}, Math::Vector3{},
+                         Math::Vector3{8, 1, 6});
+  topFloor->AddComponent<MeshComponent>("MoreNature\\naturePack_001.scene.xml");
 
   Entity* walls = Entity::Instantiate("Walls", nullptr, true);
   walls->transform->SetLocalScale(Math::Vector3{2});

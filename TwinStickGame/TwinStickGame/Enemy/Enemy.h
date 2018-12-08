@@ -23,7 +23,7 @@ enum class State : U8 { Run = 0, Punch = 1, Die = 2 };
 const int score{1};
 AnimationComponent* animator{nullptr};
 State state{State::Run};
-float speed = 5.f;
+float speed = 3.f;
 float attackDamage = 20.f;
 
 // punch

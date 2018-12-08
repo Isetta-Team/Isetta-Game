@@ -28,7 +28,7 @@ void CmdShoot();
 void CmdChangeState(State newState) const;
 Math::Vector3 GetBulletPos() const;
 
-float moveSpeed{15.0f};
+float moveSpeed{10.0f};
 bool isMoving{false};
 
 float shootInterval{0.1f};
