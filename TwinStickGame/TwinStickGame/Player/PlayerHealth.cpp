@@ -13,10 +13,7 @@ void PlayerHealth::Start() {
   health = entity->GetComponent<Damageable>();
   if (!health) {
     SetActive(false);
-    return;
   }
-  // TODO(Jacob) remove
-  Input::RegisterKeyPressCallback(KeyCode::H, [&]() { health->DealDamage(1); });
 }
 
 void PlayerHealth::GuiUpdate() {

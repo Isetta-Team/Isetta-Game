@@ -3,10 +3,8 @@
  */
 #include "Gameplay/Hitscan.h"
 #include <IsettaEngine.h>
-#include "GameManager.h"
-#include "Gameplay/Damageable.h"
-#include "Networking/PlayerMessages.h"
-#include "BulletManager.h"
+#include "Enemy/Enemy.h"
+#include "Networking/NetworkMessages.h"
 
 Hitscan::Hitscan(const float range, const float speed, const int damage) {
   properties.range = range;
@@ -35,30 +33,18 @@ void Hitscan::Update() {
     // If the ray hits at the appropriate range, it's a hit
     RaycastHit hit;
     if (Collisions::Raycast(bullet, &hit, it->props->speed * deltaTime)) {
-      Damageable* damageable =
-          hit.GetCollider()->entity->GetComponent<Damageable>();
+      Enemy* enemy = hit.GetCollider()->entity->GetComponent<Enemy>();
 
-      // TODO(YIDI): Change to enemy
-      if (damageable) {
+      if (enemy) {
         auto props = it->props;
-        NetworkManager::Instance().SendMessageFromClient<HitEnemyMessage>(
-            [props](HitEnemyMessage* message) {
+
+        NetworkManager::Instance().SendMessageFromServerToAll<HitEnemyMessage>(
+            [props, enemy](HitEnemyMessage* message) {
               message->bulletIndex = props->bulletIndex;
               message->damage = props->damage;
               message->playerIndex = props->playerIndex;
-              // TODO(YIDI): Enemy index
+              message->enemyIndex = enemy->enemyIndex;
             });
-
-        // TODO(YIDI): move this to callback
-        damageable->DealDamage(it->props->damage);
-        BulletManager::Instance().DeactivateBullet(props->bulletIndex);
-
-        LOG_INFO(Debug::Channel::Networking, "%s just hit %s with Bullet (%d)",
-                 GameManager::Instance()
-                     .GetPlayer(props->playerIndex)
-                     ->entity->GetName()
-                     .c_str(),
-                 damageable->entity->GetName().c_str(), props->bulletIndex);
       }
 
       // Draw the collision
@@ -76,8 +62,15 @@ void Hitscan::Update() {
     // Move bullets
     it->travel += it->props->speed * deltaTime;
     if (it->travel > it->props->range) {
+      NetworkManager::Instance()
+          .SendMessageFromServerToAll<DeactivateBulletMessage>(
+              [it](DeactivateBulletMessage* message) {
+                message->bulletIndex = it->props->bulletIndex;
+              });
+
       --it->props->refCount;
       it = bullets.erase(it);
+
     } else {
       ++it;
     }

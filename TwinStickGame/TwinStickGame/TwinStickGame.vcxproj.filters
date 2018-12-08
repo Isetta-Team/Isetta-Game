@@ -90,12 +90,6 @@
     <ClCompile Include="Gameplay\EntityFactory.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\EnemyController.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\Bullet.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
     <ClCompile Include="IsettaEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -110,6 +104,15 @@
     </ClCompile>
     <ClCompile Include="Gameplay\BulletManager.cpp">
       <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\Bullet.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnemyManager.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Enemy.cpp">
+      <Filter>Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,15 +176,6 @@
     <ClInclude Include="Networking\NetworkMessages.h">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\EnemyController.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Networking\PlayerMessages.h">
-      <Filter>Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\Bullet.h">
-      <Filter>Player</Filter>
-    </ClInclude>
     <ClInclude Include="IsettaEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -197,83 +191,91 @@
     <ClInclude Include="Gameplay\BulletManager.h">
       <Filter>Gameplay</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="*.cfg;" />
-    <CustomBuild Include="*.cfg;" />
+    <ClInclude Include="Gameplay\Bullet.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyManager.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Enemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="user.cfg" />
-    <CustomBuild Include="Resources\Halves\Soldier\Soldier.geo" />
-    <CustomBuild Include="Resources\Halves\Soldier\Soldier_Idle.geo" />
-    <CustomBuild Include="Resources\models\Bullet\Bullet.geo" />
-    <CustomBuild Include="Resources\models\Enemy\running.geo" />
-    <CustomBuild Include="Resources\models\Ground\Level.geo" />
-    <CustomBuild Include="Resources\models\Neon_grid.geo" />
-    <CustomBuild Include="Resources\models\Player\Vanguard.geo" />
-    <CustomBuild Include="Resources\models\Soldier\idle.geo" />
-    <CustomBuild Include="Resources\models\Zombie\Zombie_Run.geo" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_001.geo" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_016.geo" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_018.geo" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_021.geo" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_032.geo" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_079.geo" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_119.geo" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_133.geo" />
-    <CustomBuild Include="Resources\WeaponAmmo\machinegun.geo" />
-    <CustomBuild Include="Resources\Halves\Soldier\Soldier.scene.xml" />
-    <CustomBuild Include="Resources\Halves\Soldier\Soldier_Idle.scene.xml" />
-    <CustomBuild Include="Resources\Halves\Soldier\VanguardBodyMat.material.xml" />
-    <CustomBuild Include="Resources\Halves\Soldier\Vanguard_VisorMat.material.xml" />
-    <CustomBuild Include="Resources\models\Bullet\Bullet.material.xml" />
-    <CustomBuild Include="Resources\models\Bullet\Bullet.scene.xml" />
-    <CustomBuild Include="Resources\models\Enemy\Body_MAT.material.xml" />
-    <CustomBuild Include="Resources\models\Enemy\Body_MAT_ncl1_1.material.xml" />
-    <CustomBuild Include="Resources\models\Enemy\Brows_MAT.material.xml" />
-    <CustomBuild Include="Resources\models\Enemy\Exo_MAT.material.xml" />
-    <CustomBuild Include="Resources\models\Enemy\Eye_MAT.material.xml" />
-    <CustomBuild Include="Resources\models\Enemy\Eye_Spec_MAT.material.xml" />
-    <CustomBuild Include="Resources\models\Enemy\running.scene.xml" />
-    <CustomBuild Include="Resources\models\Grid.material.xml" />
-    <CustomBuild Include="Resources\models\Ground\Ground.material.xml" />
-    <CustomBuild Include="Resources\models\Ground\Level.scene.xml" />
-    <CustomBuild Include="Resources\models\Neon_grid.scene.xml" />
-    <CustomBuild Include="Resources\models\Player\Vanguard.scene.xml" />
-    <CustomBuild Include="Resources\models\Player\VanguardBodyMat.material.xml" />
-    <CustomBuild Include="Resources\models\Player\Vanguard_VisorMat.material.xml" />
-    <CustomBuild Include="Resources\models\Soldier\idle.scene.xml" />
-    <CustomBuild Include="Resources\models\Soldier\VanguardBodyMat.material.xml" />
-    <CustomBuild Include="Resources\models\Soldier\Vanguard_VisorMat.material.xml" />
-    <CustomBuild Include="Resources\models\Zombie\parasitezombie_Material.material.xml" />
-    <CustomBuild Include="Resources\models\Zombie\Zombie_Run.scene.xml" />
-    <CustomBuild Include="Resources\MoreNature\Green_leafs_126.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Green_leafs_128.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Green_leafs_131.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Green_leafs_155.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Leafs_174.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Leafs_218.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Light_Wood_046.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_001.scene.xml" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_016.scene.xml" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_018.scene.xml" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_021.scene.xml" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_032.scene.xml" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_078.scene.xml" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_119.scene.xml" />
-    <CustomBuild Include="Resources\MoreNature\naturePack_133.scene.xml" />
-    <CustomBuild Include="Resources\MoreNature\Stone_174.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Wood_298.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Wood_311.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Wood_313.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Wood_316.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Wood_347.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Wood_368.material.xml" />
-    <CustomBuild Include="Resources\MoreNature\Wood_381.material.xml" />
-    <CustomBuild Include="Resources\WeaponAmmo\FrontColor_034.material.xml" />
-    <CustomBuild Include="Resources\WeaponAmmo\Gray5_041.material.xml" />
-    <CustomBuild Include="Resources\WeaponAmmo\Gray6_047.material.xml" />
-    <CustomBuild Include="Resources\WeaponAmmo\Gray8_095.material.xml" />
-    <CustomBuild Include="Resources\WeaponAmmo\machinegun.scene.xml" />
+    <CustomBuild Include="*.cfg;" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
   </ItemGroup>
 </Project>

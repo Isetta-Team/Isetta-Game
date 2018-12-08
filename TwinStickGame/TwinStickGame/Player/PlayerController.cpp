@@ -6,7 +6,7 @@
 #include "Player/PlayerController.h"
 
 #include "Gameplay/GameManager.h"
-#include "Networking/PlayerMessages.h"
+#include "Networking/NetworkMessages.h"
 #include "Player/PlayerHealth.h"
 
 void PlayerController::Awake() {
@@ -143,6 +143,7 @@ void PlayerController::CmdShoot() {
         message->dir = transform->GetForward();
         message->speed = shootSpeed;
         message->range = bulletRange;
+        message->damage = bulletDamage;
         message->playerIndex = playerIndex;
       });
 }

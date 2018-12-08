@@ -5,11 +5,11 @@
 
 #include "Levels/Level1.h"
 
-#include "Enemy/EnemyController.h"
 #include "Gameplay/EntityFactory.h"
 #include "Gameplay/GameManager.h"
 #include "Player/CameraController.h"
 #include "Gameplay/BulletManager.h"
+#include "Enemy/EnemyManager.h"
 
 void Level1::Load() {
   Entity* camera = Entity::Instantiate("Camera");
@@ -31,11 +31,8 @@ void Level1::Load() {
   // Spawn the scene
 
   // Spawn an enemy spawner
-  Entity* enemy = Entity::Instantiate("Enemy");
-  enemy->AddComponent<EnemyController>();
-  enemy->transform->SetWorldPos({1, 0, 5});
-
-  // Spawn a score tracker
+  Entity* enemyManager = Entity::Instantiate("Enemy Manager");
+  enemyManager->AddComponent<EnemyManager>();
 
   // Spawn an UI manager?
   Entity* bulletManager = Entity::Instantiate("Bullet Manager");

@@ -123,8 +123,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy\EnemyController.cpp" />
+    <ClCompile Include="Enemy\Enemy.cpp" />
+    <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="Gameplay\Bullet.cpp" />
     <ClCompile Include="Gameplay\BulletManager.cpp" />
     <ClCompile Include="Gameplay\Damageable.cpp" />
     <ClCompile Include="Gameplay\EntityFactory.cpp" />
@@ -144,7 +146,6 @@
     <ClCompile Include="Levels\SinglePlayerLevel.cpp" />
     <ClCompile Include="Menu\MainMenu.cpp" />
     <ClCompile Include="Menu\MainMenuDraw.cpp" />
-    <ClCompile Include="Player\Bullet.cpp" />
     <ClCompile Include="Player\CameraController.cpp" />
     <ClCompile Include="Player\PlayerController.cpp" />
     <ClCompile Include="Player\PlayerHealth.cpp" />
@@ -155,7 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consts.h" />
-    <ClInclude Include="Enemy\EnemyController.h" />
+    <ClInclude Include="Enemy\Enemy.h" />
+    <ClInclude Include="Enemy\EnemyManager.h" />
+    <ClInclude Include="Gameplay\Bullet.h" />
     <ClInclude Include="Gameplay\BulletManager.h" />
     <ClInclude Include="Gameplay\Damageable.h" />
     <ClInclude Include="Gameplay\EntityFactory.h" />
@@ -173,8 +176,6 @@
     <ClInclude Include="Menu\MainMenu.h" />
     <ClInclude Include="Menu\MainMenuDraw.h" />
     <ClInclude Include="Networking\NetworkMessages.h" />
-    <ClInclude Include="Networking\PlayerMessages.h" />
-    <ClInclude Include="Player\Bullet.h" />
     <ClInclude Include="Player\CameraController.h" />
     <ClInclude Include="Player\PlayerController.h" />
     <ClInclude Include="Player\PlayerHealth.h" />

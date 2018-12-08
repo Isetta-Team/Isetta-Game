@@ -3,10 +3,10 @@
  */
 #include <IsettaEngine.h>
 
-#include "BulletManager.h"
+#include "Gameplay/Bullet.h"
+#include "Gameplay/BulletManager.h"
 #include "Gameplay/Hitscan.h"
-#include "Networking/PlayerMessages.h"
-#include "Player/Bullet.h"
+#include "Networking/NetworkMessages.h"
 
 using namespace Isetta;
 
@@ -16,6 +16,7 @@ void BulletManager::Awake() {
   instance = this;
   hitScan = entity->AddComponent<Hitscan>();
   InitializeBullets();
+
   NetworkManager::Instance().RegisterServerCallback<ShootMessage>(
       [this](int clientIndex, yojimbo::Message* message) {
         auto* shootMessage = reinterpret_cast<ShootMessage*>(message);
@@ -31,6 +32,7 @@ void BulletManager::Awake() {
           // Hitscan bullet
           hitScan->SetRange(shootMessage->range);
           hitScan->SetSpeed(shootMessage->speed);
+          hitScan->SetDamage(shootMessage->damage);
           hitScan->SetBulletIndex(shootMessage->bulletIndex);
           hitScan->SetPlayerIndex(shootMessage->playerIndex);
           hitScan->Fire(shootMessage->startPos, shootMessage->dir);
@@ -49,6 +51,12 @@ void BulletManager::Awake() {
           bullet->Shoot(shootMessage->startPos, shootMessage->dir,
                         shootMessage->speed);
         }
+      });
+
+  NetworkManager::Instance().RegisterClientCallback<DeactivateBulletMessage>(
+      [this](yojimbo::Message* inMessage) {
+        auto* message = reinterpret_cast<DeactivateBulletMessage*>(inMessage);
+        DeactivateBullet(message->bulletIndex);
       });
 }
 
@@ -72,8 +80,8 @@ int BulletManager::GetBulletIndex() {
   for (int i = nextIndex; i < bulletPoolCount + nextIndex; ++i) {
     Bullet* bullet = bulletPool[i % bulletPoolCount];
     if (!bullet->entity->GetActive()) {
-      nextIndex = i + 1;
-      return i;
+      nextIndex = i % bulletPoolCount + 1;
+      return i % bulletPoolCount;
     }
   }
   return -1;

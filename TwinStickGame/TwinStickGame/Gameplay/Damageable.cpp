@@ -7,14 +7,14 @@
 
 using namespace Isetta;
 
-void Damageable::DealDamage(const int damage) {
+void Damageable::DealDamage(const int playerIndex, const int damage) {
   if (isDead) return;
 
   health -= damage;
   if (health < 0) {
     health = 0;
     isDead = true;
-    deathDelegate.Invoke();
+    deathDelegate.Invoke(playerIndex);
   }
-  damageDelegate.Invoke();
+  damageDelegate.Invoke(playerIndex);
 }

@@ -33,6 +33,7 @@ float shootCooldown{0.f};
 float shootSpeed{60.f};
 Math::Vector3 bulletOffset{0, 100, 0};
 float bulletRange{100.f};
+float bulletDamage{20.f};
 
 // Animation
 AnimationComponent* animator = nullptr;

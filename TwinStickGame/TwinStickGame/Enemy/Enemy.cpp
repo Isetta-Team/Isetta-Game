@@ -3,14 +3,18 @@
  */
 #include <IsettaEngine.h>
 
-#include "Enemy/EnemyController.h"
+#include "Enemy/Enemy.h"
 #include "Gameplay/Damageable.h"
 
 using namespace Isetta;
 
-void EnemyController::Awake() {
+void Enemy::Awake() {
   entity->AddComponent<CapsuleCollider>();
-  entity->AddComponent<Damageable>(100);
+  auto* damageable = entity->AddComponent<Damageable>(100);
+
+  damageable->deathDelegate.Subscribe([this](int playerIndex) {
+    entity->SetActive(false);
+  });
 
   auto* mesh =
       entity->AddComponent<MeshComponent>("models/Enemy/running.scene.xml");
@@ -22,4 +26,12 @@ void EnemyController::Awake() {
   // Animation hack
   animator->TransitToAnimationState(static_cast<int>(State::Punch), 0.2f);
   animator->TransitToAnimationState(static_cast<int>(State::Run), 0.2f);
+}
+
+void Enemy::Update() {
+  // TODO(YIDI): Only do path finding on server
+}
+
+void Enemy::Reanimate() {
+  // TODO(YIDI):  Follow player
 }

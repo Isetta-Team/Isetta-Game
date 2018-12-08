@@ -8,13 +8,13 @@ using namespace Isetta;
 
 DEFINE_COMPONENT(Damageable, Component, true)
 public:
-Delegate<> deathDelegate{};
-Delegate<> damageDelegate{};
+Delegate<int> deathDelegate{};
+Delegate<int> damageDelegate{};
 
 explicit Damageable(const int maxHealth)
     : health{maxHealth}, maxHealth{maxHealth} {}
 
-void DealDamage(int damage);
+void DealDamage(int playerIndex, int damage);
 
 int GetHealth() const { return health; }
 int GetMaxHealth() const { return maxHealth; }

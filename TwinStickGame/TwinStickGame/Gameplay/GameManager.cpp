@@ -3,6 +3,10 @@
  */
 #include <IsettaEngine.h>
 
+#include "BulletManager.h"
+#include "Damageable.h"
+#include "Enemy/Enemy.h"
+#include "Enemy/EnemyManager.h"
 #include "Gameplay/EntityFactory.h"
 #include "Gameplay/GameManager.h"
 #include "Networking/NetworkMessages.h"
@@ -21,6 +25,11 @@ GameManager::GameManager() {
   RegisterClientLevelLoadedCallback();
   RegisterAllPlayerReadyCallback();
   RegisterSpawnPlayerCallbacks();
+  RegisterHitEnemyCallback();
+}
+
+std::string GameManager::GetPlayerName(int playerIndex) {
+  return Instance().GetPlayer(playerIndex)->entity->GetName();
 }
 
 void GameManager::SendSpawnPlayerMessage() {
@@ -124,6 +133,8 @@ void GameManager::RegisterClientLevelLoadedCallback() {
                   [this](AllPlayerReadyMessage* message) {
                     message->playerCount = playerCount;
                   });
+
+          EnemyManager::Instance().InitializeEnemies();
           LOG_INFO(Debug::Channel::Networking, "All player ready message sent");
         }
       });
@@ -151,5 +162,21 @@ void GameManager::RegisterClientConnectionCallbacks() {
         playerCount--;
         LOG_INFO(Debug::Channel::Networking, "A player left, count: %d",
                  playerCount);
+      });
+}
+
+void GameManager::RegisterHitEnemyCallback() {
+  NetworkManager::Instance().RegisterClientCallback<HitEnemyMessage>(
+      [](yojimbo::Message* inMessage) {
+        auto* message = reinterpret_cast<HitEnemyMessage*>(inMessage);
+        BulletManager::Instance().DeactivateBullet(message->bulletIndex);
+        auto* damageable = EnemyManager::Instance()
+                               .GetEnemy(message->enemyIndex)
+                               ->entity->GetComponent<Damageable>();
+        ASSERT(damageable != nullptr);
+        damageable->DealDamage(message->playerIndex, message->damage);
+        LOG_INFO(Debug::Channel::Gameplay, "%s hit %s and dealt %.3f damage",
+                 Instance().GetPlayerName(message->playerIndex).c_str(),
+                 damageable->entity->GetName().c_str(), message->damage);
       });
 }

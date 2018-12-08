@@ -15,7 +15,7 @@ void DeactivateBullet(int bulletIndex);
 private:
 void InitializeBullets();
 int GetBulletIndex();
-const int bulletPoolCount{500};
+const int bulletPoolCount{100};
 Array<class Bullet*> bulletPool{};
 int nextIndex{0};  // predict next available index
 

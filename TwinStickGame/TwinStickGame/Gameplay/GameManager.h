@@ -19,6 +19,7 @@ class GameManager {
   GameManager();
 
   // Player stuff
+  std::string GetPlayerName(int playerIndex);
   void SendSpawnPlayerMessage();        // from client
   void RegisterSpawnPlayerCallbacks();  // on both client and server
   Math::Vector3 GetPlayerStartPos();
@@ -35,4 +36,8 @@ class GameManager {
   void RegisterClientConnectionCallbacks();  // on server
   U8 playerCount = 0;                        // server only
   U8 levelLoadCompletePlayerCount = 0;       // server only
+
+  // Misc.
+  void RegisterHitEnemyCallback();
+
 };
