@@ -16,7 +16,7 @@ void Enemy::Awake() {
 
   damageable = entity->AddComponent<Damageable>(100);
   // health is synced by HitEnemyMessage
-  damageable->deathDelegate.Subscribe([this](int playerIndex) {
+  damageable->onDeath.Subscribe([this](int playerIndex) {
     if (NetworkManager::Instance().IsHost()) {
       NetworkManager::Instance().SendMessageFromServerToAll<ScoreMessage>(
           [this](ScoreMessage* message) { message->score = score; });
@@ -92,6 +92,7 @@ void Enemy::OnReachTarget(Transform* target) {
             message->enemyIndex = enemyIndex;
             message->newState = static_cast<int>(State::Punch);
           });
+
   auto name = target->entity->GetName();
   PlayerController* player = target->entity->GetComponent<PlayerController>();
   ASSERT(player != nullptr);

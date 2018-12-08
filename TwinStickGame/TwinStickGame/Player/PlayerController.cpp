@@ -3,14 +3,22 @@
  */
 #include <IsettaEngine.h>
 
-#include "Player/PlayerController.h"
-
+#include "Gameplay/Damageable.h"
 #include "Gameplay/GameManager.h"
 #include "Networking/NetworkMessages.h"
+#include "Player/PlayerController.h"
 #include "Player/PlayerHealth.h"
 
 void PlayerController::Awake() {
   RegisterNetworkCallbacks();
+  auto* damageable = entity->AddComponent<Damageable>(100.f);
+
+  // called on each client automatically as health is synced
+  damageable->onDeath.Subscribe([this](int playerIndex) {
+    ChangeState(static_cast<int>(State::Die));
+    receiveInput = false;
+  });
+
   entity->AddComponent<PlayerHealth>();
   auto* mesh =
       entity->AddComponent<MeshComponent>("Halves/Soldier/Soldier.scene.xml");
@@ -27,7 +35,7 @@ void PlayerController::Start() {
 }
 
 void PlayerController::Update() {
-  if (networkId->HasClientAuthority()) {
+  if (networkId->HasClientAuthority() && receiveInput) {
     float dt = Time::GetDeltaTime();
 
     Math::Vector3 movement(Input::GetGamepadAxis(GamepadAxis::L_HORIZONTAL), 0,

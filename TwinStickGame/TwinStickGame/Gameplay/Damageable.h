@@ -8,7 +8,7 @@ using namespace Isetta;
 
 DEFINE_COMPONENT(Damageable, Component, true)
 public:
-Delegate<int> deathDelegate{};
+Delegate<int> onDeath{};
 Delegate<int> damageDelegate{};
 
 explicit Damageable(const int maxHealth)

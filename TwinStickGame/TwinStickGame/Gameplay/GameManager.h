@@ -23,6 +23,7 @@ class GameManager {
   void SendSpawnPlayerMessage();        // from client
   void RegisterSpawnPlayerCallbacks();  // on both client and server
   void RegisterScoreCallbacks();
+  void RegisterHealthCallbacks();
   Math::Vector3 GetPlayerStartPos();
   PlayerController* GetPlayer(int index);
   PlayerController* GetLocalPlayer() const { return localPlayer; }

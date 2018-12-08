@@ -14,7 +14,7 @@ void Damageable::DealDamage(const int playerIndex, const int damage) {
   if (health < 0) {
     health = 0;
     isDead = true;
-    deathDelegate.Invoke(playerIndex);
+    onDeath.Invoke(playerIndex);
   }
   damageDelegate.Invoke(playerIndex);
 }

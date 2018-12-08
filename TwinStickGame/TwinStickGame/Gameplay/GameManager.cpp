@@ -27,6 +27,7 @@ GameManager::GameManager() {
   RegisterSpawnPlayerCallbacks();
   RegisterHitEnemyCallback();
   RegisterScoreCallbacks();
+  RegisterHealthCallbacks();
 }
 
 std::string GameManager::GetPlayerName(int playerIndex) {
@@ -106,6 +107,17 @@ void GameManager::RegisterScoreCallbacks() {
       [](yojimbo::Message* inMessage) {
         auto* message = reinterpret_cast<ScoreMessage*>(inMessage);
         Instance().GetPlayer(message->playerIndex)->Score(message->score);
+      });
+}
+
+void GameManager::RegisterHealthCallbacks() {
+  NetworkManager::Instance().RegisterClientCallback<PlayerDamageMessage>(
+      [this](yojimbo::Message* inMessage) {
+        auto* message = reinterpret_cast<PlayerDamageMessage*>(inMessage);
+        auto* damageable =
+            GetPlayer(message->playerIndex)->entity->GetComponent<Damageable>();
+        ASSERT(damageable);
+        damageable->DealDamage(-1, message->damage);
       });
 }
 

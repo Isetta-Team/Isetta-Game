@@ -27,7 +27,7 @@ Math::Vector3 GetBulletPos() const;
 
 float moveSpeed{15.0f};
 bool isMoving{false};
-
+bool receiveInput{true};
 float shootInterval{0.1f};
 float shootCooldown{0.f};
 float shootSpeed{60.f};
