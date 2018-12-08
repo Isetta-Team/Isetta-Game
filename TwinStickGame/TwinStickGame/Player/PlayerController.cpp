@@ -39,14 +39,14 @@ void PlayerController::Update() {
   if (networkId->HasClientAuthority() && isAlive) {
     float dt = Time::GetDeltaTime();
 
-    Math::Vector3 movement(Input::GetGamepadAxis(GamepadAxis::L_HORIZONTAL), 0,
-                           Input::GetGamepadAxis(GamepadAxis::L_VERTICAL));
+    Math::Vector3 movement(-Input::GetGamepadAxis(GamepadAxis::L_HORIZONTAL), 0,
+                           -Input::GetGamepadAxis(GamepadAxis::L_VERTICAL));
     bool shouldRun = movement.Magnitude() > 0.2f;
     if (movement.Magnitude() > 1.f) movement.Normalize();
 
     Math::Vector3 shootDir =
-        Math::Vector3(Input::GetGamepadAxis(GamepadAxis::R_HORIZONTAL), 0,
-                      Input::GetGamepadAxis(GamepadAxis::R_VERTICAL));
+        Math::Vector3(-Input::GetGamepadAxis(GamepadAxis::R_HORIZONTAL), 0,
+                      -Input::GetGamepadAxis(GamepadAxis::R_VERTICAL));
     bool shouldShoot = shootDir.Magnitude() >= 1.f;
 
     // Animation & Look Dir

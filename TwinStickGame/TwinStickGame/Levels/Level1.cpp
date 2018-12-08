@@ -10,8 +10,8 @@
 #include "Player/CameraController.h"
 #include "Gameplay/BulletManager.h"
 #include "Enemy/EnemyManager.h"
-#include <Components/Editor/EditorComponent.h>
 #include <Components/NetworkMonitor.h>
+#include "Player/LightController.h"
 
 void Level1::Load() {
   Entity* camera = Entity::Instantiate("Camera");
@@ -19,11 +19,6 @@ void Level1::Load() {
   camera->AddComponent<CameraController>();
   camera->transform->SetWorldPos({15, 15, 30});
   camera->transform->LookAt(Math::Vector3::zero);
-
-  Entity* lightEntity{Entity::Instantiate("Light")};
-  lightEntity->AddComponent<LightComponent>();
-  lightEntity->SetTransform(Math::Vector3{0, 200, 600},
-                            Math::Vector3{-30, 0, 0});
 
   // temp. instantiate the ground
   BuildEnvironment();

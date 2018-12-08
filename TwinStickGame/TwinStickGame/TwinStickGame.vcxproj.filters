@@ -114,6 +114,9 @@
     <ClCompile Include="Enemy\Enemy.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Player\LightController.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Levels\MenuLevel.h">
@@ -200,10 +203,84 @@
     <ClInclude Include="Enemy\Enemy.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Player\LightController.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="user.cfg" />
-    <CustomBuild Include="*.cfg;" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
+    <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
     <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
     <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />
     <CustomBuild Include="**/*.cfg;**/*.geo;**/*.xml" />

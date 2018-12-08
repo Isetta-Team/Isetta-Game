@@ -12,6 +12,7 @@
 #include "Gameplay/GameManager.h"
 #include "Menu/ColorScheme.h"
 #include "Networking/NetworkMessages.h"
+#include "Player/LightController.h"
 
 using namespace Isetta;
 
@@ -125,6 +126,10 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
 
         EnemyManager::Instance().AddTarget(player->transform);
 
+        Entity* lightEntity{Entity::Instantiate("Light")};
+        lightEntity->AddComponent<LightComponent>();
+        lightEntity->AddComponent<LightController>(player);
+
         NetworkManager::Instance()
             .SendMessageFromServerToAll<SpawnPlayerMessage>(spawnMessage);
         LOG_INFO(Debug::Channel::Networking,
@@ -149,6 +154,10 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
             player->GetComponent<PlayerController>();
         players[spawnMessage->clientAuthorityId]->playerIndex =
             spawnMessage->clientAuthorityId;
+
+        Entity* lightEntity{Entity::Instantiate("Light")};
+        lightEntity->AddComponent<LightComponent>();
+        lightEntity->AddComponent<LightController>(player);
 
         if (NetworkManager::Instance().GetClientIndex() ==
             spawnMessage->clientAuthorityId) {
@@ -188,7 +197,7 @@ void GameManager::NotifyPlayerDied(int playerIndex) {
 Math::Vector3 GameManager::GetPlayerStartPos() {
   static int count = 0;
   count++;
-  return Math::Vector3(count, 0, 0);
+  return Math::Vector3(-27 + count, 0, 21);
 }
 
 PlayerController* GameManager::GetPlayer(const int index) {
