@@ -198,8 +198,5 @@ void GameManager::RegisterHitEnemyCallback() {
                                ->entity->GetComponent<Damageable>();
         ASSERT(damageable != nullptr);
         damageable->DealDamage(message->playerIndex, message->damage);
-        LOG_INFO(Debug::Channel::Gameplay, "%s hit %s and dealt %.3f damage",
-                 Instance().GetPlayerName(message->playerIndex).c_str(),
-                 damageable->entity->GetName().c_str(), message->damage);
       });
 }

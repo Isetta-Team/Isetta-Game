@@ -11,7 +11,7 @@
 using namespace Isetta;
 
 void Enemy::Awake() {
-  auto* collider = entity->AddComponent<CapsuleCollider>();
+  collider = entity->AddComponent<CapsuleCollider>();
   collider->center = Math::Vector3::up * 1.f;
 
   damageable = entity->AddComponent<Damageable>(100);
@@ -42,7 +42,10 @@ void Enemy::Update() {
                                         Time::GetDeltaTime());
         targetPos.x += dir.x * Time::GetDeltaTime() * speed;
         targetPos.z += dir.y * Time::GetDeltaTime() * speed;
-        transform->LookAt(targetPos);
+        targetPos.y = 0;
+        if ((targetPos - transform->GetWorldPos()).Magnitude() > 0.05f) {
+          transform->LookAt(targetPos);
+        }
         transform->SetWorldPos(targetPos);
       }
       break;
@@ -70,12 +73,14 @@ void Enemy::Reanimate() {
   state = State::Run;
   animator->TransitToAnimationState(static_cast<int>(state), 0.2f);
   damageable->Reset();
+  collider->SetActive(true);
 }
 
 void Enemy::Die() {
   state = State::Die;
   animator->TransitToAnimationState(static_cast<int>(state), 0.2f);
   stateElapsed = 0.f;
+  collider->SetActive(false);
 }
 
 // client callback
@@ -86,6 +91,7 @@ void Enemy::ChangeState(int newState) {
 }
 
 void Enemy::OnReachTarget(Transform* target) {
+  transform->LookAt(target->GetWorldPos());
   NetworkManager::Instance()
       .SendMessageFromServerToAll<EnemyStateChangeMessage>(
           [this](EnemyStateChangeMessage* message) {
@@ -96,9 +102,9 @@ void Enemy::OnReachTarget(Transform* target) {
   auto name = target->entity->GetName();
   PlayerController* player = target->entity->GetComponent<PlayerController>();
   ASSERT(player != nullptr);
-  NetworkManager::Instance().SendMessageFromServerToAll<PlayerDamageMessage>(
-      [player, this](PlayerDamageMessage* message) {
-        message->playerIndex = player->playerIndex;
-        message->damage = attackDamage;
-      });
+  // NetworkManager::Instance().SendMessageFromServerToAll<PlayerDamageMessage>(
+  // [player, this](PlayerDamageMessage* message) {
+  // message->playerIndex = player->playerIndex;
+  // message->damage = attackDamage;
+  // });
 }

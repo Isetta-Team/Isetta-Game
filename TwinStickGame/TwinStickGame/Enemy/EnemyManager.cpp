@@ -62,6 +62,36 @@ void EnemyManager::Awake() {
   }
 }
 
+// server only
+void EnemyManager::InitializeEnemies() {
+  for (int i = 0; i < enemyPoolCount; ++i) {
+    auto* enemyEntity = Entity::Instantiate("Enemy");
+    enemyEntity->transform->SetLocalScale(Math::Vector3::one *
+                                          (Math::Random::GetRandom01() + 1));
+    auto* enemy = enemyEntity->AddComponent<Enemy>();
+    enemy->enemyIndex = i;
+
+    auto* networkId = enemyEntity->AddComponent<NetworkId>();
+    int netId = networkId->id;
+    enemyEntity->AddComponent<NetworkTransform>();
+
+    enemy->agent = enemyEntity->AddComponent<Nav2DAgent>(&plane, 5, 2, 0.1, 1.5);
+    enemy->agent->onTargetArrive.Subscribe(
+        [enemy](Transform* target) { enemy->OnReachTarget(target); });
+
+    enemyEntity->SetActive(false);
+    enemyPool[i] = enemy;
+
+    NetworkManager::Instance()
+        .SendMessageFromServerToAll<InitializeEnemyMessage>(
+            [netId, enemy](InitializeEnemyMessage* message) {
+              message->networkId = netId;
+              message->index = enemy->enemyIndex;
+              message->localScale = enemy->transform->GetLocalScale();
+            });
+  }
+}
+
 void EnemyManager::Update() {
   if (NetworkManager::Instance().IsHost()) {
     spawnCooldown -= Time::GetDeltaTime();
@@ -79,36 +109,6 @@ void EnemyManager::AddTarget(Transform* transform) {
 
 void EnemyManager::RemoveTarget(Transform* transform) {
   plane.RemoveTarget(transform);
-}
-
-// server only
-void EnemyManager::InitializeEnemies() {
-  for (int i = 0; i < enemyPoolCount; ++i) {
-    auto* enemyEntity = Entity::Instantiate("Enemy");
-    enemyEntity->transform->SetLocalScale(Math::Vector3::one *
-                                          (Math::Random::GetRandom01() + 1));
-    auto* enemy = enemyEntity->AddComponent<Enemy>();
-    enemy->enemyIndex = i;
-
-    auto* networkId = enemyEntity->AddComponent<NetworkId>();
-    int netId = networkId->id;
-    enemyEntity->AddComponent<NetworkTransform>();
-
-    enemy->agent = enemyEntity->AddComponent<Nav2DAgent>(&plane, 2, 2, 0.1, 1);
-    enemy->agent->onTargetArrive.Subscribe(
-        [enemy](Transform* target) { enemy->OnReachTarget(target); });
-
-    enemyEntity->SetActive(false);
-    enemyPool[i] = enemy;
-
-    NetworkManager::Instance()
-        .SendMessageFromServerToAll<InitializeEnemyMessage>(
-            [netId, enemy](InitializeEnemyMessage* message) {
-              message->networkId = netId;
-              message->index = enemy->enemyIndex;
-              message->localScale = enemy->transform->GetLocalScale();
-            });
-  }
 }
 
 int EnemyManager::GetAvailableIndex() {

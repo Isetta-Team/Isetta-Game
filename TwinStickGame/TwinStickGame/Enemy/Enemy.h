@@ -34,6 +34,7 @@ void Die();
 float stateElapsed{0.f};
 float dieAnimationDuration{1.75f};
 
+CapsuleCollider* collider;
 class Damageable* damageable{nullptr};
 
 DEFINE_COMPONENT_END(Enemy, Component)
