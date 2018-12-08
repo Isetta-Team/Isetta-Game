@@ -19,4 +19,10 @@ const int score{3};
 AnimationComponent* animator{nullptr};
 State state{State::Run};
 
+void Die();
+float dieElapsed{0.f};
+float dieAnimationDuration{3.f};
+
+class Damageable* damageable{nullptr};
+
 DEFINE_COMPONENT_END(Enemy, Component)

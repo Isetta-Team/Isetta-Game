@@ -18,3 +18,8 @@ void Damageable::DealDamage(const int playerIndex, const int damage) {
   }
   damageDelegate.Invoke(playerIndex);
 }
+
+void Damageable::Reset() {
+  health = maxHealth;
+  isDead = false;
+}

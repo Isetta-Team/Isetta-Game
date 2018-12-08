@@ -99,12 +99,6 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
 }
 
 void GameManager::RegisterScoreCallbacks() {
-  NetworkManager::Instance().RegisterServerCallback<ScoreMessage>(
-      [](int clientIndex, yojimbo::Message* inMessage) {
-        NetworkManager::Instance().SendMessageFromServerToAll<ScoreMessage>(
-            inMessage);
-      });
-
   NetworkManager::Instance().RegisterClientCallback<ScoreMessage>(
       [](yojimbo::Message* inMessage) {
         auto* message = reinterpret_cast<ScoreMessage*>(inMessage);

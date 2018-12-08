@@ -15,7 +15,7 @@ explicit Damageable(const int maxHealth)
     : health{maxHealth}, maxHealth{maxHealth} {}
 
 void DealDamage(int playerIndex, int damage);
-
+void Reset();
 int GetHealth() const { return health; }
 int GetMaxHealth() const { return maxHealth; }
 
