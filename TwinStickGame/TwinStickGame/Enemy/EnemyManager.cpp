@@ -75,7 +75,7 @@ void EnemyManager::InitializeEnemies() {
     int netId = networkId->id;
     enemyEntity->AddComponent<NetworkTransform>();
 
-    enemy->agent = enemyEntity->AddComponent<Nav2DAgent>(&plane, 5, 2, 0.1, 1.7);
+    enemy->agent = enemyEntity->AddComponent<Nav2DAgent>(&plane, 5, 2, 0.1, 1.4);
     enemy->agent->onTargetArrive.Subscribe(
         [enemy](Transform* target) { enemy->OnReachTarget(target); });
 
