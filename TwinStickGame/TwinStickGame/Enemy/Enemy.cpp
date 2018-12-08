@@ -102,9 +102,9 @@ void Enemy::OnReachTarget(Transform* target) {
   auto name = target->entity->GetName();
   PlayerController* player = target->entity->GetComponent<PlayerController>();
   ASSERT(player != nullptr);
-  // NetworkManager::Instance().SendMessageFromServerToAll<PlayerDamageMessage>(
-  // [player, this](PlayerDamageMessage* message) {
-  // message->playerIndex = player->playerIndex;
-  // message->damage = attackDamage;
-  // });
+  NetworkManager::Instance().SendMessageFromServerToAll<PlayerDamageMessage>(
+      [player, this](PlayerDamageMessage* message) {
+        message->playerIndex = player->playerIndex;
+        message->damage = attackDamage;
+      });
 }

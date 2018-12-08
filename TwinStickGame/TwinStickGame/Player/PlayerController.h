@@ -44,6 +44,9 @@ AnimationComponent* animator = nullptr;
 // int dieState = 0;
 State state = State::Idle;
 float transitionDuration = 0.1f;
+float stateElapsed = 0.f;
+float dieAnimationDuration = 1.75f;
+float isAnimationStopped = false;
 
 // Networking
 NetworkId* networkId = nullptr;

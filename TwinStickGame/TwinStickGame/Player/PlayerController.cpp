@@ -84,6 +84,14 @@ void PlayerController::Update() {
       shootCooldown = 0.f;
     }
   }
+
+  if (state == State::Die) {
+    stateElapsed += Time::GetDeltaTime();
+    if (stateElapsed >= 1.75f && !isAnimationStopped) {
+      animator->Stop();
+      isAnimationStopped = true;
+    }
+  }
 }
 
 void PlayerController::GuiUpdate() {
@@ -122,8 +130,11 @@ void PlayerController::GuiUpdate() {
 }
 
 void PlayerController::ChangeState(int newState) {
+  animator->Play();
+  isAnimationStopped = false;
   animator->TransitToAnimationState(newState, transitionDuration);
   state = static_cast<State>(newState);
+  stateElapsed = 0.f;
 }
 
 void PlayerController::Score(const float score) { this->score += score; }
