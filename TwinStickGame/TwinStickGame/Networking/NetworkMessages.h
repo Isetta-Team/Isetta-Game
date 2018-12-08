@@ -244,7 +244,7 @@ DEFINE_NETWORK_MESSAGE_END
 DEFINE_NETWORK_MESSAGE(EnemyStateChangeMessage)
 template <typename Stream>
 bool Serialize(Stream* stream) {
-  serialize_float(stream, newState);
+  serialize_int(stream, newState, 0, 1000);
   serialize_int(stream, enemyIndex, 0, 10000);
   return true;
 }
