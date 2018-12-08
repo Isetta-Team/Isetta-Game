@@ -3,11 +3,10 @@
  */
 #include <IsettaEngine.h>
 
-#include "BulletManager.h"
 #include "Consts.h"
 #include "Damageable.h"
-#include "Enemy/Enemy.h"
 #include "Enemy/EnemyManager.h"
+#include "Enemy/Enemy.h"
 #include "Gameplay/EntityFactory.h"
 #include "Gameplay/GameManager.h"
 #include "Menu/ColorScheme.h"
