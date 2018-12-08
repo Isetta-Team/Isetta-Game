@@ -7,6 +7,7 @@
 #include "Gameplay/GameManager.h"
 #include "Networking/NetworkMessages.h"
 #include "Player/PlayerController.h"
+#include "Enemy/EnemyManager.h"
 
 void PlayerController::Awake() {
   RegisterNetworkCallbacks();
@@ -18,6 +19,7 @@ void PlayerController::Awake() {
     isAlive = false;
     if (NetworkManager::Instance().IsHost()) {
       GameManager::Instance().NotifyPlayerDied(this->playerIndex);
+      EnemyManager::Instance().RemoveTarget(transform);
     }
   });
 
