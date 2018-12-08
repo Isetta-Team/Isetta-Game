@@ -20,7 +20,10 @@ void Enemy::Awake() {
   damageable->onDeath.Subscribe([this](int playerIndex) {
     if (NetworkManager::Instance().IsHost()) {
       NetworkManager::Instance().SendMessageFromServerToAll<ScoreMessage>(
-          [this](ScoreMessage* message) { message->score = score; });
+          [this, playerIndex](ScoreMessage* message) {
+            message->score = score;
+            message->playerIndex = playerIndex;
+          });
     }
     Die();
   });
