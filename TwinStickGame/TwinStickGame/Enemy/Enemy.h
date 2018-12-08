@@ -13,11 +13,15 @@ void Update() override;
 void Reanimate();
 int enemyIndex{0};
 
+// server only
+Nav2DAgent* agent{nullptr};
+
 private:
 enum class State : U8 { Run = 0, Punch = 1, Die = 2 };
 const int score{3};
 AnimationComponent* animator{nullptr};
 State state{State::Run};
+float speed = 5.f;
 
 void Die();
 float dieElapsed{0.f};

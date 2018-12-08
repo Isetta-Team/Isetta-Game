@@ -40,7 +40,6 @@ void Hitscan::Update() {
 
         NetworkManager::Instance().SendMessageFromServerToAll<HitEnemyMessage>(
             [props, enemy](HitEnemyMessage* message) {
-              message->bulletIndex = props->bulletIndex;
               message->damage = props->damage;
               message->playerIndex = props->playerIndex;
               message->enemyIndex = enemy->enemyIndex;
@@ -53,6 +52,11 @@ void Hitscan::Update() {
 #endif
 
       if (!it->props->piercing) {
+        NetworkManager::Instance()
+            .SendMessageFromServerToAll<DeactivateBulletMessage>(
+                [it](DeactivateBulletMessage* message) {
+                  message->bulletIndex = it->props->bulletIndex;
+                });
         --it->props->refCount;
         it = bullets.erase(it);
         continue;

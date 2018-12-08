@@ -35,7 +35,6 @@ void Enemy::Awake() {
 }
 
 void Enemy::Update() {
-  // TODO(YIDI): Only do path finding on server
   switch (state) {
     case State::Die:
       dieElapsed += Time::GetDeltaTime();
@@ -46,10 +45,20 @@ void Enemy::Update() {
     default:
       break;
   }
+
+  if (NetworkManager::Instance().IsHost() && state != State::Die) {
+    Math::Vector3 targetPos{transform->GetWorldPos()};
+    // Get the suggested movement direction from the agent
+    auto dir =
+        agent->GetAIMovement({targetPos.x, targetPos.z}, Time::GetDeltaTime());
+    targetPos.x += dir.x * Time::GetDeltaTime() * speed;
+    targetPos.z += dir.y * Time::GetDeltaTime() * speed;
+    transform->LookAt(targetPos);
+    transform->SetWorldPos(targetPos);
+  }
 }
 
 void Enemy::Reanimate() {
-  // TODO(YIDI):  Follow player
   state = State::Run;
   animator->TransitToAnimationState(static_cast<int>(state), 0.2f);
   damageable->Reset();

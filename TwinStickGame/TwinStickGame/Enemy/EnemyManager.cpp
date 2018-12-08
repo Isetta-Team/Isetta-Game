@@ -13,6 +13,7 @@ EnemyManager* EnemyManager::instance = nullptr;
 
 void EnemyManager::Awake() {
   instance = this;
+
   enemyPool.Resize(enemyPoolCount, nullptr);
 
   NetworkManager::Instance().RegisterClientCallback<RespawnEnemyMessage>(
@@ -41,6 +42,18 @@ void EnemyManager::Awake() {
         enemyEntity->SetActive(false);
         enemyPool[message->index] = enemy;
       });
+
+  if (NetworkManager::Instance().IsHost()) {
+    plane =
+        Nav2DPlane(Math::Rect{-75, -25, 100, 100}, Math::Vector2Int{75, 75});
+    plane.AddObstacle(Nav2DObstacle(
+        {{-53.f, -7.f}, {-1.f, -7.f}, {-1, 11},  {17, 12},  {17, 23},
+         {-1, 23},      {-1, 24},     {-1, 25},  {-1, 26},  {-1, 30},
+         {-1, 41},      {-25, 41},    {-25, 59}, {-30, 59}, {-44, 59},
+         {-45, 59},     {-46, 59},    {-48, 59}, {-48, 50}, {-48, 49},
+         {-48, 48},     {-48, 47},    {-65, 47}, {-65, 30}, {-53, 30},
+         {-53, -7}}));
+  }
 }
 
 void EnemyManager::Update() {
@@ -50,7 +63,16 @@ void EnemyManager::Update() {
       SpawnEnemy();
       spawnCooldown += spawnInterval;
     }
+    plane.UpdateRoute();
   }
+}
+
+void EnemyManager::AddTarget(Transform* transform) {
+  plane.AddTarget(transform);
+}
+
+void EnemyManager::RemoveTarget(Transform* transform) {
+  plane.RemoveTarget(transform);
 }
 
 void EnemyManager::InitializeEnemies() {
@@ -65,6 +87,7 @@ void EnemyManager::InitializeEnemies() {
     enemyEntity->AddComponent<NetworkTransform>();
     enemyEntity->SetActive(false);
     enemyPool[i] = enemy;
+    enemy->agent = enemyEntity->AddComponent<Nav2DAgent>(&plane);
 
     NetworkManager::Instance()
         .SendMessageFromServerToAll<InitializeEnemyMessage>(

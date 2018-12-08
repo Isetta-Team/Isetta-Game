@@ -5,6 +5,7 @@
 #include <IsettaEngine.h>
 
 #include <AI/Nav2DPlane.h>
+#include <AI/Nav2DAgent.h>
 
 using namespace Isetta;
 

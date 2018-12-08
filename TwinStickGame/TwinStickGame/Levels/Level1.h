@@ -8,4 +8,5 @@ using namespace Isetta;
 
 DEFINE_LEVEL(Level1)
 void Load() override;
+void BuildEnvironment();
 DEFINE_LEVEL_END

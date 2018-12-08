@@ -113,7 +113,6 @@ template <typename Stream>
 bool Serialize(Stream* stream) {
   serialize_int(stream, playerIndex, 0, 100);
   serialize_int(stream, enemyIndex, 0, 10000);
-  serialize_int(stream, bulletIndex, 0, 10000);
   serialize_float(stream, damage);
   return true;
 }
@@ -122,13 +121,11 @@ void Copy(const yojimbo::Message* otherMessage) override {
   auto* message = reinterpret_cast<const HitEnemyMessage*>(otherMessage);
   playerIndex = message->playerIndex;
   enemyIndex = message->enemyIndex;
-  bulletIndex = message->bulletIndex;
   damage = message->damage;
 }
 
 int playerIndex = 0;
 int enemyIndex = 0;
-int bulletIndex = 0;
 float damage = 0.f;
 DEFINE_NETWORK_MESSAGE_END
 
@@ -206,4 +203,58 @@ void Copy(const yojimbo::Message* otherMessage) override {
 
 float score = 0;
 int playerIndex = 0;
+DEFINE_NETWORK_MESSAGE_END
+
+DEFINE_NETWORK_MESSAGE(PlayerLifeMessage)
+template <typename Stream>
+bool Serialize(Stream* stream) {
+  serialize_int(stream, state, 0, 10);
+  serialize_int(stream, playerIndex, 0, 10000);
+  return true;
+}
+
+void Copy(const yojimbo::Message* otherMessage) override {
+  auto* message = reinterpret_cast<const PlayerLifeMessage*>(otherMessage);
+  state = message->state;
+  playerIndex = message->playerIndex;
+}
+
+int state = 0; // 1 - die, 2 - revive
+int playerIndex = 0;
+DEFINE_NETWORK_MESSAGE_END
+
+DEFINE_NETWORK_MESSAGE(PlayerDamageMessage)
+template <typename Stream>
+bool Serialize(Stream* stream) {
+  serialize_float(stream, damage);
+  serialize_int(stream, playerIndex, 0, 10000);
+  return true;
+}
+
+void Copy(const yojimbo::Message* otherMessage) override {
+  auto* message = reinterpret_cast<const PlayerDamageMessage*>(otherMessage);
+  damage = message->damage;
+  playerIndex = message->playerIndex;
+}
+
+float damage = 0;
+int playerIndex = 0;
+DEFINE_NETWORK_MESSAGE_END
+
+DEFINE_NETWORK_MESSAGE(EnemyStateChangeMessage)
+template <typename Stream>
+bool Serialize(Stream* stream) {
+  serialize_float(stream, newState);
+  serialize_int(stream, enemyIndex, 0, 10000);
+  return true;
+}
+
+void Copy(const yojimbo::Message* otherMessage) override {
+  auto* message = reinterpret_cast<const EnemyStateChangeMessage*>(otherMessage);
+  newState = message->newState;
+  enemyIndex = message->enemyIndex;
+}
+
+int newState = 0;
+int enemyIndex = 0;
 DEFINE_NETWORK_MESSAGE_END

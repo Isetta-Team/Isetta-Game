@@ -66,6 +66,9 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
             spawnMessage->clientAuthorityId) {
           localPlayer = player->GetComponent<PlayerController>();
         }
+
+        EnemyManager::Instance().AddTarget(player->transform);
+
         NetworkManager::Instance()
             .SendMessageFromServerToAll<SpawnPlayerMessage>(spawnMessage);
         LOG_INFO(Debug::Channel::Networking,
@@ -178,7 +181,6 @@ void GameManager::RegisterHitEnemyCallback() {
   NetworkManager::Instance().RegisterClientCallback<HitEnemyMessage>(
       [](yojimbo::Message* inMessage) {
         auto* message = reinterpret_cast<HitEnemyMessage*>(inMessage);
-        BulletManager::Instance().DeactivateBullet(message->bulletIndex);
         auto* damageable = EnemyManager::Instance()
                                .GetEnemy(message->enemyIndex)
                                ->entity->GetComponent<Damageable>();
