@@ -17,6 +17,7 @@ void Level1::Load() {
   Entity* camera = Entity::Instantiate("Camera");
   camera->AddComponent<CameraComponent>();
   camera->AddComponent<CameraController>();
+  camera->AddComponent<AudioListener>();
   camera->transform->SetWorldPos({15, 15, 30});
   camera->transform->LookAt(Math::Vector3::zero);
 

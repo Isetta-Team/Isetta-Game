@@ -5,8 +5,8 @@
 
 #include "Consts.h"
 #include "Damageable.h"
-#include "Enemy/EnemyManager.h"
 #include "Enemy/Enemy.h"
+#include "Enemy/EnemyManager.h"
 #include "Gameplay/EntityFactory.h"
 #include "Gameplay/GameManager.h"
 #include "Menu/ColorScheme.h"
@@ -181,6 +181,8 @@ void GameManager::RegisterHealthCallbacks() {
             GetPlayer(message->playerIndex)->entity->GetComponent<Damageable>();
         ASSERT(damageable);
         damageable->DealDamage(-1, message->damage);
+
+        // TODO(YIDI): Add player take damage sound
       });
 }
 
@@ -270,5 +272,7 @@ void GameManager::RegisterHitEnemyCallback() {
                                ->entity->GetComponent<Damageable>();
         ASSERT(damageable != nullptr);
         damageable->DealDamage(message->playerIndex, message->damage);
+
+        // TODO(YIDI): Add enemy take damage sound
       });
 }

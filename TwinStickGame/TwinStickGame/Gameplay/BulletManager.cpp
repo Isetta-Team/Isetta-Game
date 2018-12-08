@@ -51,6 +51,8 @@ void BulletManager::Awake() {
           bullet->Shoot(shootMessage->startPos, shootMessage->dir,
                         shootMessage->speed);
         }
+
+        // TODO(YIDI): Add gunshot sound
       });
 
   NetworkManager::Instance().RegisterClientCallback<DeactivateBulletMessage>(

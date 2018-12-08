@@ -21,6 +21,8 @@ void PlayerController::Awake() {
       GameManager::Instance().NotifyPlayerDied(this->playerIndex);
       EnemyManager::Instance().RemoveTarget(transform);
     }
+
+    // TODO(YIDI): Add player die sound
   });
 
   auto* mesh =

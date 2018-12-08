@@ -78,9 +78,11 @@ void Enemy::Reanimate() {
   animator->TransitToAnimationState(static_cast<int>(state), 0.2f);
   damageable->Reset();
   collider->SetActive(true);
+  // TODO(YIDI): Add respawn sound if any
 }
 
 void Enemy::Die() {
+  // TODO(YIDI): Add die sound
   state = State::Die;
   animator->TransitToAnimationState(static_cast<int>(state), 0.2f);
   stateElapsed = 0.f;
