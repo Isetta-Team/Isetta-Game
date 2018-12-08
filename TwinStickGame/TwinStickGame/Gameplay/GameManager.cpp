@@ -26,6 +26,7 @@ GameManager::GameManager() {
   RegisterAllPlayerReadyCallback();
   RegisterSpawnPlayerCallbacks();
   RegisterHitEnemyCallback();
+  RegisterScoreCallbacks();
 }
 
 std::string GameManager::GetPlayerName(int playerIndex) {
@@ -94,6 +95,20 @@ void GameManager::RegisterSpawnPlayerCallbacks() {
             spawnMessage->clientAuthorityId) {
           localPlayer = player->GetComponent<PlayerController>();
         }
+      });
+}
+
+void GameManager::RegisterScoreCallbacks() {
+  NetworkManager::Instance().RegisterServerCallback<ScoreMessage>(
+      [](int clientIndex, yojimbo::Message* inMessage) {
+        NetworkManager::Instance().SendMessageFromServerToAll<ScoreMessage>(
+            inMessage);
+      });
+
+  NetworkManager::Instance().RegisterClientCallback<ScoreMessage>(
+      [](yojimbo::Message* inMessage) {
+        auto* message = reinterpret_cast<ScoreMessage*>(inMessage);
+        Instance().GetPlayer(message->playerIndex)->Score(message->score);
       });
 }
 

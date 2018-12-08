@@ -135,6 +135,9 @@ DEFINE_NETWORK_MESSAGE_END
 DEFINE_NETWORK_MESSAGE(InitializeEnemyMessage)
 template <typename Stream>
 bool Serialize(Stream* stream) {
+  serialize_float(stream, localScale.x);
+  serialize_float(stream, localScale.y);
+  serialize_float(stream, localScale.z);
   serialize_int(stream, networkId, 0, 10000);
   serialize_int(stream, index, 0, 10000);
   return true;
@@ -142,10 +145,12 @@ bool Serialize(Stream* stream) {
 
 void Copy(const yojimbo::Message* otherMessage) override {
   auto* message = reinterpret_cast<const InitializeEnemyMessage*>(otherMessage);
+  localScale = message->localScale;
   networkId = message->networkId;
   index = message->index;
 }
 
+Math::Vector3 localScale {};
 int networkId = 0;
 int index = 0;
 DEFINE_NETWORK_MESSAGE_END
@@ -183,4 +188,22 @@ void Copy(const yojimbo::Message* otherMessage) override {
 }
 
 int bulletIndex = 0;
+DEFINE_NETWORK_MESSAGE_END
+
+DEFINE_NETWORK_MESSAGE(ScoreMessage)
+template <typename Stream>
+bool Serialize(Stream* stream) {
+  serialize_float(stream, score);
+  serialize_int(stream, playerIndex, 0, 10000);
+  return true;
+}
+
+void Copy(const yojimbo::Message* otherMessage) override {
+  auto* message = reinterpret_cast<const ScoreMessage*>(otherMessage);
+  score = message->score;
+  playerIndex = message->playerIndex;
+}
+
+float score = 0;
+int playerIndex = 0;
 DEFINE_NETWORK_MESSAGE_END

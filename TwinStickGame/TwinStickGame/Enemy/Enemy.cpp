@@ -5,15 +5,18 @@
 
 #include "Enemy/Enemy.h"
 #include "Gameplay/Damageable.h"
+#include "Networking/NetworkMessages.h"
 
 using namespace Isetta;
 
 void Enemy::Awake() {
   auto* collider = entity->AddComponent<CapsuleCollider>();
   collider->center = Math::Vector3::up * 1.f;
-  auto* damageable = entity->AddComponent<Damageable>(100);
 
+  auto* damageable = entity->AddComponent<Damageable>(100);
   damageable->deathDelegate.Subscribe([this](int playerIndex) {
+    NetworkManager::Instance().SendMessageFromClient<ScoreMessage>(
+        [this](ScoreMessage* message) { message->score = score; });
     entity->SetActive(false);
   });
 

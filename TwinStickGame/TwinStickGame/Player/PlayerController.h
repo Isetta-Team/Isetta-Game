@@ -14,9 +14,9 @@ void Update() override;
 void GuiUpdate() override;
 
 void ChangeState(int newState);
+void Score(float score);
 
 int playerIndex = 0;
-
 private:
 enum class State : int { Idle = 0, Run = 1, Shoot = 2, RunShoot = 3, Die = 4 };
 
@@ -48,6 +48,7 @@ float transitionDuration = 0.1f;
 // Networking
 NetworkId* networkId = nullptr;
 
-// Server only
+// Misc.
+float score = 0;
 
 DEFINE_COMPONENT_END(PlayerController, Component)

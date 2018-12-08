@@ -91,8 +91,11 @@ void PlayerController::GuiUpdate() {
       [this]() {
         float y = 5, x = 5, height = 20, width = 250;
         for (PlayerController* player : GameManager::Instance().players) {
-          GUI::Text(RectTransform{Math::Rect{x, y, width, height}},
-                    player->entity->GetName());
+          if (player == nullptr) continue;
+          GUI::Text(
+              RectTransform{Math::Rect{x, y, width, height}},
+              Util::StrFormat("%s \t %.0f", player->entity->GetName().c_str(),
+                              player->score));
           y += height;
         }
         GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Move Speed    ",
@@ -114,6 +117,8 @@ void PlayerController::ChangeState(int newState) {
   animator->TransitToAnimationState(newState, transitionDuration);
   state = static_cast<State>(newState);
 }
+
+void PlayerController::Score(const float score) { this->score += score; }
 
 void PlayerController::RegisterNetworkCallbacks() {
   static bool areSharedCallbacksInitialized = false;

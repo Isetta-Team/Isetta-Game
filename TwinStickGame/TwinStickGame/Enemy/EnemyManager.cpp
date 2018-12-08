@@ -34,6 +34,7 @@ void EnemyManager::Awake() {
 
         auto* enemyEntity = Entity::Instantiate("Enemy");
         auto* enemy = enemyEntity->AddComponent<Enemy>();
+        enemy->transform->SetLocalScale(message->localScale);
         enemy->enemyIndex = message->index;
         enemyEntity->AddComponent<NetworkId>(message->networkId);
         enemyEntity->AddComponent<NetworkTransform>();
@@ -70,6 +71,7 @@ void EnemyManager::InitializeEnemies() {
             [netId, enemy](InitializeEnemyMessage* message) {
               message->networkId = netId;
               message->index = enemy->enemyIndex;
+              message->localScale = enemy->transform->GetLocalScale();
             });
   }
 }
