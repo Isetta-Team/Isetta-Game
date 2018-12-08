@@ -3,5 +3,5 @@
 
 void TestComponent::Update() {
   plane.UpdateRoute();
-  plane.DebugDisplay();
+  // plane.DebugDisplay();
 }
