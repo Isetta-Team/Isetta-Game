@@ -11,10 +11,12 @@ public:
 void Awake() override;
 void Update() override;
 void Reanimate();
+void ChangeState(int newState);
 int enemyIndex{0};
 
 // server only
 Nav2DAgent* agent{nullptr};
+void OnReachTarget(Transform* target);
 
 private:
 enum class State : U8 { Run = 0, Punch = 1, Die = 2 };
@@ -22,10 +24,15 @@ const int score{3};
 AnimationComponent* animator{nullptr};
 State state{State::Run};
 float speed = 5.f;
+float attackDamage = 20.f;
 
+// punch
+float punchAnimationDuration {1.75f};
+
+// die
 void Die();
-float dieElapsed{0.f};
-float dieAnimationDuration{3.f};
+float stateElapsed{0.f};
+float dieAnimationDuration{1.75f};
 
 class Damageable* damageable{nullptr};
 

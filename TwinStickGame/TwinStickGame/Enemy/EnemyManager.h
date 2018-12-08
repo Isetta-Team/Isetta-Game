@@ -33,10 +33,11 @@ float spawnCooldown{3.f};
 Math::Vector3 GetSpawnEnemyPos();
 
 Nav2DPlane plane{};
-Array<Math::Vector3> spawnPositions{
-     {-50, 0, -6}, {-64, 0, 46}, {-30, 0, 58}, {16, 0, 13}, {-2, 0, -6}};
+// Array<Math::Vector3> spawnPositions{
+     // {-50, 0, -6}, {-64, 0, 46}, {-30, 0, 58}, {16, 0, 13}, {-2, 0, -6}};
 // Array<Math::Vector3> spawnPositions{{1, 0, 0}, {2, 0, 0}, {3, 0, 0},
-                                    // {4, 0, 0}, {5, 0, 0}, {6, 0, 0}};
+//                                     {4, 0, 0}, {5, 0, 0}, {6, 0, 0}};
+Array<Math::Vector3> spawnPositions{{-20, 0, 14}};
 
 Array<class Enemy*> enemyPool{};
 const int enemyPoolCount{20};
