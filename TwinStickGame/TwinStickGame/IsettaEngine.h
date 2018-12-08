@@ -66,3 +66,7 @@
 
 #include "Input/Input.h"
 #include "Input/KeyCode.h"
+
+#include "AI/Nav2DAgent.h"
+#include "AI/Nav2DObstacle.h"
+#include "AI/Nav2DPlane.h"

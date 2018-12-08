@@ -11,9 +11,10 @@ using namespace Isetta;
 DEFINE_COMPONENT(TestComponent, Component, true)
 public:
 void Update() override;
+Nav2DAgent* agent;
 
 Nav2DPlane plane;
-TestComponent() : plane{Math::Rect{18, -7, -84, 67}, Math::Vector2Int{20, 20}} {
+TestComponent() : plane{Math::Rect{-75, -25, 100, 100}, Math::Vector2Int{75, 75}} {
   // plane.AddObstacle(Nav2DObstacle{Array<Math::Vector2>{
 
   //}});
