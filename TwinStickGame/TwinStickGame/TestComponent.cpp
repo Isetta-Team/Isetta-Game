@@ -2,7 +2,7 @@
 
 #include "TestComponent.h"
 
-
 void TestComponent::Update() {
-  // plane.DebugDisplay();
+  plane.UpdateRoute();
+  plane.DebugDisplay();
 }

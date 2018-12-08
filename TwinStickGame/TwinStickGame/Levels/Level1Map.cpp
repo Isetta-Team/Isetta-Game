@@ -1,18 +1,10 @@
 /*
  * Copyright (c) 2018 Isetta
  */
+#include <IsettaEngine.h>
 #include "Level1Map.h"
-
-#include "AI/Nav2DPlane.h"
-#include "Collisions/BoxCollider.h"
-#include "Graphics/MeshComponent.h"
-#include "Scene/Entity.h"
-
 #include "Components/Editor/EditorComponent.h"
 #include "Components/FlyController.h"
-#include "Components/GridComponent.h"
-#include "Graphics/CameraComponent.h"
-#include "Graphics/LightComponent.h"
 #include "TestComponent.h"
 
 void Level1Map::Load() {
@@ -241,7 +233,11 @@ void Level1Map::Load() {
 
   // AI Plane
   Entity* test = Entity::Instantiate("test");
-  test->AddComponent<TestComponent>();
+  auto testComp = test->AddComponent<TestComponent>();
+  Entity* testAgent = Primitive::Create(Primitive::Type::Cube, "Agent", true);
+  auto agentComp = testAgent->AddComponent<Nav2DAgent>(&testComp->plane);
+  testComp->plane.AddTarget(testAgent->transform);
+  // testComp->agent = agentComp;
 
   // Characters
   Entity* player = Entity::Instantiate("Player");
