@@ -17,7 +17,4 @@ Math::Vector3 dir{};
 float speed{0.f};
 float elapsedTime{0.f};
 
-// particle
-ParticleSystemComponent* particles = nullptr;
-
 DEFINE_COMPONENT_END(Bullet, Component)

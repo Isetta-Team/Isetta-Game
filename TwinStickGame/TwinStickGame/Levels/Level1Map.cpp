@@ -194,23 +194,24 @@ void Level1Map::Load() {
   colliders->AddComponent<BoxCollider>(Math::Vector3{-27, 3, -7},
                                        Math::Vector3{54, 6, 2.5f});
   // Floor
+  float floorHeight = -0.5;
   Entity* leftFloor = Entity::Instantiate("Left Floor", nullptr, true);
-  leftFloor->SetTransform(Math::Vector3{0, 0, 24}, Math::Vector3{},
+  leftFloor->SetTransform(Math::Vector3{0, floorHeight, 24}, Math::Vector3{},
                           Math::Vector3{6, 1, 4});
   leftFloor->AddComponent<MeshComponent>(
       "MoreNature\\naturePack_001.scene.xml");
   Entity* mainFloor = Entity::Instantiate("Right Floor", nullptr, true);
-  mainFloor->SetTransform(Math::Vector3{-54, 0, 42}, Math::Vector3{},
+  mainFloor->SetTransform(Math::Vector3{-54, floorHeight, 42}, Math::Vector3{},
                           Math::Vector3{18, 1, 16});
   mainFloor->AddComponent<MeshComponent>(
       "MoreNature\\naturePack_001.scene.xml");
   Entity* rightFloor = Entity::Instantiate("Main Floor", nullptr, true);
-  rightFloor->SetTransform(Math::Vector3{-66, 0, 48}, Math::Vector3{},
+  rightFloor->SetTransform(Math::Vector3{-66, floorHeight, 48}, Math::Vector3{},
                            Math::Vector3{4, 1, 6});
   rightFloor->AddComponent<MeshComponent>(
       "MoreNature\\naturePack_001.scene.xml");
   Entity* topFloor = Entity::Instantiate("Top Floor", nullptr, true);
-  topFloor->SetTransform(Math::Vector3{-48, 0, 60}, Math::Vector3{},
+  topFloor->SetTransform(Math::Vector3{-48, floorHeight, 60}, Math::Vector3{},
                          Math::Vector3{8, 1, 6});
   topFloor->AddComponent<MeshComponent>("MoreNature\\naturePack_001.scene.xml");
   // Obstacles

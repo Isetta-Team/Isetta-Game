@@ -27,6 +27,8 @@ void Enemy::Awake() {
     audioComp->SetVolume(0.8f);
     audioComp->clip = enemyDamage;
     audioComp->Play();
+    // if (particles != nullptr) Destroy(particles);
+    // particles = entity->AddComponent<ParticleSystemComponent>();
   });
   // health is synced by HitEnemyMessage
   damageable->onDeath.Subscribe([this](int playerIndex) {

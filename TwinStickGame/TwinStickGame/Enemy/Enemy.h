@@ -37,6 +37,9 @@ float dieAnimationDuration{1.75f};
 AudioSource* audioComp = nullptr;
 AudioClip* enemyDamage = nullptr;
 
+// particle
+ParticleSystemComponent* particles = nullptr;
+
 CapsuleCollider* collider;
 class Damageable* damageable{nullptr};
 
