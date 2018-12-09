@@ -1,4 +1,4 @@
-<Model name="Vanguard" geometry="models/Player/textures/Vanguard.geo">
+<Model name="Vanguard" geometry="models/Player/Vanguard.geo">
 	<Joint name="mixamorig_Hips" tx="0.161349" ty="106.13" tz="1.11171" jointIndex="1">
 		<Joint name="mixamorig_Spine" tx="-0.038121" ty="9.49051" tz="-1.39206" jointIndex="2">
 			<Joint name="mixamorig_Spine1" tx="-0.044231" ty="11.0723" tz="-1.62407" jointIndex="3">
@@ -117,6 +117,6 @@
 		</Joint>
 	</Joint>
 
-	<Mesh name="vanguard_visor" material="models/Player/textures/Vanguard_VisorMat.material.xml" batchStart="0" batchCount="570" vertRStart="0" vertREnd="569" />
-	<Mesh name="vanguard_Mesh" material="models/Player/textures/VanguardBodyMat.material.xml" batchStart="570" batchCount="33558" vertRStart="570" vertREnd="30965" />
+	<Mesh name="vanguard_visor" material="models/Player/Vanguard_VisorMat.material.xml" batchStart="0" batchCount="570" vertRStart="0" vertREnd="569" />
+	<Mesh name="vanguard_Mesh" material="models/Player/VanguardBodyMat.material.xml" batchStart="570" batchCount="33558" vertRStart="570" vertREnd="30965" />
 </Model>

@@ -2,5 +2,5 @@
 	<Shader source="shaders/model.shader" />
 	<ShaderFlag name="_F01_Skinning" />
 
-	<Sampler name="albedoMap" map="models/Player/textures/vanguard_diffuse.png" />
+	<Sampler name="albedoMap" map="models/Player/vanguard_diffuse.png" />
 </Material>

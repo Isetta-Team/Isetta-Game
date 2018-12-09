@@ -8,7 +8,8 @@
 using namespace Isetta;
 
 void Bullet::Shoot(const Math::Vector3& pos, const Math::Vector3& dir,
-                        const float speed) {
+                   const float speed) {
+  particles = entity->AddComponent<ParticleSystemComponent, false>();
   transform->LookAt(transform->GetWorldPos() + dir);
   transform->SetWorldPos(pos);
   this->dir = dir;
