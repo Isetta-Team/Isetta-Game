@@ -12,12 +12,16 @@ static BulletManager& Instance() { return *instance; }
 void Awake() override;
 
 void DeactivateBullet(int bulletIndex);
+
 private:
 void InitializeBullets();
 int GetBulletIndex();
 const int bulletPoolCount{100};
 Array<class Bullet*> bulletPool{};
 int nextIndex{0};  // predict next available index
+
+AudioSource* audioComponent = nullptr;
+AudioClip* gunshot = nullptr;
 
 class Hitscan* hitScan{nullptr};
 static BulletManager* instance;

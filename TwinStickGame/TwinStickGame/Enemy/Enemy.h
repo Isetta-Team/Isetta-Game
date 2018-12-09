@@ -27,12 +27,15 @@ float speed = 3.f;
 float attackDamage = 20.f;
 
 // punch
-float punchAnimationDuration {1.75f};
+float punchAnimationDuration{1.75f};
 
 // die
 void Die();
 float stateElapsed{0.f};
 float dieAnimationDuration{1.75f};
+
+AudioSource* audioComp = nullptr;
+AudioClip* enemyDamage = nullptr;
 
 CapsuleCollider* collider;
 class Damageable* damageable{nullptr};

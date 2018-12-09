@@ -13,6 +13,8 @@ EnemyManager* EnemyManager::instance = nullptr;
 
 void EnemyManager::Awake() {
   instance = this;
+  Layers::NewLayer("Enemy");
+  Collisions::SetIgnoreLayerCollision(Layers::NameToLayer("Enemy"), Layers::NameToLayer("Enemy"), true);
 
   enemyPool.Resize(enemyPoolCount, nullptr);
 
@@ -75,7 +77,7 @@ void EnemyManager::InitializeEnemies() {
     int netId = networkId->id;
     enemyEntity->AddComponent<NetworkTransform>();
 
-    enemy->agent = enemyEntity->AddComponent<Nav2DAgent>(&plane, 5, 2, 0.1, 1.4);
+    enemy->agent = enemyEntity->AddComponent<Nav2DAgent>(&plane, 5, 2, 0.1, 1);
     enemy->agent->onTargetArrive.Subscribe(
         [enemy](Transform* target) { enemy->OnReachTarget(target); });
 

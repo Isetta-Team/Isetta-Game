@@ -12,9 +12,9 @@ void MainMenuDraw::Update() {
   gridPosition.z += gridSpeed * Time::GetDeltaTime();
 
   DebugDraw::Grid(Math::Matrix4::Translate(-gridPosition), lines,
-                  ColorScheme::NEON_PURPLE);
-  DebugDraw::Grid(
+                  ColorScheme::NEON_PURPLE); 
+  DebugDraw::Grid( 
       Math::Matrix4::Translate(-gridPosition - lines * Math::Vector3::forward),
       lines, ColorScheme::NEON_PURPLE);
-  if (gridPosition.z >= 30) gridPosition.z = 0.f;
+  if (gridPosition.z >= 30) gridPosition.z = 0.f; 
 }

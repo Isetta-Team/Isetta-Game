@@ -12,10 +12,22 @@ using namespace Isetta;
 
 void Enemy::Awake() {
   collider = entity->AddComponent<CapsuleCollider>();
+  entity->SetLayer("Enemy");
+  collider->height = 10000.0f;
   // collider->center = transform->GetLocalScale().y * Math::Vector3::up;
   collider->center = Math::Vector3::up;
 
+  audioComp = entity->AddComponent<AudioSource>();
+  audioComp->SetProperty(AudioSource::Property::IS_3D, false);
+  audioComp->SetProperty(AudioSource::Property::LOOP, false);
+  enemyDamage = AudioClip::Load("audio/enemy_damage.wav");
+
   damageable = entity->AddComponent<Damageable>(100);
+  damageable->damageDelegate.Subscribe([this](int playerIndex) {
+    audioComp->SetVolume(0.8f);
+    audioComp->clip = enemyDamage;
+    audioComp->Play();
+  });
   // health is synced by HitEnemyMessage
   damageable->onDeath.Subscribe([this](int playerIndex) {
     if (NetworkManager::Instance().IsHost()) {
@@ -75,7 +87,7 @@ void Enemy::Update() {
 
 void Enemy::Reanimate() {
   state = State::Run;
-  animator->TransitToAnimationState(static_cast<int>(state), 0.2f);
+  animator->TransitToAnimationState(static_cast<int>(state), 0.01f);
   damageable->Reset();
   collider->SetActive(true);
   // TODO(YIDI): Add respawn sound if any

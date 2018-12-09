@@ -17,6 +17,11 @@ void BulletManager::Awake() {
   hitScan = entity->AddComponent<Hitscan>();
   InitializeBullets();
 
+  audioComponent = entity->AddComponent<AudioSource>();
+  audioComponent->SetProperty(AudioSource::Property::IS_3D, false);
+  audioComponent->SetProperty(AudioSource::Property::LOOP, false);
+  gunshot = AudioClip::Load("audio/gunshot.wav");
+
   NetworkManager::Instance().RegisterServerCallback<ShootMessage>(
       [this](int clientIndex, yojimbo::Message* message) {
         auto* shootMessage = reinterpret_cast<ShootMessage*>(message);
@@ -52,7 +57,9 @@ void BulletManager::Awake() {
                         shootMessage->speed);
         }
 
-        // TODO(YIDI): Add gunshot sound
+        audioComponent->clip = gunshot;
+        audioComponent->SetVolume(0.8);
+        audioComponent->Play();
       });
 
   NetworkManager::Instance().RegisterClientCallback<DeactivateBulletMessage>(

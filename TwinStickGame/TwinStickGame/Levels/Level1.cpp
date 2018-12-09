@@ -18,7 +18,7 @@ void Level1::Load() {
   camera->AddComponent<CameraComponent>();
   camera->AddComponent<CameraController>();
   camera->AddComponent<AudioListener>();
-  camera->transform->SetWorldPos({15, 15, 30});
+  camera->transform->SetWorldPos({15, 15, -30});
   camera->transform->LookAt(Math::Vector3::zero);
 
   // temp. instantiate the ground
@@ -32,9 +32,8 @@ void Level1::Load() {
 
   // Tests
   Entity* networkEntity = Entity::Instantiate("Network Entity");
-  networkEntity->AddComponent<NetworkMonitor>();
 
-  EntityFactory::CreateDebugEntity();
+  // EntityFactory::CreateDebugEntity();
 
   Input::RegisterKeyPressCallback(KeyCode::ESCAPE,
                                   []() { Application::Exit(); });

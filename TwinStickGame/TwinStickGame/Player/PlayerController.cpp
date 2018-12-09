@@ -3,15 +3,27 @@
  */
 #include <IsettaEngine.h>
 
+#include "Enemy/EnemyManager.h"
 #include "Gameplay/Damageable.h"
 #include "Gameplay/GameManager.h"
 #include "Networking/NetworkMessages.h"
 #include "Player/PlayerController.h"
-#include "Enemy/EnemyManager.h"
 
 void PlayerController::Awake() {
   RegisterNetworkCallbacks();
   auto* damageable = entity->AddComponent<Damageable>(100.f);
+
+  audioComp = entity->AddComponent<AudioSource>();
+  audioComp->SetProperty(AudioSource::Property::IS_3D, false);
+  audioComp->SetProperty(AudioSource::Property::LOOP, false);
+  playerDamage = AudioClip::Load("audio/player_hit.wav");
+  playerDie = AudioClip::Load("audio/die.wav");
+
+  damageable->damageDelegate.Subscribe([this](int playerIndex) {
+    audioComp->clip = playerDamage;
+    audioComp->SetVolume(1.0f);
+    audioComp->Play();
+  });
 
   // called on each client automatically as health is synced
   damageable->onDeath.Subscribe([this](int playerIndex) {
@@ -22,7 +34,9 @@ void PlayerController::Awake() {
       EnemyManager::Instance().RemoveTarget(transform);
     }
 
-    // TODO(YIDI): Add player die sound
+    audioComp->clip = playerDie;
+    audioComp->SetVolume(2.0f);
+    audioComp->Play();
   });
 
   auto* mesh =
@@ -83,15 +97,15 @@ void PlayerController::Update() {
       }
       shootCooldown -= Time::GetDeltaTime();
 
-      DebugDraw::Line(transform->GetWorldPos(),
-                      transform->GetWorldPos() + shootDir, Color::blue);
+      // DebugDraw::Line(transform->GetWorldPos(),
+      //                 transform->GetWorldPos() + shootDir, Color::blue);
     } else {
       shootCooldown = 0.f;
     }
   }
 
   if (state == State::Die) {
-    stateElapsed += Time::GetDeltaTime();
+    stateElapsed += 1;
     if (stateElapsed >= dieAnimationDuration && !isAnimationStopped) {
       animator->Stop();
       isAnimationStopped = true;
@@ -104,34 +118,37 @@ void PlayerController::GuiUpdate() {
     return;
   }
   GameManager::Instance().DrawGUI();
-  static bool isOpen = true;
-  GUI::Window(
-      RectTransform{
-          {-100, 100, 500, 200}, GUI::Pivot::TopRight, GUI::Pivot::TopRight},
-      "Players",
-      [this]() {
-        float y = 5, x = 5, height = 20, width = 250;
-        for (PlayerController* player : GameManager::Instance().players) {
-          if (player == nullptr) continue;
-          GUI::Text(
-              RectTransform{Math::Rect{x, y, width, height}},
-              Util::StrFormat("%s \t %.0f", player->entity->GetName().c_str(),
-                              player->score));
-          y += height;
-        }
-        GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Move Speed    ",
-                         &moveSpeed, 1, 15);
-        y += height;
-        GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Shoot Interval",
-                         &shootInterval, 0, 0.2);
-        y += height;
-        GUI::InputVector3(RectTransform{{x, y, width, height}},
-                          "Bullet offset ", &bulletOffset);
-        y += height;
-        GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Shoot Speed   ",
-                         &shootSpeed, 10, 50);
-      },
-      &isOpen);
+  // static bool isOpen = true;
+  // GUI::Window(
+  //     RectTransform{
+  //         {-100, 100, 500, 200}, GUI::Pivot::TopRight, GUI::Pivot::TopRight},
+  //     "Players",
+  //     [this]() {
+  //       float y = 5, x = 5, height = 20, width = 250;
+  //       for (PlayerController* player : GameManager::Instance().players) {
+  //         if (player == nullptr) continue;
+  //         GUI::Text(
+  //             RectTransform{Math::Rect{x, y, width, height}},
+  //             Util::StrFormat("%s \t %.0f",
+  //             player->entity->GetName().c_str(),
+  //                             player->score));
+  //         y += height;
+  //       }
+  //       GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Move Speed ",
+  //                        &moveSpeed, 1, 15);
+  //       y += height;
+  //       GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Shoot
+  //       Interval",
+  //                        &shootInterval, 0, 0.2);
+  //       y += height;
+  //       GUI::InputVector3(RectTransform{{x, y, width, height}},
+  //                         "Bullet offset ", &bulletOffset);
+  //       y += height;
+  //       GUI::SliderFloat(RectTransform{{x, y, width, height}}, "Shoot Speed
+  //       ",
+  //                        &shootSpeed, 10, 50);
+  //     },
+  //     &isOpen);
 }
 
 void PlayerController::ChangeState(int newState) {

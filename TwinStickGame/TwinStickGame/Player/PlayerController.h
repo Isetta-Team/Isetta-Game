@@ -28,10 +28,10 @@ void CmdShoot();
 void CmdChangeState(State newState) const;
 Math::Vector3 GetBulletPos() const;
 
-float moveSpeed{10.0f};
+float moveSpeed{8.0f};
 bool isMoving{false};
 
-float shootInterval{0.1f};
+float shootInterval{0.2f};
 float shootCooldown{0.f};
 float shootSpeed{60.f};
 Math::Vector3 bulletOffset{0, 100, 0};
@@ -43,8 +43,12 @@ AnimationComponent* animator = nullptr;
 State state = State::Idle;
 float transitionDuration = 0.1f;
 float stateElapsed = 0.f;
-float dieAnimationDuration = 1.8f;
+float dieAnimationDuration = 54;
 float isAnimationStopped = false;
+
+AudioSource* audioComp = nullptr;
+AudioClip* playerDamage = nullptr;
+AudioClip* playerDie = nullptr;
 
 // Networking
 NetworkId* networkId = nullptr;
