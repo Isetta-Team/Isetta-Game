@@ -1,27 +1,13 @@
 /*
  * Copyright (c) 2018 Isetta
  */
-#include <IsettaEngine.h>
 #include "Level1Map.h"
+#include <IsettaEngine.h>
 #include "Components/Editor/EditorComponent.h"
 #include "Components/FlyController.h"
 #include "TestComponent.h"
 
 void Level1Map::Load() {
-  Entity* camera = Entity::Instantiate("Camera");
-  camera->AddComponent<CameraComponent>();
-  camera->transform->SetWorldPos({15, 15, 30});
-  camera->transform->LookAt(Math::Vector3::zero);
-  camera->AddComponent<FlyController>();
-  Entity* light = Entity::Instantiate("Light");
-  light->AddComponent<LightComponent>();
-  light->SetTransform(Math::Vector3{0, 200, 600}, Math::Vector3::zero,
-                      Math::Vector3::one);
-
-  Entity* debug = Entity::Instantiate("Debug", nullptr, true);
-  // debug->AddComponent<GridComponent>();
-  debug->AddComponent<EditorComponent>();
-
   Entity* walls = Entity::Instantiate("Walls", nullptr, true);
   walls->transform->SetLocalScale(Math::Vector3{2});
   Entity* leftWall = Entity::Instantiate("Left Wall", walls, true);
@@ -207,7 +193,6 @@ void Level1Map::Load() {
                                        Math::Vector3{2.5f, 6, 36.5});
   colliders->AddComponent<BoxCollider>(Math::Vector3{-27, 3, -7},
                                        Math::Vector3{54, 6, 2.5f});
-  /*
   // Floor
   Entity* leftFloor = Entity::Instantiate("Left Floor", nullptr, true);
   leftFloor->SetTransform(Math::Vector3{0, 0, 24}, Math::Vector3{},
@@ -228,9 +213,23 @@ void Level1Map::Load() {
   topFloor->SetTransform(Math::Vector3{-48, 0, 60}, Math::Vector3{},
                          Math::Vector3{8, 1, 6});
   topFloor->AddComponent<MeshComponent>("MoreNature\\naturePack_001.scene.xml");
-  */
   // Obstacles
+}
 
+void Level1Map::LoadTestEntities() {
+  Entity* camera = Entity::Instantiate("Camera");
+  camera->AddComponent<CameraComponent>();
+  camera->transform->SetWorldPos({15, 15, 30});
+  camera->transform->LookAt(Math::Vector3::zero);
+  camera->AddComponent<FlyController>();
+  Entity* light = Entity::Instantiate("Light");
+  light->AddComponent<LightComponent>();
+  light->SetTransform(Math::Vector3{0, 200, 600}, Math::Vector3::zero,
+                      Math::Vector3::one);
+
+  Entity* debug = Entity::Instantiate("Debug", nullptr, true);
+  // debug->AddComponent<GridComponent>();
+  debug->AddComponent<EditorComponent>();
   // AI Plane
   Entity* test = Entity::Instantiate("test");
   auto testComp = test->AddComponent<TestComponent>();

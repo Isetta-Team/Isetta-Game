@@ -14,7 +14,7 @@ EnemyManager* EnemyManager::instance = nullptr;
 void EnemyManager::Awake() {
   instance = this;
   Layers::NewLayer("Enemy");
-  Collisions::SetIgnoreLayerCollision(Layers::NameToLayer("Enemy"), Layers::NameToLayer("Enemy"), true);
+  Collisions::SetIgnoreLayerCollision(Layers::NameToLayer("Enemy"), Layers::NameToLayer("Enemy"), false);
 
   enemyPool.Resize(enemyPoolCount, nullptr);
 

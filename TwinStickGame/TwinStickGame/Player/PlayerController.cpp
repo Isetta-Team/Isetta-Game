@@ -40,13 +40,21 @@ void PlayerController::Awake() {
   });
 
   auto* mesh =
-      entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
+  entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
   animator = entity->AddComponent<AnimationComponent>(mesh);
   animator->AddAnimation("models/Player/Player_Idle.anim");
   animator->AddAnimation("models/Player/Player_Run.anim");
   animator->AddAnimation("models/Player/Player_Shoot.anim");
   animator->AddAnimation("models/Player/Player_ShootRun.anim");
   animator->AddAnimation("models/Player/Player_Die.anim");
+  // auto* mesh =
+      // entity->AddComponent<MeshComponent>("models/Soldier/idle.scene.xml");
+  // animator = entity->AddComponent<AnimationComponent>(mesh);
+  // animator->AddAnimation("models/Soldier/idle.anim");
+  // animator->AddAnimation("models/Player/Player_Run.anim");
+  // animator->AddAnimation("models/Player/Player_Shoot.anim");
+  // animator->AddAnimation("models/Player/Player_ShootRun.anim");
+  // animator->AddAnimation("models/Soldier/death.anim");
 }
 
 void PlayerController::Start() {

@@ -3,10 +3,11 @@
  */
 #pragma once
 #include <IsettaEngine.h>
+#include "Level1Map.h"
 
 using namespace Isetta;
 
 DEFINE_LEVEL(Level1)
 void Load() override;
-void BuildEnvironment();
+Level1Map level1Map;
 DEFINE_LEVEL_END
