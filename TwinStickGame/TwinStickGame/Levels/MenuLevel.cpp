@@ -53,10 +53,11 @@ void MenuLevel::Load() {
 
   Entity* player = Entity::Instantiate("Player");
   player->transform->SetWorldPos(Math::Vector3{-30, 0, 25});
+  player->transform->SetLocalScale(0.01f * Math::Vector3::one);
   auto playerMesh =
-      player->AddComponent<MeshComponent>("models\\Soldier\\idle.scene.xml");
+      player->AddComponent<MeshComponent>("models\\Player\\Vanguard.scene.xml");
   auto playerAnim = player->AddComponent<AnimationComponent>(playerMesh);
-  playerAnim->AddAnimation("models\\Soldier\\idle.anim");
+  playerAnim->AddAnimation("models\\Player\\Player_Idle.anim");
 
   Entity* weapon = Entity::Instantiate("Weapon");
   weapon->transform->SetLocalScale(Math::Vector3{0.75f});
