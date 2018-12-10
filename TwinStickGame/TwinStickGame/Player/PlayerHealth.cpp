@@ -12,6 +12,7 @@
 
 using namespace Isetta;
 
+int PlayerHealth::authority = 0;
 void PlayerHealth::Start() {
   health = entity->GetComponent<Damageable>();
   if (!health) {

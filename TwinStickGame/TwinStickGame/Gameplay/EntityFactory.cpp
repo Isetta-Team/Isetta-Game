@@ -5,7 +5,7 @@
 #include <IsettaEngine.h>
 
 #include <Components/Editor/EditorComponent.h>
-#include <Components/NetworkMonitor.h>
+#include <Components/Editor/NetworkMonitor.h>
 
 #include "Player/PlayerController.h"
 #include "Player/PlayerHealth.h"
