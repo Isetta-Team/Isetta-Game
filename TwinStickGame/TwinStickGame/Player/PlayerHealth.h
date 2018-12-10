@@ -15,6 +15,7 @@ float displayedHealth = 0;
 float lerpHealth = 0;
 NetworkId* networkId = nullptr;
 PlayerController* const player = nullptr;
+static int authority = 0;
 
 public:
 PlayerHealth() = default;

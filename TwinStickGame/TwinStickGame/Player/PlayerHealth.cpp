@@ -19,16 +19,16 @@ void PlayerHealth::Start() {
   }
   displayedHealth = health->GetMaxHealth();
   networkId = entity->GetComponent<NetworkId>();
+  if (networkId->HasClientAuthority()) authority = networkId->clientAuthorityId;
 }
 
 void PlayerHealth::GuiUpdate() {
   float y = 60;
-  float scale = smallScale;
+  float scale = mainScale;
   std::string name = player->entity->GetName();
-  if (networkId->HasClientAuthority()) {
-    scale = mainScale;
-  } else {
-    y += Math::Util::Max(1, networkId->clientAuthorityId) * 60;
+  if (!networkId->HasClientAuthority()) {
+    scale = smallScale;
+    y += Math::Util::Max(authority, networkId->clientAuthorityId) * 60;
   }
 
   RectTransform rect{{30, y, 0, 0}};
