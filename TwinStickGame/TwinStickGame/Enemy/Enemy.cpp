@@ -60,7 +60,7 @@ void Enemy::Update() {
         targetPos.x += dir.x * Time::GetDeltaTime() * speed;
         targetPos.z += dir.y * Time::GetDeltaTime() * speed;
         targetPos.y = 0;
-        if ((targetPos - transform->GetWorldPos()).Magnitude() > 0.05f) {
+        if ((targetPos - transform->GetWorldPos()).Magnitude() > Math::Util::EPSILON) {
           transform->LookAt(targetPos);
         }
         transform->SetWorldPos(targetPos);
