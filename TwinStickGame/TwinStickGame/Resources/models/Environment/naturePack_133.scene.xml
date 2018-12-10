@@ -1,0 +1,6 @@
+<Model name="naturePack_133" geometry="models/Environment/naturePack_133.geo">
+
+	<Mesh name="Mesh1_Tall_Rock_1_Model_007" material="models/Environment/Green_leafs_155.material.xml" rx="90" ry="0" rz="-0" batchStart="0" batchCount="24" vertRStart="0" vertREnd="18">
+		<Mesh name="#Mesh1_Tall_Rock_1_Model_007" material="models/Environment/Wood_381.material.xml" batchStart="24" batchCount="90" vertRStart="19" vertREnd="91" />
+	</Mesh>
+</Model>

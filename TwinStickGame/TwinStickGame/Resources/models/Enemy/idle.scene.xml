@@ -1,0 +1,184 @@
+<Model name="idle" geometry="models/Enemy/idle.geo">
+	<Joint name="Exo_HiRes_Meshes" jointIndex="1">
+		<Mesh name="EXO_Eyes" material="models/Enemy/Eye_MAT.material.xml" batchStart="0" batchCount="4560" vertRStart="0" vertREnd="4559" />
+		<Mesh name="EXO_EyesSpec" material="models/Enemy/Eye_Spec_MAT.material.xml" batchStart="4560" batchCount="2760" vertRStart="4560" vertREnd="7319" />
+		<Mesh name="EXO_Caruncula" material="models/Enemy/Body_MAT.material.xml" batchStart="7320" batchCount="120" vertRStart="7320" vertREnd="7439" />
+		<Mesh name="EXO_HeadMask" material="models/Enemy/Body_MAT.material.xml" batchStart="7440" batchCount="3384" vertRStart="7440" vertREnd="10823" />
+		<Mesh name="Exo_Suit" material="models/Enemy/Exo_MAT.material.xml" batchStart="10824" batchCount="46332" vertRStart="10824" vertREnd="53351" />
+		<Mesh name="EXO_Body" material="models/Enemy/Body_MAT.material.xml" batchStart="57156" batchCount="30594" vertRStart="53352" vertREnd="82325" />
+		<Mesh name="EXO_BrowsLashes" material="models/Enemy/Brows_MAT.material.xml" batchStart="87750" batchCount="72" vertRStart="82326" vertREnd="82397" />
+		<Mesh name="EXO_Teeth" material="models/Enemy/Body_MAT.material.xml" batchStart="87822" batchCount="7248" vertRStart="82398" vertREnd="89645" />
+	</Joint>
+	<Joint name="Hips" tx="1.53e-05" ty="0.891346" tz="0.0003797" rx="17.4001" ry="-3.45248" rz="-0.956835" sx="0.01" sy="0.01" sz="0.01" jointIndex="2">
+		<Joint name="Spine" tx="3e-06" ty="9.2263" tz="1.5771" rx="14.908" ry="-1.61407" rz="-0.0150601" jointIndex="3">
+			<Joint name="Spine1" tx="0" ty="16.254" tz="-0.1656" rx="5.35141" ry="-0.849361" rz="-1.63886" jointIndex="4">
+				<Joint name="Spine2" tx="0" ty="13.6396" tz="-1.2923" rx="5.14094" ry="-0.430653" rz="-0.212506" jointIndex="5">
+					<Joint name="Neck" tx="0" ty="13.8774" tz="-4.3542" rx="-8.30288" ry="0.962562" rz="1.70525" jointIndex="6">
+						<Joint name="Neck1" tx="0" ty="4.34" tz="0.9269" jointIndex="7">
+							<Joint name="Head" tx="0" ty="4.0266" tz="0.8585" rx="-26.333" ry="5.64138" rz="-1.85985" jointIndex="8">
+								<Joint name="HeadTop_End" tx="0" ty="21.0545" tz="4.8205" jointIndex="9" />
+								<Joint name="L_Ear" tx="6.8586" ty="8.862" tz="3.3161" jointIndex="10" />
+								<Joint name="Jaw" tx="0.0038" ty="6.235" tz="4.4131" jointIndex="11">
+									<Joint name="TongueBack" tx="0" ty="-3.35179" tz="4.64679" jointIndex="12">
+										<Joint name="TongueMid" tx="0" ty="0.042375" tz="1.66589" jointIndex="13">
+											<Joint name="TongueTip" tx="0" ty="-0.434378" tz="1.28471" jointIndex="14" />
+										</Joint>
+									</Joint>
+									<Joint name="Chin" tx="-0.0038" ty="-6.16051" tz="9.12406" jointIndex="15" />
+									<Joint name="LowerChin" tx="-0.0038" ty="-8.2784" tz="6.0042" jointIndex="16" />
+								</Joint>
+								<Joint name="L_Temple" tx="6.7164" ty="11.953" tz="7.4033" jointIndex="17" />
+								<Joint name="L_IOuterBrow" tx="5.185" ty="11.3348" tz="12.3701" jointIndex="18" />
+								<Joint name="L_MidBrow" tx="3.3668" ty="11.4156" tz="13.6166" jointIndex="19" />
+								<Joint name="L_InnerBrow" tx="1.6599" ty="10.7576" tz="14.115" jointIndex="20" />
+								<Joint name="L_Eye" tx="3.0989" ty="9.6989" tz="11.4382" jointIndex="21" />
+								<Joint name="L_EyelidLower" tx="3.0989" ty="9.6989" tz="11.4382" jointIndex="22" />
+								<Joint name="L_EyelidUpper" tx="3.0989" ty="9.6989" tz="11.4382" jointIndex="23" />
+								<Joint name="L_InnerCheek" tx="2.1484" ty="7.4937" tz="13.4347" jointIndex="24" />
+								<Joint name="L_LowerCheek" tx="4.3527" ty="2.5675" tz="9.9423" jointIndex="25" />
+								<Joint name="L_LipCorner" tx="2.9076" ty="2.9095" tz="12.5938" jointIndex="26">
+									<Joint name="L_LipCornerLowTweak" tx="-0.807241" ty="-0.325443" tz="0.454666" jointIndex="27" />
+									<Joint name="L_LipCornerUpTweak" tx="-0.72509" ty="0.023698" tz="0.578196" jointIndex="28" />
+								</Joint>
+								<Joint name="L_LipLower" tx="1.2586" ty="2.3762" tz="13.5915" jointIndex="29" />
+								<Joint name="L_LipUpper" tx="1.2981" ty="3.1535" tz="13.8987" jointIndex="30" />
+								<Joint name="LipMidLower" tx="0" ty="2.4182" tz="14.0113" jointIndex="31" />
+								<Joint name="LipMidUpper" tx="0" ty="3.2177" tz="14.3127" jointIndex="32" />
+								<Joint name="L_CheekFold" tx="2.8997" ty="4.8397" tz="12.9905" jointIndex="33" />
+								<Joint name="L_Nostril" tx="1.2793" ty="5.2449" tz="14.0405" jointIndex="34" />
+								<Joint name="Scalp" tx="0.0038" ty="15.512" tz="8.5871" jointIndex="35" />
+								<Joint name="L_OuterCheek" tx="4.805" ty="7.1686" tz="11.679" jointIndex="36" />
+								<Joint name="R_LipLower" tx="-1.2586" ty="2.3762" tz="13.5915" jointIndex="37" />
+								<Joint name="RightNostril" tx="-1.2793" ty="5.2449" tz="14.0405" jointIndex="38" />
+								<Joint name="R_CheekFold" tx="-2.8997" ty="4.8397" tz="12.9905" jointIndex="39" />
+								<Joint name="R_LowerCheek" tx="-4.3527" ty="2.5675" tz="9.9423" jointIndex="40" />
+								<Joint name="R_gLipCorner" tx="-2.9076" ty="2.9095" tz="12.5938" jointIndex="41">
+									<Joint name="R_gLipCornerLowTweak" tx="0.807241" ty="-0.325443" tz="0.454666" jointIndex="42" />
+									<Joint name="R_gLipCornerUpTweak" tx="0.72509" ty="0.023698" tz="0.578196" jointIndex="43" />
+								</Joint>
+								<Joint name="R_LipUpper" tx="-1.2981" ty="3.1535" tz="13.8987" jointIndex="44" />
+								<Joint name="R_OuterCheek" tx="-4.805" ty="7.1686" tz="11.679" jointIndex="45" />
+								<Joint name="MidBrows" tx="0" ty="10.8004" tz="14.2738" jointIndex="46" />
+								<Joint name="R_InnerBrow" tx="-1.6599" ty="10.7576" tz="14.115" jointIndex="47" />
+								<Joint name="R_MidBrow" tx="-3.3668" ty="11.4156" tz="13.6166" jointIndex="48" />
+								<Joint name="R_IOuterBrow" tx="-5.185" ty="11.3348" tz="12.3701" jointIndex="49" />
+								<Joint name="R_Eye" tx="-3.0989" ty="9.6989" tz="11.4382" jointIndex="50" />
+								<Joint name="R_EyelidLower" tx="-3.0989" ty="9.6989" tz="11.4382" jointIndex="51" />
+								<Joint name="R_EyelidUpper" tx="-3.0989" ty="9.6989" tz="11.4382" jointIndex="52" />
+								<Joint name="R_Temple" tx="-6.7164" ty="11.953" tz="7.4033" jointIndex="53" />
+								<Joint name="R_Ear" tx="-6.8586" ty="8.862" tz="3.3161" jointIndex="54" />
+								<Joint name="R_InnerCheek" tx="-2.1484" ty="7.4937" tz="13.4347" jointIndex="55" />
+							</Joint>
+							<Joint name="Throat" tx="0" ty="-0.6141" tz="8.3185" jointIndex="56" />
+						</Joint>
+					</Joint>
+					<Joint name="LeftShoulder" tx="6.1442" ty="10.187" tz="-3.7932" rx="-17.4006" ry="-17.5091" rz="2.68541" jointIndex="57">
+						<Joint name="LeftArm" tx="12.3191" ty="-1.113" tz="-1.7935" rx="-14.0943" ry="5.85248" rz="-54.2494" jointIndex="58">
+							<Joint name="LeftForeArm" tx="27.687" ty="0" tz="0" rx="-5.52321" ry="-49.9464" rz="2.57393" jointIndex="59">
+								<Joint name="LeftHand" tx="27.8738" ty="0" tz="0" rx="9.47876" ry="-29.0998" rz="29.2254" jointIndex="60">
+									<Joint name="LeftHandThumb1" tx="2.42101" ty="-1.3949" tz="2.39272" rx="12.0841" ry="3.64197" rz="-9.90527" jointIndex="61">
+										<Joint name="LeftHandThumb2" tx="3.49651" ty="-2.01871" tz="2.01871" rx="4.76879" ry="8.49566" rz="1.67811" jointIndex="62">
+											<Joint name="LeftHandThumb3" tx="4.0114" ty="-2.31598" tz="2.31598" rx="-4.22107" ry="10.5352" rz="15.0733" jointIndex="63">
+												<Joint name="LeftHandThumb4" tx="2.2926" ty="-1.32363" tz="1.32363" jointIndex="64" />
+											</Joint>
+										</Joint>
+									</Joint>
+									<Joint name="LeftHandMiddle1" tx="10.4908" ty="0" tz="1e-06" rx="0.488567" ry="4.56114" rz="-22.3598" jointIndex="65">
+										<Joint name="LeftHandMiddle2" tx="5.7921" ty="0" tz="0" rx="0.92743" ry="3.1632" rz="-32.6731" jointIndex="66">
+											<Joint name="LeftHandMiddle3" tx="3.7132" ty="0" tz="0" rx="0.557096" ry="2.49321" rz="-25.1879" jointIndex="67">
+												<Joint name="LeftHandMiddle4" tx="2.3" ty="0" tz="0" jointIndex="68" />
+											</Joint>
+										</Joint>
+									</Joint>
+									<Joint name="LeftHandIndex1" tx="10.5148" ty="-0.230762" tz="2.26491" rx="-0.645107" ry="-1.65962" rz="-23.1607" jointIndex="69">
+										<Joint name="LeftHandIndex2" tx="5.5493" ty="0" tz="0" rx="0.806006" ry="2.96536" rz="-30.4055" jointIndex="70">
+											<Joint name="LeftHandIndex3" tx="3.3911" ty="0" tz="0" rx="0.882791" ry="3.09252" rz="-31.8568" jointIndex="71">
+												<Joint name="LeftHandIndex4" tx="2.5" ty="0" tz="0" jointIndex="72" />
+											</Joint>
+										</Joint>
+									</Joint>
+									<Joint name="LeftHandRing1" tx="10.2407" ty="-0.046629" tz="-2.31414" rx="0.67983" ry="5.02349" rz="-28.4488" jointIndex="73">
+										<Joint name="LeftHandRing2" tx="5.4452" ty="0" tz="0" rx="0.452183" ry="2.25662" rz="-22.6572" jointIndex="74">
+											<Joint name="LeftHandRing3" tx="3.7132" ty="0" tz="0" rx="1.66439" ry="4.09096" rz="-44.263" jointIndex="75">
+												<Joint name="LeftHandRing4" tx="2" ty="0" tz="0" jointIndex="76" />
+											</Joint>
+										</Joint>
+									</Joint>
+									<Joint name="LeftHandPinky1" tx="9.82025" ty="-0.210871" tz="-4.41841" rx="1.02215" ry="8.22633" rz="-13.7628" jointIndex="77">
+										<Joint name="LeftHandPinky2" tx="3.6763" ty="0" tz="0" rx="0.622244" ry="2.62728" rz="-26.645" jointIndex="78">
+											<Joint name="LeftHandPinky3" tx="2.8113" ty="0" tz="0" rx="2.01488" ry="4.42234" rz="-48.9716" jointIndex="79">
+												<Joint name="LeftHandPinky4" tx="2.9" ty="0" tz="0" jointIndex="80" />
+											</Joint>
+										</Joint>
+									</Joint>
+								</Joint>
+							</Joint>
+						</Joint>
+					</Joint>
+					<Joint name="RightShoulder" tx="-6.1402" ty="10.187" tz="-3.7932" rx="-21.8222" ry="24.6096" rz="-6.22817" jointIndex="81">
+						<Joint name="RightArm" tx="-12.3231" ty="-1.113" tz="-1.7935" rx="0.148454" ry="-15.049" rz="56.8909" jointIndex="82">
+							<Joint name="RightForeArm" tx="-27.687" ty="0" tz="0" rx="-5.76451" ry="53.045" rz="-2.87878" jointIndex="83">
+								<Joint name="RightHand" tx="-27.8738" ty="0" tz="0" rx="-3.0249" ry="19.1276" rz="-20.1157" jointIndex="84">
+									<Joint name="RightHandThumb1" tx="-2.57043" ty="-1.24478" tz="2.31923" rx="-1.76333" ry="10.8003" rz="5.64593" jointIndex="85">
+										<Joint name="RightHandThumb2" tx="-3.51879" ty="-2.03157" tz="2.03157" rx="7.08323" ry="-18.9666" rz="-4.77241" jointIndex="86">
+											<Joint name="RightHandThumb3" tx="-3.94523" ty="-2.27778" tz="2.27778" rx="-3.26086" ry="-13.8689" rz="-15.6736" jointIndex="87">
+												<Joint name="RightHandThumb4" tx="-2.2926" ty="-1.32363" tz="1.32363" jointIndex="88" />
+											</Joint>
+										</Joint>
+									</Joint>
+									<Joint name="RightHandIndex1" tx="-10.5773" ty="-0.175045" tz="2.28737" rx="-0.183862" ry="3.73859" rz="13.7939" jointIndex="89">
+										<Joint name="RightHandIndex2" tx="-5.3768" ty="0" tz="0" rx="0.253134" ry="-1.5148" rz="18.9696" jointIndex="90">
+											<Joint name="RightHandIndex3" tx="-3.3855" ty="0" tz="0" rx="0.288543" ry="-1.61426" rz="20.2678" jointIndex="91">
+												<Joint name="RightHandIndex4" tx="-2.6" ty="0" tz="0" jointIndex="92" />
+											</Joint>
+										</Joint>
+									</Joint>
+									<Joint name="RightHandMiddle1" tx="-10.7792" ty="0" tz="1e-06" rx="0.186899" ry="-3.41136" rz="14.023" jointIndex="93">
+										<Joint name="RightHandMiddle2" tx="-5.6168" ty="0" tz="0" rx="0.447771" ry="-1.99321" rz="25.3219" jointIndex="94">
+											<Joint name="RightHandMiddle3" tx="-3.7364" ty="0" tz="0" rx="0.479457" ry="-2.05881" rz="26.2167" jointIndex="95">
+												<Joint name="RightHandMiddle4" tx="-2.3" ty="0" tz="0" jointIndex="96" />
+											</Joint>
+										</Joint>
+									</Joint>
+									<Joint name="RightHandRing1" tx="-10.3919" ty="0.104826" tz="-2.34991" rx="3.43987" ry="-10.7071" rz="16.6675" jointIndex="97">
+										<Joint name="RightHandRing2" tx="-5.4013" ty="0" tz="0" rx="1.3738" ry="-3.30451" rz="45.1397" jointIndex="98">
+											<Joint name="RightHandRing3" tx="-3.3916" ty="0" tz="0" rx="0.422446" ry="-1.93862" rz="24.5822" jointIndex="99">
+												<Joint name="RightHandRing4" tx="-2.2" ty="0" tz="0" jointIndex="100" />
+											</Joint>
+										</Joint>
+									</Joint>
+									<Joint name="RightHandPinky1" tx="-9.79101" ty="-0.213537" tz="-4.37831" rx="4.75165" ry="-22.9285" rz="21.8221" jointIndex="101">
+										<Joint name="RightHandPinky2" tx="-3.6528" ty="0" tz="0" rx="0.573483" ry="-2.23969" rz="28.7217" jointIndex="102">
+											<Joint name="RightHandPinky3" tx="-2.782" ty="0" tz="0" rx="0.999117" ry="-2.88358" rz="38.2154" jointIndex="103">
+												<Joint name="RightHandPinky4" tx="-2.9" ty="0" tz="0" jointIndex="104" />
+											</Joint>
+										</Joint>
+									</Joint>
+								</Joint>
+							</Joint>
+						</Joint>
+					</Joint>
+				</Joint>
+			</Joint>
+		</Joint>
+		<Joint name="LeftUpLeg" tx="9.6338" ty="-3.2733" tz="0" rx="-40.58" ry="2.63586" rz="17.0605" jointIndex="105">
+			<Joint name="LeftLeg" tx="-0.006491" ty="-41.7619" tz="-0.576549" rx="32.9175" ry="-2.95369" rz="1.25057" jointIndex="106">
+				<Joint name="LeftFoot" tx="0.006493" ty="-39.1481" tz="-1.99985" rx="-9.52158" ry="-5.43217" rz="-16.7654" jointIndex="107">
+					<Joint name="LeftToeBase" tx="-0.1833" ty="-12.1931" tz="8.2823" rx="-5.30883" ry="0" rz="0" jointIndex="108">
+						<Joint name="LeftFootToeBase_End" tx="0" ty="0" tz="12.7" jointIndex="109" />
+					</Joint>
+				</Joint>
+			</Joint>
+		</Joint>
+		<Joint name="RightUpLeg" tx="-9.6338" ty="-3.2733" tz="0" rx="-40.6903" ry="-3.63108" rz="-8.91856" jointIndex="110">
+			<Joint name="RightLeg" tx="-0.006491" ty="-41.7618" tz="-0.578375" rx="34.9693" ry="-5.06664" rz="-11.4051" jointIndex="111">
+				<Joint name="RightFoot" tx="0.006493" ty="-39.1482" tz="-1.9981" rx="-9.09929" ry="-1.12798" rz="19.5428" jointIndex="112">
+					<Joint name="RightToeBase" tx="-0.1833" ty="-12.1931" tz="8.2823" rx="-3.2674" ry="0" rz="0" jointIndex="113">
+						<Joint name="RightFootToeBase_End" tx="0.0032" ty="0" tz="12.7" jointIndex="114" />
+					</Joint>
+				</Joint>
+			</Joint>
+		</Joint>
+	</Joint>
+
+</Model>

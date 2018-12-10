@@ -1,19 +1,18 @@
 /*
  * Copyright (c) 2018 Isetta
  */
-#include <IsettaEngine.h>
 #include "MainMenu.h"
+#include <IsettaEngine.h>
 
 // GAME
 #include "ColorScheme.h"
 #include "Consts.h"
 #include "Gameplay/GameManager.h"
-#include "Gameplay/Score.h"
 
 using namespace Isetta;
 
 void MainMenu::Start() {
-  backgroundTexture = Texture{"images\\Neon-background.png"};
+  // backgroundTexture = Texture{"images\\Neon-background.png"};
   buttonAudio = entity->GetComponent<AudioSource>();
   buttonAudio->SetVolume(0.25f);
   networkDiscovery = entity->AddComponent<NetworkDiscovery>();
@@ -36,9 +35,10 @@ void MainMenu::GuiUpdate() {
           GUI::Pivot::Top},
       backgroundTexture);
 
-  RectTransform rect{{0, -100, 0, 0}, GUI::Pivot::Center, GUI::Pivot::Center};
-  GUI::Text(rect, "GAME NAME",
-            GUI::TextStyle{ColorScheme::NEON_BLUE, Consts::TITLE_SIZE, "Neon"});
+  RectTransform rect{{0, -250, 0, 0}, GUI::Pivot::Center, GUI::Pivot::Center};
+  GUI::Text(
+      rect, "The Last of Isetta",
+      GUI::TextStyle{ColorScheme::NEON_BLUE, Consts::TITLE_SIZE, "Deathe"});
 
   const float width = 500.f, height = 75.f, padding = 25.f;
   rect.rect.y = 0.f;
@@ -55,7 +55,7 @@ void MainMenu::GuiUpdate() {
 
   const GUI::InputStyle ipStyle{sunsetLightAlpha, sunsetLightAlpha,
                                 sunsetLightAlpha, Color::white};
-  const GUI::TextStyle textStyle{Color::white, Consts::MID_SIZE, "Neon"};
+  const GUI::TextStyle textStyle{Color::white, Consts::MID_SIZE, "Deathe"};
 
   struct FilterIP {
     static int Filter(InputTextCallbackData* data) {
@@ -64,7 +64,7 @@ void MainMenu::GuiUpdate() {
     }
   };
 
-  Font::PushFont("Neon", Consts::MID_SIZE);
+  Font::PushFont("Deathe", Consts::MID_SIZE);
   if (menuState == MenuState::MainMenu) {
     if (GUI::Button(rect, "SINGLE PLAYER", btnStyle)) {
       buttonAudio->Play();
@@ -130,7 +130,8 @@ void MainMenu::GuiUpdate() {
 
         localRect.anchor = GUI::Pivot::Right;
         localRect.pivot = GUI::Pivot::Right;
-        const char* players = Util::StrFormat("%d/4", GameManager::Instance().playerCount);
+        const char* players =
+            Util::StrFormat("%d/4", GameManager::Instance().playerCount);
         GUI::Text(localRect, players, textStyle);
       });
 
@@ -141,8 +142,9 @@ void MainMenu::GuiUpdate() {
           rect.rect.y - Math::Util::Lerp(0, height + padding, btnLerpFactor);
       GUI::Child(rectCpy, "host_ready", [&]() {
         RectTransform localRect{{0, 0, rect.rect.width, rect.rect.height}};
-        if (GUI::Button(localRect, "START!", btnStyle)) {buttonAudio->Play();
-        GameManager::Instance().LoadLevel("Level1");
+        if (GUI::Button(localRect, "START!", btnStyle)) {
+          buttonAudio->Play();
+          GameManager::Instance().LoadLevel("Level1");
         }
       });
     } else if (menuState == MenuState::Client) {

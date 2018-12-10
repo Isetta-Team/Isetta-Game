@@ -43,7 +43,7 @@ void GameManager::DrawGUI() {
     RectTransform rect{{0, -100, 0, 0}, GUI::Pivot::Center, GUI::Pivot::Center};
     GUI::Text(
         rect, "GAME OVER!",
-        GUI::TextStyle{ColorScheme::NEON_BLUE, Consts::TITLE_SIZE, "Neon"});
+        GUI::TextStyle{ColorScheme::NEON_BLUE, Consts::TITLE_SIZE, "Deathe"});
   } else {
     float x = 30, y = 60;
     for (PlayerController* player : players) {
@@ -55,7 +55,7 @@ void GameManager::DrawGUI() {
 
         auto name = player->entity->GetName();
         GUI::Text(rect, Util::StrFormat("%s:", name.c_str()),
-                  GUI::TextStyle{Consts::MID_SIZE, "Neon"});
+                  GUI::TextStyle{Consts::MID_SIZE, "Deathe"});
 
         rect.pivot = GUI::Pivot::Left;
         rect.rect.x += 130.f;
@@ -73,13 +73,14 @@ void GameManager::DrawGUI() {
           GUI::Draw::RectFilled(rect,
                                 Color{109.f / 255, 205.f / 255, 116.f / 255});
         } else {
-          GUI::Text(rect, "Dead!", GUI::TextStyle{Consts::MID_SIZE, "Neon"});
+          GUI::Text(rect, "Dead!", GUI::TextStyle{Consts::MID_SIZE, "Deathe"});
         }
-        rect.rect.x += width + 5;
-        rect.rect.height = rect.rect.width = 0;
-        GUI::Text(rect, Util::StrFormat("%.0f", player->GetScore()),
-                  GUI::TextStyle{Consts::MID_SIZE, "Neon"});
-        y += 35;
+
+        RectTransform killsRect{
+            {-20, 45, 0, 0}, GUI::Pivot::TopRight, GUI::Pivot::Right};
+        GUI::Text(killsRect,
+                  Util::StrFormat("Kills: %0*d", 3, player->GetScore()),
+                  GUI::TextStyle{Consts::MID_SIZE, "Deathe"});
       }
     }
   }

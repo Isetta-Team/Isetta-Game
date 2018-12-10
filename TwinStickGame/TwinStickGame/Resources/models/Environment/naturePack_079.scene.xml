@@ -1,0 +1,6 @@
+<Model name="naturePack_079" geometry="models/Environment/naturePack_079.geo">
+
+	<Mesh name="Mesh1_Group1_Model_188" material="models/Environment/Light_Wood_047.material.xml" rx="90" ry="0" rz="-0" batchStart="0" batchCount="48" vertRStart="0" vertREnd="29">
+		<Mesh name="#Mesh1_Group1_Model_188" material="models/Environment/Wood_348.material.xml" batchStart="48" batchCount="120" vertRStart="30" vertREnd="105" />
+	</Mesh>
+</Model>

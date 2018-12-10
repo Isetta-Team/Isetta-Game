@@ -57,14 +57,15 @@ void NetworkTestComp::Start() {
     }
   });
 
-  Input::RegisterKeyPressCallback(KeyCode::KP_8, []() {
+  Input::RegisterKeyPressCallback(KeyCode::L, []() {
     NetworkManager::Instance().NetworkLoadLevel("Level1");
   });
 }
 
 void NetworkTestComp::Update() {
   static bool hostStarted = false;
-  if (Input::IsGamepadButtonPressed(GamepadButton::LEFT_BUMPER) && !hostStarted) {
+  if (Input::IsGamepadButtonPressed(GamepadButton::LEFT_BUMPER) &&
+      !hostStarted) {
     NetworkManager::Instance().StartHost(
         CONFIG_VAL(networkConfig.defaultServerIP));
     LOG_INFO(Debug::Channel::Networking, "Started as host on %s",
@@ -73,7 +74,8 @@ void NetworkTestComp::Update() {
   }
 
   static bool levelStarted = false;
-  if (Input::IsGamepadButtonPressed(GamepadButton::RIGHT_BUMPER) && !levelStarted) {
+  if (Input::IsGamepadButtonPressed(GamepadButton::RIGHT_BUMPER) &&
+      !levelStarted) {
     NetworkManager::Instance().NetworkLoadLevel("Level1");
     levelStarted = true;
   }

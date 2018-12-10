@@ -1,0 +1,6 @@
+<Model name="naturePack_078" geometry="models/Environment/naturePack_078.geo">
+
+	<Mesh name="Mesh1_Campfire_Model_005" material="models/Environment/Light_Wood_046.material.xml" rx="90" ry="0" rz="-0" batchStart="0" batchCount="48" vertRStart="0" vertREnd="31">
+		<Mesh name="#Mesh1_Campfire_Model_005" material="models/Environment/Wood_347.material.xml" batchStart="48" batchCount="276" vertRStart="32" vertREnd="178" />
+	</Mesh>
+</Model>

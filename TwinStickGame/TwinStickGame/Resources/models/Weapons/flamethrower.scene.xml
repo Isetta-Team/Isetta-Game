@@ -1,0 +1,13 @@
+<Model name="flamethrower" geometry="models/Weapons/flamethrower.geo">
+
+	<Mesh name="Mesh1_Group2_Group1_Model_088" material="models/Weapons/Brick_Red_004.material.xml" rx="90" ry="0" rz="-0" batchStart="0" batchCount="162" vertRStart="0" vertREnd="108">
+		<Mesh name="#Mesh1_Group2_Group1_Model_088" material="models/Weapons/Gray6_042.material.xml" batchStart="162" batchCount="312" vertRStart="109" vertREnd="248" />
+		<Mesh name="#Mesh1_Group2_Group1_Model_088" material="models/Weapons/Gray4_020.material.xml" batchStart="474" batchCount="258" vertRStart="249" vertREnd="384" />
+		<Mesh name="#Mesh1_Group2_Group1_Model_088" material="models/Weapons/Gray8_088.material.xml" batchStart="732" batchCount="264" vertRStart="385" vertREnd="528" />
+		<Mesh name="#Mesh1_Group2_Group1_Model_088" material="models/Weapons/Gray5_034.material.xml" batchStart="996" batchCount="54" vertRStart="529" vertREnd="560" />
+	</Mesh>
+	<Mesh name="Mesh2_Group3_Group1_Model_088" material="models/Weapons/Brick_Red_004.material.xml" rx="90" ry="0" rz="-0" batchStart="1050" batchCount="48" vertRStart="561" vertREnd="592">
+		<Mesh name="#Mesh2_Group3_Group1_Model_088" material="models/Weapons/Gray4_020.material.xml" batchStart="1098" batchCount="180" vertRStart="593" vertREnd="690" />
+		<Mesh name="#Mesh2_Group3_Group1_Model_088" material="models/Weapons/Gray8_088.material.xml" batchStart="1278" batchCount="66" vertRStart="691" vertREnd="730" />
+	</Mesh>
+</Model>

@@ -78,7 +78,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions>_DEBUG;_EDITOR;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_EDITOR;_DEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>IsettaEngine.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>IsettaEngine.h</ForcedIncludeFiles>
@@ -132,7 +132,6 @@
     <ClCompile Include="Gameplay\EntityFactory.cpp" />
     <ClCompile Include="Gameplay\GameManager.cpp" />
     <ClCompile Include="Gameplay\Hitscan.cpp" />
-    <ClCompile Include="Gameplay\Score.cpp" />
     <ClCompile Include="IsettaEngine.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -145,7 +144,7 @@
     <ClCompile Include="Levels\MessageTestLevel.cpp" />
     <ClCompile Include="Levels\SinglePlayerLevel.cpp" />
     <ClCompile Include="Menu\MainMenu.cpp" />
-    <ClCompile Include="Menu\MainMenuDraw.cpp" />
+    <ClCompile Include="Menu\OrbitFollow.cpp" />
     <ClCompile Include="Player\CameraController.cpp" />
     <ClCompile Include="Player\LightController.cpp" />
     <ClCompile Include="Player\PlayerController.cpp" />
@@ -165,7 +164,6 @@
     <ClInclude Include="Gameplay\EntityFactory.h" />
     <ClInclude Include="Gameplay\GameManager.h" />
     <ClInclude Include="Gameplay\Hitscan.h" />
-    <ClInclude Include="Gameplay\Score.h" />
     <ClInclude Include="IsettaEngine.h" />
     <ClInclude Include="Levels\HitscanTestLevel.h" />
     <ClInclude Include="Levels\Level1.h" />
@@ -175,7 +173,7 @@
     <ClInclude Include="Levels\SinglePlayerLevel.h" />
     <ClInclude Include="Menu\ColorScheme.h" />
     <ClInclude Include="Menu\MainMenu.h" />
-    <ClInclude Include="Menu\MainMenuDraw.h" />
+    <ClInclude Include="Menu\OrbitFollow.h" />
     <ClInclude Include="Networking\NetworkMessages.h" />
     <ClInclude Include="Player\CameraController.h" />
     <ClInclude Include="Player\LightController.h" />
