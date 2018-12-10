@@ -27,6 +27,10 @@ void PlayerController::Awake() {
     audioComp->Play();
   });
 
+  BoxCollider* sc = entity->AddComponent<BoxCollider>();
+  sc->center = Math::Vector3{0, 0, 0};
+  sc->size = Math::Vector3{100, 10000, 100};
+
   auto* mesh =
       entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
   animator = entity->AddComponent<AnimationComponent>(mesh);

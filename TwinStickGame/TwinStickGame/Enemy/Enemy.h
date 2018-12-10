@@ -40,7 +40,7 @@ AudioClip* enemyDamage = nullptr;
 // particle
 ParticleSystemComponent* particles = nullptr;
 
-CapsuleCollider* collider;
+BoxCollider* collider;
 class Damageable* damageable{nullptr};
 
 DEFINE_COMPONENT_END(Enemy, Component)

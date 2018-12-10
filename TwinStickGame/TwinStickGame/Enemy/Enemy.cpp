@@ -11,11 +11,10 @@
 using namespace Isetta;
 
 void Enemy::Awake() {
-  collider = entity->AddComponent<CapsuleCollider>();
-  collider->height = 2.f;
+  collider = entity->AddComponent<BoxCollider>();
   entity->SetLayer("Enemy");
   // collider->center = transform->GetLocalScale().y * Math::Vector3::up;
-  collider->center = Math::Vector3::up;
+  collider->size = Math::Vector3{1, 20, 1};
 
   audioComp = entity->AddComponent<AudioSource>();
   audioComp->SetProperty(AudioSource::Property::IS_3D, false);

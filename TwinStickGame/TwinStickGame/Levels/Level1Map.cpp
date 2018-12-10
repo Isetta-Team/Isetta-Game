@@ -278,7 +278,7 @@ void Level1Map::Load() {
       rockGroup->SetTransform(
           Math::Vector3{position.x, floorHeight, position.y},
           Math::Vector3::zero, Math::Vector3{2});
-      rockGroup->AddComponent<BoxCollider>(Math::Vector3{1.6f, 0, -1.1f},
+      rockGroup->AddComponent<BoxCollider>(Math::Vector3{.75, 0, -.5},
                                            Math::Vector3{2.3f, 1, 2.5f});
 
       Entity* vertRock = Entity::Instantiate("Vertical Rock", rockGroup, true);
@@ -305,35 +305,35 @@ void Level1Map::Load() {
   RockGroup group2{Math::Vector2{-37.6f, 21.3f}};
   RockGroup group3{Math::Vector2{14.8f, 13.08f}};
   Entity* crater1 = Entity::Instantiate("Crater", nullptr, true);
-  crater1->SetTransform(Math::Vector3{-16.96f, 0.23f + floorHeight, 28.36f},
+  crater1->SetTransform(Math::Vector3{-16.96f, floorHeight, 28.36f},
                         Math::Vector3::zero, Math::Vector3{3, 2, 3});
   crater1->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_079.scene.xml");
-  crater1->AddComponent<SphereCollider>(Math::Vector3{1.4f, floorHeight, -1.5f},
+  crater1->AddComponent<SphereCollider>(Math::Vector3{.5, floorHeight, -.5},
                                         0.65f);
   Entity* crater2 = Entity::Instantiate("Crater", nullptr, true);
-  crater2->SetTransform(Math::Vector3{-38.13, 0.23f + floorHeight, 11.94f},
+  crater2->SetTransform(Math::Vector3{-38.13, floorHeight, 11.94f},
                         Math::Vector3::zero, Math::Vector3{3, 2, 3});
   crater2->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_079.scene.xml");
-  crater2->AddComponent<SphereCollider>(Math::Vector3{1.4f, floorHeight, -1.5f},
+  crater2->AddComponent<SphereCollider>(Math::Vector3{.5, floorHeight, -.5},
                                         0.65f);
   Entity* mountain = Entity::Instantiate("Mountain", nullptr, true);
   mountain->SetTransform(Math::Vector3{-50, floorHeight, 62.9f},
                          Math::Vector3::zero, Math::Vector3{5});
   mountain->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_032.scene.xml");
-  mountain->AddComponent<BoxCollider>(Math::Vector3{9, 2 + floorHeight, -5.2f},
+  mountain->AddComponent<BoxCollider>(Math::Vector3{0, floorHeight, 0},
                                       Math::Vector3{0.5f, 1, 2});
-  mountain->AddComponent<BoxCollider>(Math::Vector3{4, 2 + floorHeight, -9},
+  mountain->AddComponent<BoxCollider>(Math::Vector3{0, floorHeight, 0},
                                       Math::Vector3{2, 1, 0.5f});
   Entity* pillar = Entity::Instantiate("Pillar", nullptr, true);
   pillar->SetTransform(Math::Vector3{-24.82f, floorHeight, 44.17f},
                        Math::Vector3{0, 27.5f, 0}, Math::Vector3{3});
   pillar->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_133.scene.xml");
-  pillar->AddComponent<CapsuleCollider>(
-      Math::Vector3{0.5f, 1.5 + floorHeight, -2.9f}, 0.75f, 3);
+  pillar->AddComponent<CapsuleCollider>(Math::Vector3{0, floorHeight, 0}, 0.75f,
+                                        3);
 
   // AI Plane
   navPlane =

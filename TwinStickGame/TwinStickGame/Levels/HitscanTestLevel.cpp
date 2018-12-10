@@ -22,7 +22,6 @@ void HitscanTestLevel::Load() {
 
   Entity* debug = Entity::Instantiate("Debug");
   debug->AddComponent<GridComponent>();
-  debug->AddComponent<FrameReporter>()->Open();
   debug->AddComponent<EditorComponent>();
 
   Entity* colEnt = Entity::Instantiate("Collider 1");
