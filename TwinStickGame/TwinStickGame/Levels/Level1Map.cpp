@@ -243,7 +243,7 @@ void Level1Map::Load() {
                                        Math::Vector3{54, 6, 2.5f});
 
   // Floor
-  float floorHeight = -0.5;
+  const static float floorHeight = -0.5;
   Entity* leftFloor = Entity::Instantiate("Left Floor", nullptr, true);
   leftFloor->SetTransform(Math::Vector3{0, floorHeight, 24}, Math::Vector3{},
                           Math::Vector3{6, 1, 4});
@@ -265,8 +265,8 @@ void Level1Map::Load() {
   topFloor->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_001.scene.xml");
   Entity* fillerFloor = Entity::Instantiate("Filler Floor", nullptr, true);
-  fillerFloor->SetTransform(Math::Vector3{-54, 0, 48}, Math::Vector3{},
-                            Math::Vector3{2, 1, 2});
+  fillerFloor->SetTransform(Math::Vector3{-54, floorHeight, 48},
+                            Math::Vector3{}, Math::Vector3{2, 1, 2});
   fillerFloor->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_001.scene.xml");
 
@@ -275,8 +275,9 @@ void Level1Map::Load() {
     Math::Vector2 position;
     RockGroup(const Math::Vector2& position) : position{position} {
       Entity* rockGroup = Entity::Instantiate("Rock Group", nullptr, true);
-      rockGroup->SetTransform(Math::Vector3{position.x, 0, position.y},
-                              Math::Vector3::zero, Math::Vector3{2});
+      rockGroup->SetTransform(
+          Math::Vector3{position.x, floorHeight, position.y},
+          Math::Vector3::zero, Math::Vector3{2});
       rockGroup->AddComponent<BoxCollider>(Math::Vector3{1.6f, 0, -1.1f},
                                            Math::Vector3{2.3f, 1, 2.5f});
 
@@ -304,33 +305,35 @@ void Level1Map::Load() {
   RockGroup group2{Math::Vector2{-37.6f, 21.3f}};
   RockGroup group3{Math::Vector2{14.8f, 13.08f}};
   Entity* crater1 = Entity::Instantiate("Crater", nullptr, true);
-  crater1->SetTransform(Math::Vector3{-16.96f, 0.23f, 28.36f},
+  crater1->SetTransform(Math::Vector3{-16.96f, 0.23f + floorHeight, 28.36f},
                         Math::Vector3::zero, Math::Vector3{3, 2, 3});
   crater1->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_079.scene.xml");
-  crater1->AddComponent<SphereCollider>(Math::Vector3{1.4f, 0, -1.5f}, 0.65f);
+  crater1->AddComponent<SphereCollider>(Math::Vector3{1.4f, floorHeight, -1.5f},
+                                        0.65f);
   Entity* crater2 = Entity::Instantiate("Crater", nullptr, true);
-  crater2->SetTransform(Math::Vector3{-38.13, 0.23f, 11.94f},
+  crater2->SetTransform(Math::Vector3{-38.13, 0.23f + floorHeight, 11.94f},
                         Math::Vector3::zero, Math::Vector3{3, 2, 3});
   crater2->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_079.scene.xml");
-  crater2->AddComponent<SphereCollider>(Math::Vector3{1.4f, 0, -1.5f}, 0.65f);
+  crater2->AddComponent<SphereCollider>(Math::Vector3{1.4f, floorHeight, -1.5f},
+                                        0.65f);
   Entity* mountain = Entity::Instantiate("Mountain", nullptr, true);
-  mountain->SetTransform(Math::Vector3{-50, 0, 62.9f}, Math::Vector3::zero,
-                         Math::Vector3{5});
+  mountain->SetTransform(Math::Vector3{-50, floorHeight, 62.9f},
+                         Math::Vector3::zero, Math::Vector3{5});
   mountain->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_032.scene.xml");
-  mountain->AddComponent<BoxCollider>(Math::Vector3{9, 2, -5.2f},
+  mountain->AddComponent<BoxCollider>(Math::Vector3{9, 2 + floorHeight, -5.2f},
                                       Math::Vector3{0.5f, 1, 2});
-  mountain->AddComponent<BoxCollider>(Math::Vector3{4, 2, -9},
+  mountain->AddComponent<BoxCollider>(Math::Vector3{4, 2 + floorHeight, -9},
                                       Math::Vector3{2, 1, 0.5f});
   Entity* pillar = Entity::Instantiate("Pillar", nullptr, true);
-  pillar->SetTransform(Math::Vector3{-24.82f, 0, 44.17f},
+  pillar->SetTransform(Math::Vector3{-24.82f, floorHeight, 44.17f},
                        Math::Vector3{0, 27.5f, 0}, Math::Vector3{3});
   pillar->AddComponent<MeshComponent>(
       "models\\Environment\\naturePack_133.scene.xml");
-  pillar->AddComponent<CapsuleCollider>(Math::Vector3{0.5f, 1.5, -2.9f}, 0.75f,
-                                        3);
+  pillar->AddComponent<CapsuleCollider>(
+      Math::Vector3{0.5f, 1.5 + floorHeight, -2.9f}, 0.75f, 3);
 
   // AI Plane
   navPlane =
@@ -360,14 +363,13 @@ void Level1Map::LoadTestEntities() {
   camera->transform->LookAt(Math::Vector3::zero);
   camera->AddComponent<FlyController>();
 
-  Entity* light = Entity::Instantiate("Light");
-  light->AddComponent<LightComponent>();
-  light->SetTransform(Math::Vector3{0, 200, 600}, Math::Vector3::zero,
-                      Math::Vector3::one);
-  // light->SetProperty<LightComponent::Property::COLOR>(Color{1, 1, 1});
-  // light->SetProperty<LightComponent::Property::FOV>(360);
-  // light->SetProperty<LightComponent::Property::RADIUS>(30);
-  // light->SetProperty<LightComponent::Property::RADIUS>(2500);
+  Entity* lightEntity = Entity::Instantiate("Light");
+  auto light = lightEntity->AddComponent<LightComponent>();
+  lightEntity->SetTransform(Math::Vector3{0, 200, 600}, Math::Vector3::zero,
+                            Math::Vector3::one);
+  light->SetProperty<LightComponent::Property::COLOR>(Color{1, 1, 1});
+  light->SetProperty<LightComponent::Property::FOV>(180);
+  light->SetProperty<LightComponent::Property::RADIUS>(2500);
 
   Entity* debug = Entity::Instantiate("Debug", nullptr, true);
   // debug->AddComponent<GridComponent>();
@@ -382,13 +384,15 @@ void Level1Map::LoadTestEntities() {
   // Characters
   Entity* player = Entity::Instantiate("Player");
   player->transform->SetWorldPos(Math::Vector3{-5, 0, 4});
-  auto playerMesh =
-      player->AddComponent<MeshComponent>("models\\Soldier\\idle.scene.xml");
+  player->transform->SetLocalScale(Math::Vector3::one * 0.01f);
+  auto* playerMesh =
+      player->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
   auto playerAnim = player->AddComponent<AnimationComponent>(playerMesh);
-  playerAnim->AddAnimation("models\\Soldier\\idle.anim");
-  playerAnim->AddAnimation("models\\Soldier\\impact.anim");
-  playerAnim->AddAnimation("models\\Soldier\\walking.anim");
-  playerAnim->AddAnimation("models\\Soldier\\death.anim");
+  playerAnim->AddAnimation("models/Player/Player_Idle.anim");
+  playerAnim->AddAnimation("models/Player/Player_Run.anim");
+  playerAnim->AddAnimation("models/Player/Player_Shoot.anim");
+  playerAnim->AddAnimation("models/Player/Player_ShootRun.anim");
+  playerAnim->AddAnimation("models/Player/Player_Die.anim");
 
   Entity* weapon = Entity::Instantiate("Weapon");
   weapon->transform->SetLocalScale(Math::Vector3{0.75f});
@@ -403,7 +407,7 @@ void Level1Map::LoadTestEntities() {
 
   static int playerState = 0;
   Input::RegisterKeyPressCallback(KeyCode::N, [playerAnim]() {
-    if (playerState == 4) playerState = 0;
+    if (playerState == 5) playerState = 0;
     playerAnim->TransitToAnimationState(playerState++, 0.2);
   });
 

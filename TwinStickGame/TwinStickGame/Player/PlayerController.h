@@ -15,7 +15,7 @@ void GuiUpdate() override;
 
 void ChangeState(int newState);
 void Score(float score);
-float GetScore() {return score;}
+int GetScore() { return score; }
 
 int playerIndex = 0;
 bool isAlive{true};
@@ -37,6 +37,7 @@ float shootSpeed{60.f};
 Math::Vector3 bulletOffset{0, 100, 0};
 float bulletRange{100.f};
 float bulletDamage{20.f};
+Entity* weapon = nullptr;
 
 // Animation
 AnimationComponent* animator = nullptr;

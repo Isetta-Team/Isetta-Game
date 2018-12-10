@@ -89,5 +89,5 @@ void MenuLevel::Load() {
   enemyAnim = enemy->AddComponent<AnimationComponent>(enemyMesh);
   enemyAnim->AddAnimation("models\\Enemy\\idle.anim");
 
-  EntityFactory::CreateNetworkEntity();
+  // EntityFactory::CreateNetworkEntity();
 }

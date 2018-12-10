@@ -22,15 +22,14 @@ void Level1::Load() {
   // temp. instantiate the ground
   level1Map.Load();
 
+  Entity* editor = Entity::Instantiate("Editor");
+  editor->AddComponent<EditorComponent>();
+
   Entity* enemyManager = Entity::Instantiate("Enemy Manager");
   enemyManager->AddComponent<EnemyManager>();
-  enemyManager->AddComponent<EditorComponent>();
 
   Entity* bulletManager = Entity::Instantiate("Bullet Manager");
   bulletManager->AddComponent<BulletManager>();
-
-  Input::RegisterKeyPressCallback(KeyCode::ESCAPE,
-                                  []() { Application::Exit(); });
 
   GameManager::Instance().SendLevelLoadedMessage();
 }

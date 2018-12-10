@@ -18,7 +18,7 @@ class GameManager {
   static GameManager& Instance();
   GameManager();
   void RegisterGameOverCallback();
-  void DrawGUI();
+  void DrawGameOver();
   bool isGameOver = false;
 
   // Player stuff

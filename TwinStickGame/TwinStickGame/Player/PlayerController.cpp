@@ -3,6 +3,8 @@
  */
 #include <IsettaEngine.h>
 
+#include <Components/JointFollow.h>
+#include "Consts.h"
 #include "Enemy/EnemyManager.h"
 #include "Gameplay/Damageable.h"
 #include "Gameplay/GameManager.h"
@@ -25,6 +27,23 @@ void PlayerController::Awake() {
     audioComp->Play();
   });
 
+  auto* mesh =
+      entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
+  animator = entity->AddComponent<AnimationComponent>(mesh);
+  animator->AddAnimation("models/Player/Player_Idle.anim");
+  animator->AddAnimation("models/Player/Player_Run.anim");
+  animator->AddAnimation("models/Player/Player_Shoot.anim");
+  animator->AddAnimation("models/Player/Player_ShootRun.anim");
+  animator->AddAnimation("models/Player/Player_Die.anim");
+
+  weapon = Entity::Instantiate("Weapon");
+  weapon->transform->SetLocalScale(Math::Vector3{0.75f});
+  weapon->AddComponent<MeshComponent>(
+      "models\\Weapons\\flamethrower.scene.xml");
+  weapon->AddComponent<JointFollow>(mesh, "mixamorig_LeftHand",
+                                    Math::Vector3{-0.1f, 0.05f, 0.05f},
+                                    Math::Vector3::zero);
+
   // called on each client automatically as health is synced
   damageable->onDeath.Subscribe([this](int playerIndex) {
     ChangeState(static_cast<int>(State::Die));
@@ -34,27 +53,12 @@ void PlayerController::Awake() {
       EnemyManager::Instance().RemoveTarget(transform);
     }
 
+    weapon->SetActive(false);
+
     audioComp->clip = playerDie;
     audioComp->SetVolume(2.0f);
     audioComp->Play();
   });
-
-  auto* mesh =
-  entity->AddComponent<MeshComponent>("models/Player/Vanguard.scene.xml");
-  animator = entity->AddComponent<AnimationComponent>(mesh);
-  animator->AddAnimation("models/Player/Player_Idle.anim");
-  animator->AddAnimation("models/Player/Player_Run.anim");
-  animator->AddAnimation("models/Player/Player_Shoot.anim");
-  animator->AddAnimation("models/Player/Player_ShootRun.anim");
-  animator->AddAnimation("models/Player/Player_Die.anim");
-  // auto* mesh =
-      // entity->AddComponent<MeshComponent>("models/Soldier/idle.scene.xml");
-  // animator = entity->AddComponent<AnimationComponent>(mesh);
-  // animator->AddAnimation("models/Soldier/idle.anim");
-  // animator->AddAnimation("models/Player/Player_Run.anim");
-  // animator->AddAnimation("models/Player/Player_Shoot.anim");
-  // animator->AddAnimation("models/Player/Player_ShootRun.anim");
-  // animator->AddAnimation("models/Soldier/death.anim");
 }
 
 void PlayerController::Start() {
@@ -125,7 +129,13 @@ void PlayerController::GuiUpdate() {
   if (!networkId->HasClientAuthority()) {
     return;
   }
-  GameManager::Instance().DrawGUI();
+  RectTransform killsRect{
+      {-20, 45, 0, 0}, GUI::Pivot::TopRight, GUI::Pivot::Right};
+  GUI::Text(killsRect, Util::StrFormat("Kills: %0*d", 3, GetScore()),
+            GUI::TextStyle{Consts::MID_SIZE, "Deathe"});
+
+  GameManager::Instance().DrawGameOver();
+
   // static bool isOpen = true;
   // GUI::Window(
   //     RectTransform{

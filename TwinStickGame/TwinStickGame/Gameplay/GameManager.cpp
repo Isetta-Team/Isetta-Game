@@ -38,51 +38,12 @@ void GameManager::RegisterGameOverCallback() {
       [this](yojimbo::Message* inMessage) { isGameOver = true; });
 }
 
-void GameManager::DrawGUI() {
+void GameManager::DrawGameOver() {
   if (isGameOver) {
     RectTransform rect{{0, -100, 0, 0}, GUI::Pivot::Center, GUI::Pivot::Center};
     GUI::Text(
         rect, "GAME OVER!",
         GUI::TextStyle{ColorScheme::NEON_BLUE, Consts::TITLE_SIZE, "Deathe"});
-  } else {
-    float x = 30, y = 60;
-    for (PlayerController* player : players) {
-      if (player != nullptr) {
-        auto* health = player->entity->GetComponent<Damageable>();
-        RectTransform rect{{x, y, 0, 0}};
-
-        rect.pivot = GUI::Pivot::Left;
-
-        auto name = player->entity->GetName();
-        GUI::Text(rect, Util::StrFormat("%s:", name.c_str()),
-                  GUI::TextStyle{Consts::MID_SIZE, "Deathe"});
-
-        rect.pivot = GUI::Pivot::Left;
-        rect.rect.x += 130.f;
-
-        const float scale = 3.f;
-        rect.rect.width = scale * health->GetMaxHealth();
-        auto width = rect.rect.width;
-
-        if (player->isAlive) {
-          rect.rect.height = 30.f;
-          GUI::Draw::RectFilled(rect,
-                                Color{187.f / 255, 187.f / 255, 187.f / 255});
-
-          rect.rect.width = scale * health->GetHealth();
-          GUI::Draw::RectFilled(rect,
-                                Color{109.f / 255, 205.f / 255, 116.f / 255});
-        } else {
-          GUI::Text(rect, "Dead!", GUI::TextStyle{Consts::MID_SIZE, "Deathe"});
-        }
-
-        RectTransform killsRect{
-            {-20, 45, 0, 0}, GUI::Pivot::TopRight, GUI::Pivot::Right};
-        GUI::Text(killsRect,
-                  Util::StrFormat("Kills: %0*d", 3, player->GetScore()),
-                  GUI::TextStyle{Consts::MID_SIZE, "Deathe"});
-      }
-    }
   }
 }
 

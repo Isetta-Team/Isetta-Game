@@ -1,13 +1,14 @@
 /*
  * Copyright (c) 2018 Isetta
  */
-#include <IsettaEngine.h>
 #include "Gameplay/EntityFactory.h"
+#include <IsettaEngine.h>
 
 #include <Components/Editor/EditorComponent.h>
 #include <Components/NetworkMonitor.h>
 
 #include "Player/PlayerController.h"
+#include "Player/PlayerHealth.h"
 #include "Test/NetworkTestComp.h"
 
 using namespace Isetta;
@@ -27,7 +28,8 @@ Entity* EntityFactory::CreateDebugEntity() {
 
 Entity* EntityFactory::CreatePlayer(const std::string_view playerName) {
   Entity* player = Entity::Instantiate(playerName.data());
-  player->AddComponent<PlayerController>();
   player->transform->SetLocalScale(Math::Vector3::one * 0.01f);
+  auto controller = player->AddComponent<PlayerController>();
+  player->AddComponent<PlayerHealth>(controller);
   return player;
 }

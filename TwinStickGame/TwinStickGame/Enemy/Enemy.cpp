@@ -12,8 +12,8 @@ using namespace Isetta;
 
 void Enemy::Awake() {
   collider = entity->AddComponent<CapsuleCollider>();
+  collider->height = 2.f;
   entity->SetLayer("Enemy");
-  collider->height = 10000.0f;
   // collider->center = transform->GetLocalScale().y * Math::Vector3::up;
   collider->center = Math::Vector3::up;
 
