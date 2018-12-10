@@ -123,19 +123,19 @@
 #define YOJIMBO_PLATFORM YOJIMBO_PLATFORM_UNIX
 #endif
 
-#define YOJIMBO_SERIALIZE_CHECKS 1
-
 #ifndef NDEBUG
 
 #define YOJIMBO_DEBUG_MEMORY_LEAKS 0
 #define YOJIMBO_DEBUG_MESSAGE_LEAKS 1
 #define YOJIMBO_DEBUG_MESSAGE_BUDGET 1
+#define YOJIMBO_SERIALIZE_CHECKS 1
 
 #else  // #ifndef NDEBUG
 
 #define YOJIMBO_DEBUG_MEMORY_LEAKS 0
 #define YOJIMBO_DEBUG_MESSAGE_LEAKS 0
 #define YOJIMBO_DEBUG_MESSAGE_BUDGET 0
+#define YOJIMBO_SERIALIZE_CHECKS 0
 
 #endif  // #ifndef NDEBUG
 
@@ -546,7 +546,7 @@ __declspec(dllexport) void yojimbo_assert_function(const char *, const char *,
     }                                                                        \
   } while (0)
 #else
-#define yojimbo_assert(ignore) ((void)0)
+#define yojimbo_assert(ignore) (void(ignore))
 #endif
 
 /**
@@ -2051,7 +2051,6 @@ class BitReader {
     yojimbo_assert(m_scratchBits >= 0 && m_scratchBits <= 64);
 
     if (m_scratchBits < bits) {
-      yojimbo_assert(m_wordIndex < m_numWords);
       m_scratch |= uint64_t(network_to_host(m_data[m_wordIndex]))
                    << m_scratchBits;
       m_scratchBits += 32;
@@ -2341,7 +2340,7 @@ class WriteStream : public BaseStream {
     SerializeAlign();
     SerializeBits(SerializeCheckValue, 32);
 #else   // #if YOJIMBO_SERIALIZE_CHECKS
-    (void)string;
+    (void)0;
 #endif  // #if YOJIMBO_SERIALIZE_CHECKS
     return true;
   }
