@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2018 Isetta
  */
-#include <IsettaEngine.h>
 #include "HitscanTestLevel.h"
+#include <IsettaEngine.h>
 #include "Components/Editor/EditorComponent.h"
 #include "Components/Editor/FrameReporter.h"
 #include "Components/GridComponent.h"
@@ -20,9 +20,11 @@ void HitscanTestLevel::Load() {
   testEntity->AddComponent<Hitscan>();
   testEntity->AddComponent<HitscanTest>();
 
+#ifdef _EDITOR
   Entity* debug = Entity::Instantiate("Debug");
   debug->AddComponent<GridComponent>();
   debug->AddComponent<EditorComponent>();
+#endif
 
   Entity* colEnt = Entity::Instantiate("Collider 1");
   colEnt->SetTransform(Math::Vector3(2, 0, 2));

@@ -26,10 +26,9 @@ void PlayerHealth::GuiUpdate() {
   float scale = smallScale;
   std::string name = player->entity->GetName();
   if (networkId->HasClientAuthority()) {
-    name = "Health";
     scale = mainScale;
   } else {
-    y += networkId->clientAuthorityId * 60;
+    y += Math::Util::Max(1, networkId->clientAuthorityId) * 60;
   }
 
   RectTransform rect{{30, y, 0, 0}};
